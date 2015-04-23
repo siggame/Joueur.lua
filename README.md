@@ -1,4 +1,4 @@
-# Joueur.py
+# Joueur.lua
 A simple Lua game client for the Cadre framework to connect to [Cerveau](https://github.com/JacobFischer/Cerveau) servers.
 
 ![{Cadre}](http://i.imgur.com/17wwI3f.png)
