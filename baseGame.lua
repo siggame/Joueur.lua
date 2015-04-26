@@ -5,26 +5,12 @@ local BaseGameObject = require("baseGameObject")
 -- @class BaseGame: the basics of any game, basically state management. Competitiors do not modify
 local BaseGame = class()
 
-function BaseGame:init(session)
-    self.session = session
-    self.client = undefined
-    self.gameObjects = {}
-
-    self._gotInitialState = false
+function BaseGame:init()
     self._gameObjectClasses = {}
  end
 
-
-function BaseGame:setClient(client)
-    self.client = client
-end
-
-function BaseGame:setAI(ai)
-    self.ai = ai
-end
-
-function BaseGame:connected(data)
-    self._serverConstants = data.constants
+function BaseGame:setConstants(constants)
+    self._serverConstants = constants
 end
 
 -- @returns BaseGameObject with the given id
@@ -34,32 +20,18 @@ end
 
 --- applies a delta state (change in state information) to self game
 function BaseGame:applyDeltaState(delta)
-    local notGotInitialState = not self._gotInitialState
-    self._gotInitialState = true
-
     if delta.gameObjects then
         self:_initGameObjects(delta.gameObjects)
     end
 
     self:_mergeDelta(self, delta)
-
-    if notGotInitialState then -- we just got it, so this game should be initialize with initial data
-        self.ai:connectPlayer()
-        self.ai:gameInitialized()
-    end
-
-    self.ai:gameUpdated()
 end
 
 --- game objects can be refences in the delta states for cycles, they will all point to the game objects here.
 function BaseGame:_initGameObjects(gameObjects)
     for id, gameObject in pairs(gameObjects) do
         if not self.gameObjects[id] then
-            self.gameObjects[id] = self._gameObjectClasses[gameObject.gameObjectName]({
-                game = self,
-                ai = self.ai,
-                client = self.client,
-            })
+            self.gameObjects[id] = self._gameObjectClasses[gameObject.gameObjectName]()
         end
     end
 end

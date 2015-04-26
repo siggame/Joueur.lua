@@ -2,6 +2,7 @@
 -- This is a simple class to represent the ${obj_key} object in the game. You can extend it by adding utility functions here in this file.
 <% parent_classes = obj['parentClasses'] %>
 local class = require("utilities.class")
+local makeCommand = require("utilities.command")
 % if len(parent_classes) > 0:
 % for parent_class in parent_classes:
 local ${parent_class} = require("${game_name}.${uncapitalize(parent_class)}")
@@ -18,37 +19,37 @@ else:
 local ${obj_key} = class(${", ".join(parent_classes)})
 
 --- initializes a ${obj_key} with basic logic as provided by the Creer code generator
--- @param <table> data: initialization data
-function ${obj_key}:init(data)
+function ${obj_key}:init(...)
 % for parent_class in reversed(parent_classes):
-    ${parent_class}.init(self, data)
+    ${parent_class}.init(self, ...)
 % endfor
+
+
+    -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
 % for attr_name, attr_parms in obj['attributes'].items():
 <%
     attr_default = attr_parms["default"] if 'default' in attr_parms else None
     attr_type = attr_parms["type"]
-    attr_cast = ""
 
-    if attr_type == "string":
-        attr_default = '"' + (attr_default if attr_default != None else '') + '"'
-        attr_cast = "tostring"
-    elif attr_type == "array" or attr_type == "dictionary":
-        attr_default = 'Table()'
-    elif attr_type == "int" or attr_type == "float":
-        attr_default = attr_default or 0
-        attr_cast = "tonumber"
-    elif attr_type == "boolean":
-        attr_default = 'false'
+    if attr_default == None:
+        if attr_type == "string":
+            attr_default = '""'
+        elif attr_type == "array" or attr_type == "dictionary":
+            attr_default = '{}'
+        elif attr_type == "int" or attr_type == "float":
+            attr_default = attr_default or 0
+        elif attr_type == "boolean":
+            attr_default = 'false'
+        else:
+            attr_default = "nil"
     else:
-        attr_default = "nil"
-
-%>    if data.${attr_name} == nil then -- set to default value because it was not sent
-        self.${attr_name} = ${attr_default}
-    else
-        self.${attr_name} = ${attr_cast}(data.${attr_name})
-    end
-
+        if attr_type == "string":
+            attr_default = '"' + attr_default + '"'
+        elif attr_type == "boolean":
+            attr_default = str(attr_default).lower()
+%>    -- ${attr_parms['description']}
+    self.${attr_name} = ${attr_default}
 % endfor
 % if obj_key == "Game":
 
@@ -78,7 +79,7 @@ end
 % endfor
 % endif
 function ${obj_key}:${function_name}(${argument_string})
-    return self._client:sendCommand(self, "${function_name}", {
+    return makeCommand(self, "${function_name}", {
 % for argument_name in argument_names:
         ${argument_name} = ${argument_name},
 % endfor

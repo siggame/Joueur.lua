@@ -19,13 +19,13 @@ function serializer.isGameObjectReference(obj)
 end
 
 function serializer.serialize(data)
-    serialized = {}
+    local serialized = {}
 
     for key, value in pairs(data) do
         if class.isInstance(value, BaseGameObject) then
             serialized[key] = {id = value.id}
         elseif type(value) == "table" then
-            serialized[key] = serialize(value)
+            serialized[key] = serializer.serialize(value)
         else
             serialized[key] = value
         end

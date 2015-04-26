@@ -12,7 +12,7 @@ function AI:getName()
 end
 
 -- this is called once the game starts and your AI knows its playerID and game. You can initialize your AI here.
-function AI:gameInitialized()
+function AI:start()
     -- pass
 end
 
@@ -21,19 +21,33 @@ function AI:gameUpdated()
     -- pass
 end
 
--- this is called every time the server tells you that you can send a command. Once you send a command you must return because the game state will change. This is where most of your game logic will probably go
-function AI:run()
+--- this is called when the game ends, you can clean up your data and dump files here if need be
+-- @param {boolean} won == true means you won, won == false means you lost
+-- @param {string} reason you won or lost
+function AI:ended(won, reason)
     -- pass
 end
 
--- this is called when the server is no longer taking game commands from you, normally when you turn ends and another players begins.
-function AI:ignoring()
-    -- pass
+--- Response Functions: functions you must fill out to send data to the game server to actually play the game! ---
+% for function_name, function_parms in ai['functions'].items():
+<%
+argument_string = ""
+argument_names = []
+if 'arguments' in function_parms:
+    for arg_parms in function_parms['arguments']:
+        argument_names.append(arg_parms['name'])
+    argument_string = ", ".join(argument_names)
+%>
+--- ${function_parms['description']}
+% if 'arguments' in function_parms:
+% for arg_parms in function_parms['arguments']:
+-- @param <${arg_parms['type']}> ${arg_parms['name']}: ${arg_parms['description']}
+% endfor
+% endif
+-- @returns <${function_parms['return']['type']}> ${function_parms['return']['description']}
+function AI:${function_name}(${argument_string})
+    -- Put your game logic here for ${function_name}
 end
-
--- this is called when the game closes (ends), you can clean up your data and dump files here if need be
-function AI:close()
-    -- pass
-end
+% endfor
 
 return AI

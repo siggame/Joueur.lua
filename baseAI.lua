@@ -1,43 +1,61 @@
 local class = require("utilities.class")
 
+---
 -- @class BaseAI: the base functions all AIs should do
 local BaseAI = class()
 
+---
+-- BaseAI constructor, sets the game
+-- @param {Game} the game this AI should be playing
 function BaseAI:init(game)
     self.game = game
 end
 
-function BaseAI:start(data)
-    self.playerID = data.playerID
-    self.playerName = data.playerName
+---
+-- called once we get the first game state and can find our actual player in the game
+function BaseAI:setPlayer(player)
+    self.player = player
 end
 
-function BaseAI:connected(data)
-    self._serverConstants = data.constants
+---
+-- called once the game is initialized, intended to be overridden by the competitor's AI Class
+function BaseAI:start()
+    -- intended to be overridden by the AI class, purposed left empty here to not penalize competitors for forgetting to call the parent method
 end
 
-function BaseAI:connectPlayer()
-    self.player = self.game:getGameObject(self.playerID)
-end
-
-function BaseAI:gameInitialized()
-    -- intended to be overridden by the AI class
-end
-
+---
+-- called every time the game is updated, intended to be overridden by the competitor's AI Class
 function BaseAI:gameUpdated()
-    -- intended to be overridden by the AI class
+    -- intended to be overridden by the AI class, purposed left empty here to not penalize competitors for forgetting to call the parent method
 end
 
-function BaseAI:run()
-    -- intended to be overridden by the AI class
+---
+-- called when the server sends a request that it expects you to respond to. callback is executed via reflection, and said callback should be in the top-level AI class filled in by competitor
+-- @param request {string} what we are responding to, used for reflection
+-- @param {table} array of args to send to callback
+-- @returns {table} response. what the table is depends on the request.
+function BaseAI:respondTo(request, args)
+    local callback = self[request] -- this function should be generated via Creer in the inherited AI function
+
+    if callback then
+        return callback(self, args and unpack(args) or nil)
+    else
+        print("ERROR: AI has not function '" .. request .. "'' to respond with")
+    end
 end
 
-function BaseAI:ignoring()
-    -- intended to be overridden by the AI class
+---
+-- called when we (the client) send some invalid response to the server. It should be echoed back here
+-- @param data {table} the invalid data we sent, echoed back here
+function BaseAI:invalid(data)
+    print("AI was told this is invalid", data)
 end
 
-function BaseAI:over()
-    -- intended to be overridden by the AI class
+
+---
+-- called when the game is over. Intended to be overridden
+function BaseAI:ended(won, reason)
+    -- intended to be overridden by the AI class, purposed left empty here to not penalize competitors for forgetting to call the parent method
 end
 
 return BaseAI
