@@ -8,12 +8,13 @@ local EOT_CHAR = string.char(4)
 -- @class Client: talks to the server recieving game information and sending commands to execute via TCP socket. Clients perform no game logic
 local Client = class()
 
-function Client:init(game, ai, server, port, requestedSession, options)
+function Client:init(game, ai, server, port, options)
     self.game = game
     self.ai = ai
     self.server = server
     self.port = port
-    self._requestedSession = requestedSession
+    self._requestedSession = options.requestedSession
+    self._playerName = options.playerName
 
     self._printIO = options.printIO
     self._gotInitialState = false
@@ -45,12 +46,12 @@ function Client:disconnect()
     os.exit()
 end
 
-function Client:ready(playerName)
+function Client:ready()
     self:send("play", {
-        clientType = "Lua",
-        playerName = playerName or self.ai:getName() or "Lua Player",
         gameName = self.game.name,
-        gameSession = self._requestedSession,
+        requestedSession = self._requestedSession,
+        clientType = "Lua",
+        playerName = self._playerName or self.ai:getName() or "Lua Player",
     })
 
     self:run()
