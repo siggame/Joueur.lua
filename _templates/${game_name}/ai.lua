@@ -1,5 +1,6 @@
 -- ${header}
 -- This is where you build your AI for the ${game_name} game.
+<%include file="functions.noCreer" />
 local class = require("utilities.class")
 local BaseAI = require("baseAI")
 
@@ -8,7 +9,7 @@ local AI = class(BaseAI)
 
 -- this is the name you send to the server to play as.
 function AI:getName()
-    return "${game_name} Lua Player"
+    return "${game_name} Lua Player" -- REPLACE THIS WITH YOUR TEAM NAME!
 end
 
 -- this is called once the game starts and your AI knows its playerID and game. You can initialize your AI here.
@@ -28,25 +29,23 @@ function AI:ended(won, reason)
     -- pass
 end
 
---- Response Functions: functions you must fill out to send data to the game server to actually play the game! ---
+--- Game Logic Functions: functions you must fill out to send data to the game server to actually play the game! ---
+
 % for function_name, function_parms in ai['functions'].items():
-<%
-argument_string = ""
-argument_names = []
-if 'arguments' in function_parms:
-    for arg_parms in function_parms['arguments']:
-        argument_names.append(arg_parms['name'])
-    argument_string = ", ".join(argument_names)
-%>
 --- ${function_parms['description']}
 % if 'arguments' in function_parms:
 % for arg_parms in function_parms['arguments']:
 -- @param <${arg_parms['type']}> ${arg_parms['name']}: ${arg_parms['description']}
 % endfor
 % endif
--- @returns <${function_parms['return']['type']}> ${function_parms['return']['description']}
-function AI:${function_name}(${argument_string})
+% if function_parms['returns'] == None:
+-- @returns nil
+% else:
+-- @returns <${shared['lua']['type'](function_parms['returns']['type'])}> ${function_parms['returns']['description']}
+% endif
+function AI:${function_name}(${", ".join(function_parms['argument_names'])})
     -- Put your game logic here for ${function_name}
+    return ${shared['lua']['default'](function_parms['returns']['type'], function_parms['returns']['default'])}
 end
 % endfor
 

@@ -19,12 +19,14 @@ function serializer.isGameObjectReference(obj)
 end
 
 function serializer.serialize(data)
-    local serialized = {}
+    if class.isInstance(data, BaseGameObject) then
+        return {id = data.id}
+    end
+
+    local serialized = Table()
 
     for key, value in pairs(data) do
-        if class.isInstance(value, BaseGameObject) then
-            serialized[key] = {id = value.id}
-        elseif type(value) == "table" then
+        if type(value) == "table" then
             serialized[key] = serializer.serialize(value)
         else
             serialized[key] = value
@@ -32,6 +34,26 @@ function serializer.serialize(data)
     end
 
     return serialized
+end
+
+function serializer.deserialize(data, game)
+    if serializer.isGameObjectReference(data) then
+        return game:getGameObject(data.id)
+    end
+
+    local deserialized = Table()
+
+    for key, value in pairs(data) do
+        if type(value) == "table" then
+            deserialized[key] = serializer.deserialize(value, game)
+        elseif value == serializer.null then
+            deserialized[key] = nil -- yes, this means nothing because it is already nil, but you get the idea
+        else
+            deserialized[key] = value
+        end
+    end
+
+    return deserialized
 end
 
 serializer.null = "&NULL" -- used for json because turning null to nil means the key is deleted in parsed json structures

@@ -1,0 +1,50 @@
+<%
+if not 'lua' in shared:
+    shared['lua'] = {}
+
+    def lua_default(base_type, default=None):
+        if default == None:
+            if base_type == "string":
+                return '""'
+            elif base_type == "array" or base_type == "dictionary":
+                return '{}'
+            elif base_type == "int" or base_type == "float":
+                return '0'
+            elif base_type == "boolean":
+                return 'false'
+            elif base_type == 'null':
+                return "nil"
+            else:
+                return "nil"
+        else:
+            if base_type == "string":
+                return '"' + default + '"'
+            elif base_type == "boolean":
+                return str(default).lower()
+    shared['lua']['default'] = lua_default
+
+
+    def lua_type(base_type):
+        if base_type == "array" or base_type == "dictionary":
+            return "table"
+        elif base_type == "int" or base_type == "float":
+            return "number"
+        elif base_type == "null":
+            return "nil"
+        else:
+            return base_type
+    shared['lua']['type'] = lua_type
+
+
+    def lua_cast(base_type):
+        if base_type == "string":
+            return "tostring"
+        elif base_type == "int" or base_type == "float":
+            return "tonumber"
+        elif base_type == "boolean":
+            return "not not "
+        else:
+            return ""
+    shared['lua']['cast'] = lua_cast
+
+%>

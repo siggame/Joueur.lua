@@ -30,17 +30,18 @@ function BaseAI:gameUpdated()
 end
 
 ---
--- called when the server sends a request that it expects you to respond to. callback is executed via reflection, and said callback should be in the top-level AI class filled in by competitor
--- @param request {string} what we are responding to, used for reflection
+-- called when the server sends a order that it expects you to execute and finish. callback is executed via reflection, and said callback should be in the top-level AI class filled in by competitor
+-- @param order {string} what we are responding to, used for reflection
 -- @param {table} array of args to send to callback
--- @returns {table} response. what the table is depends on the request.
-function BaseAI:respondTo(request, args)
-    local callback = self[request] -- this function should be generated via Creer in the inherited AI function
+-- @returns {table} response. what the table is depends on the order.
+function BaseAI:doOrder(order, args)
+    local callback = self[order] -- this function should be generated via Creer in the inherited AI function
 
     if callback then
         return callback(self, args and unpack(args) or nil)
     else
-        print("ERROR: AI has not function '" .. request .. "'' to respond with")
+        print("ERROR: AI has not function '" .. order .. "'' to respond with")
+        os.exit()
     end
 end
 

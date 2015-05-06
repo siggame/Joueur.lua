@@ -9,6 +9,10 @@ function BaseGame:init()
     self._gameObjectClasses = {}
  end
 
+function BaseGame:setClient(client)
+    self._client = client
+end
+
 function BaseGame:setConstants(constants)
     self._serverConstants = constants
 end
@@ -31,7 +35,9 @@ end
 function BaseGame:_initGameObjects(gameObjects)
     for id, gameObject in pairs(gameObjects) do
         if not self.gameObjects[id] then
-            self.gameObjects[id] = self._gameObjectClasses[gameObject.gameObjectName]()
+            self.gameObjects[id] = self._gameObjectClasses[gameObject.gameObjectName]({
+                client = self._client,
+            })
         end
     end
 end

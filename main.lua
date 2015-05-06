@@ -20,5 +20,37 @@ args.port = tonumber(splitServer[2] or args.port)
 local game = require(args.game .. ".game")()
 local ai = require(args.game .. ".ai")(game)
 
-local client = Client(game, ai, args.server, args.port, args)
-client:ready(args.name)
+local client = Client(game, ai, args.server, args.port, args) -- TODO: game objects have client stored somewhere
+
+client:send("play", {
+    gameName = args.game,
+    requestedSession = args.session,
+    clientType = "Lua",
+    playerName = args.playerName or ai:getName() or "Lua Player",
+})
+
+local lobbyData = client:waitForEvent("lobbied")
+
+print("In Lobby for game '" .. lobbyData.gameName .. "' in session '" .. lobbyData.gameSession .. "'")
+
+game:setClient(client)
+game:setConstants(lobbyData.constants)
+
+local startData = client:waitForEvent("start")
+
+print("Game starting")
+
+ai:setPlayer(game:getGameObject(startData.playerID))
+ai:start()
+ai:gameUpdated()
+
+while true do
+    local data = client:waitForEvent("order") -- the client will decide when to os.exit
+
+    local returned = ai:doOrder(data.order, data.args)
+
+    client:send("finished", {
+        finished = data.order,
+        returned = returned,
+    })
+end

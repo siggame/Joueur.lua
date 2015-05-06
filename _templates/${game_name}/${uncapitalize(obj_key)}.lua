@@ -1,8 +1,8 @@
 -- ${header}
 -- This is a simple class to represent the ${obj_key} object in the game. You can extend it by adding utility functions here in this file.
-<% parent_classes = obj['parentClasses'] %>
+<%include file="functions.noCreer" /><%
+parent_classes = obj['parentClasses'] %>
 local class = require("utilities.class")
-local makeCommand = require("utilities.command")
 % if len(parent_classes) > 0:
 % for parent_class in parent_classes:
 local ${parent_class} = require("${game_name}.${uncapitalize(parent_class)}")
@@ -24,32 +24,11 @@ function ${obj_key}:init(...)
     ${parent_class}.init(self, ...)
 % endfor
 
-
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
 % for attr_name, attr_parms in obj['attributes'].items():
-<%
-    attr_default = attr_parms["default"] if 'default' in attr_parms else None
-    attr_type = attr_parms["type"]
-
-    if attr_default == None:
-        if attr_type == "string":
-            attr_default = '""'
-        elif attr_type == "array" or attr_type == "dictionary":
-            attr_default = '{}'
-        elif attr_type == "int" or attr_type == "float":
-            attr_default = attr_default or 0
-        elif attr_type == "boolean":
-            attr_default = 'false'
-        else:
-            attr_default = "nil"
-    else:
-        if attr_type == "string":
-            attr_default = '"' + attr_default + '"'
-        elif attr_type == "boolean":
-            attr_default = str(attr_default).lower()
-%>    -- ${attr_parms['description']}
-    self.${attr_name} = ${attr_default}
+    -- ${attr_parms['description']}
+    self.${attr_name} = ${shared['lua']['default'](attr_parms["type"], attr_parms["default"] if 'default' in attr_parms else None)}
 % endfor
 % if obj_key == "Game":
 
@@ -64,26 +43,23 @@ function ${obj_key}:init(...)
 end
 
 % for function_name, function_parms in obj['functions'].items():
-<%
-    argument_string = ""
-    argument_names = []
-    if 'arguments' in function_parms:
-        for arg_parms in function_parms['arguments']:
-            argument_names.append(arg_parms['name'])
-        argument_string = ", ".join(argument_names)
-%>
 --- ${function_parms['description']}
 % if 'arguments' in function_parms:
 % for arg_parms in function_parms['arguments']:
--- @param <${arg_parms['type']}> ${arg_parms['name']}: ${arg_parms['description']}
+-- @param <${shared['lua']['type'](arg_parms['type'])}> ${arg_parms['name']}: ${arg_parms['description']}
 % endfor
 % endif
-function ${obj_key}:${function_name}(${argument_string})
-    return makeCommand(self, "${function_name}", {
-% for argument_name in argument_names:
+% if function_parms['returns'] == None:
+-- @returns nil
+% else:
+-- @returns <${shared['lua']['type'](function_parms['returns']['type'])}> ${function_parms['returns']['description']}
+% endif
+function ${obj_key}:${function_name}(${", ".join(function_parms['argument_names'])})
+    return ${shared['lua']['cast'](function_parms['returns']['type']) if function_parms['returns'] != None else ""}(self._client:runOnServer(self, "${function_name}", {
+% for argument_name in function_parms['argument_names']:
         ${argument_name} = ${argument_name},
 % endfor
-    })
+    }))
 end
 % endfor
 

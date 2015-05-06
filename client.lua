@@ -2,6 +2,7 @@ local class = require("utilities.class")
 local serializer = require("utilities.serializer")
 local json = require("utilities.dkjson")
 local socket = require("socket")
+local inspect = require("utilities.inspect")
 local EOT_CHAR = string.char(4)
 
 ---
@@ -13,15 +14,12 @@ function Client:init(game, ai, server, port, options)
     self.ai = ai
     self.server = server
     self.port = port
-    self._requestedSession = options.requestedSession
-    self._playerName = options.playerName
 
     self._printIO = options.printIO
-    self._gotInitialState = false
-
-    self._timeoutTime = 0
-    self._bufferSize = 1024
-    self._isRunning = false
+    self._timeoutTime = 0 -- sec
+    self._receivedBufferSize = 1024
+    self._receivedBuffer = ""
+    self._eventsStack = Table()
 
     print("connecting to: " .. self.server .. ":" .. self.port)
 
@@ -32,66 +30,11 @@ function Client:init(game, ai, server, port, options)
         os.exit()
     else
         self.socket:settimeout(self._timeoutTime)
-        self:_connected()
+        print("successfully connected to server...")
     end
 end
 
-function Client:_connected()
-    print("successfully connected to server...")
-end
 
-function Client:disconnect()
-    print("disconnected from server...")
-    self.socket:close()
-    os.exit()
-end
-
-function Client:ready()
-    self:send("play", {
-        gameName = self.game.name,
-        requestedSession = self._requestedSession,
-        clientType = "Lua",
-        playerName = self._playerName or self.ai:getName() or "Lua Player",
-    })
-
-    self:run()
-end
-
-function Client:run()
-    self._isRunning = true
-
-    local buffer = ""
-    while self._isRunning do
-        local full, status, partial = self.socket:receive(self._bufferSize)
-
-        if status == "closed" then
-            self._isRunning = false
-            self:disconnect()
-        end
-
-        local sent = full or partial
-
-        if sent ~= "" and sent ~= nil then -- we got something from the server
-            if self._printIO then
-                print("FROM SERVER <--", sent)
-            end
-
-            buffer = buffer .. sent
-
-            local split = buffer:split(EOT_CHAR) --  split on "end of text" character (basically end of transmition)
-
-            buffer = split:pop() -- the last item will either be "" if the last char was an EOT_CHAR, or a partial data we need to buffer anyways
-
-            for i, jsonStr in ipairs(split) do
-                self:_sentData(json.decode(jsonStr, nil, serializer.null)) -- special null because default null -> nil, which deletes the key. We need the key to set things to nil
-            end
-        end
-    end
-end
-
-function Client:_sentData(data)
-    self["_sent" .. data.event:capitalize()](self, data.data)
-end
 
 function Client:_sendRaw(str)
     if self._printIO then
@@ -111,54 +54,106 @@ function Client:send(event, data)
     )
 end
 
-
-
--- Socket sent data functions --
-
-function Client:_sentLobbied(data)
-    self.game:setConstants(data.constants)
-
-    print("Connection successful to game '" .. data.gameName .. "' in session '" .. data.gameSession .. "'")
+function Client:disconnect(errorType)
+    print("disconnecting from server...")
+    self.socket:close()
+    os.exit(errorType and 1 or 0)
 end
 
-function Client:_sentStart(data)
-    self._playerID = data.playerID
+
+
+function Client:runOnServer(caller, functionName, args)
+    self:send("run", {
+        caller = caller,
+        functionName = functionName,
+        args = args,
+    })
+
+    local ranData = self:waitForEvent("ran")
+    return serializer.deserialize(ranData, self.game)
 end
 
-function Client:_sentRequest(data)
-    local response = self.ai:respondTo(data.request, data.args)
+function Client:waitForEvent(event)
+    while true do
+        self:waitForEvents() -- blocks
 
-    if response == nil then
-        print("no response returned to '" .. data.request .. "', erroring out.")
-        self:disconnect()
-    else
-        self:send("response", {
-            response = data.request,
-            data = response,
-        })
+        -- we should now have some events to handle
+        while #self._eventsStack > 0 do
+            local sent = self._eventsStack:pop()
+            if sent.event == event then
+                return sent.data
+            else
+                self:_autoHandle(sent.event, sent.data)
+            end
+        end
     end
 end
 
-function Client:_sentDelta(delta)
+function Client:waitForEvents()
+    if #self._eventsStack > 0 then
+        return
+    end
+
+    self.socket:settimeout(0)
+    while true do -- block until we recieve something. using normal socket:settimeout won't allow for keyboard interupts on some systems
+        local full, status, partial = self.socket:receive(self._bufferSize) -- should block for timeout
+
+        if status == "closed" then
+            self:disconnect("closed")
+        end
+
+        local sent = full or partial
+
+        if sent ~= "" and sent ~= nil then -- we got something from the server
+            if self._printIO then
+                print("FROM SERVER <--", sent)
+            end
+
+            local total = self._receivedBuffer .. sent
+            local split = total:split(EOT_CHAR) --  split on "end of text" character (basically end of transmition)
+
+            self._receivedBuffer = split:pop() -- the last item will either be "" if the last char was an EOT_CHAR, or a partial data we need to buffer anyways
+
+            for i, jsonStr in ipairs(split:reverse()) do -- reveres so the first item we recieved is last in the events STACK
+                local sent = json.decode(jsonStr, nil, serializer.null)
+                self._eventsStack:insert(sent)
+            end
+
+            if #self._eventsStack > 0 then
+                return
+            end
+        end
+    end
+end
+
+
+
+function Client:_autoHandle(event, data)
+    local callback = self["_autoHandle" .. event:capitalize()]
+
+    if callback then
+        return callback(self, data)
+    else
+        print("Error: cannot auto handle event", event)
+        self:disconnect("unhandled")
+    end
+end
+
+function Client:_autoHandleDelta(delta)
     self.game:applyDeltaState(delta)
 
-    if not self._gotInitialState then
-        self._gotInitialState = true
-
-        self.ai:setPlayer(self.game:getGameObject(self._playerID))
-        self.ai:start()
+    if self.ai.player then -- the AI is ready for updates
+        self.ai:gameUpdated()
     end
-
-    self.ai:gameUpdated()
 end
 
-function Client:_sentInvalid(data)
+function Client:_autoHandleInvalid(data)
     self.ai:invalid(data)
-    print("sent invalid command data", data, "erroring out")
-    self:disconnect()
+    print("sent invalid command data", inspect(data), "erroring out")
+    self:disconnect("invalid")
 end
 
-function Client:_sentOver()
+function Client:_autoHandleOver()
     local won = self.ai.player.won
     local reason = won and self.ai.player.reasonWon or self.ai.player.reasonLost
 
