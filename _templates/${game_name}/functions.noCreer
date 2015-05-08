@@ -42,7 +42,7 @@ if not 'lua' in shared:
         elif base_type == "int" or base_type == "float":
             return "tonumber"
         elif base_type == "boolean":
-            return "not not "
+            return "not not " # lol
         else:
             return ""
     shared['lua']['cast'] = lua_cast

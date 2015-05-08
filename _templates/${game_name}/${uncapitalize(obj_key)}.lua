@@ -15,6 +15,8 @@ else:
 %>local ${parent_classes[0]} = require("${uncapitalize(parent_classes[0])}")
 % endif
 
+${merge("-- ", "requires", "-- you can add addtional require(s) here")}
+
 --- @class ${obj_key}: ${obj['description']}
 local ${obj_key} = class(${", ".join(parent_classes)})
 
@@ -46,12 +48,10 @@ end
 --- ${function_parms['description']}
 % if 'arguments' in function_parms:
 % for arg_parms in function_parms['arguments']:
--- @param <${shared['lua']['type'](arg_parms['type'])}> ${arg_parms['name']}: ${arg_parms['description']}
+-- @param {${shared['lua']['type'](arg_parms['type'])}} ${arg_parms['name']}: ${arg_parms['description']}
 % endfor
 % endif
-% if function_parms['returns'] == None:
--- @returns nil
-% else:
+% if function_parms['returns'] != None:
 -- @returns <${shared['lua']['type'](function_parms['returns']['type'])}> ${function_parms['returns']['description']}
 % endif
 function ${obj_key}:${function_name}(${", ".join(function_parms['argument_names'])})
@@ -62,5 +62,7 @@ function ${obj_key}:${function_name}(${", ".join(function_parms['argument_names'
     }))
 end
 % endfor
+
+${merge("-- ", "functions", "-- if you want to add any client side logic (such as checking functions) this is where you can add them")}
 
 return ${obj_key}
