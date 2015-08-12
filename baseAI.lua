@@ -34,7 +34,7 @@ end
 -- @param order {string} what we are responding to, used for reflection
 -- @param {table} array of args to send to callback
 -- @returns {table} response. what the table is depends on the order.
-function BaseAI:doOrder(order, args)
+function BaseAI:_doOrder(order, args)
     local callback = self[order] -- this function should be generated via Creer in the inherited AI function
 
     if callback then

@@ -16,9 +16,10 @@ function Client:init()
     self._eventsStack = Table()
 end
 
-function Client:setup(game, ai, server, port, options)
+function Client:setup(game, ai, gameManager, server, port, options)
     self.game = game
     self.ai = ai
+    self.gameManager = gameManager
     self.server = server
     self.port = port
     self._printIO = options.printIO
@@ -143,7 +144,7 @@ function Client:_autoHandle(event, data)
 end
 
 function Client:_autoHandleDelta(delta)
-    self.game:applyDeltaState(delta)
+    self.gameManager:applyDeltaState(delta)
 
     if self.ai.player then -- the AI is ready for updates
         self.ai:gameUpdated()
