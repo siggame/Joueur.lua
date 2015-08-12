@@ -1,8 +1,7 @@
 local class = require("utilities.class")
-local DeltaMergeable = require("deltaMergeable")
 
 -- @class BaseGameObject: the base class that every game object within a game inherit from for Python manipulation that would be redundant via Creer
-local BaseGameObject = class(deltaMergeable)
+local BaseGameObject = class()
 
 function BaseGameObject:init()
     -- pass

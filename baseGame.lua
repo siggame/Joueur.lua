@@ -1,10 +1,9 @@
 local serializer = require("utilities.serializer")
 local class = require("utilities.class")
 local BaseGameObject = require("baseGameObject")
-local DeltaMergeable = require("deltaMergeable")
 
 -- @class BaseGame: the basics of any game, basically state management. Competitiors do not modify
-local BaseGame = class(deltaMergeable)
+local BaseGame = class()
 
 function BaseGame:init()
     self._gameObjectClasses = {}
