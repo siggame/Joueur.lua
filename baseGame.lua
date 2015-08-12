@@ -9,12 +9,10 @@ function BaseGame:init()
     self._gameObjectClasses = {}
  end
 
-function BaseGame:setClient(client)
-    self._client = client
-end
-
 function BaseGame:setConstants(constants)
     self._serverConstants = constants
+    self.DELTA_LIST_LENGTH = self._serverConstants.DELTA_ARRAY_LENGTH
+    self.DELTA_REMOVED = self._serverConstants.DELTA_REMOVED
 end
 
 -- @returns BaseGameObject with the given id
@@ -35,19 +33,17 @@ end
 function BaseGame:_initGameObjects(gameObjects)
     for id, gameObject in pairs(gameObjects) do
         if not self.gameObjects[id] then
-            self.gameObjects[id] = self._gameObjectClasses[gameObject.gameObjectName]({
-                client = self._client,
-            })
+            self.gameObjects[id] = self._gameObjectClasses[gameObject.gameObjectName]()
         end
     end
 end
 
 --- recursively merges delta changes to the game.
 function BaseGame:_mergeDelta(state, delta)
-    local deltaLength = delta[self._serverConstants.DELTA_ARRAY_LENGTH]
+    local deltaLength = delta[self.DELTA_LIST_LENGTH]
 
-    if deltaLength then -- this part in the state is an array
-        delta[self._serverConstants.DELTA_ARRAY_LENGTH] = nil -- we don't want to copy self key/value over to the state, it was just to signify it is an array
+    if deltaLength then -- this part in the state is a list
+        delta[self.DELTA_LIST_LENGTH] = nil -- we don't want to copy self key/value over to the state, it was just to signify it is an array
         while #state > deltaLength do -- pop elements off the array until the array is short enough. an increase in array size will be added below as arrays resize when keys larger are set
             table.pop(state)
         end
@@ -62,7 +58,7 @@ function BaseGame:_mergeDelta(state, delta)
     end
 
     for key, d in pairs(delta) do
-        if d == self._serverConstants.DELTA_REMOVED then
+        if d == self.DELTA_REMOVED then
             state[key] = nil
         elseif serializer.isGameObjectReference(d) then
             state[key] = self:getGameObject(d.id)

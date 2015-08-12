@@ -2,11 +2,12 @@
 if not 'lua' in shared:
     shared['lua'] = {}
 
-    def lua_default(base_type, default=None):
+    def lua_default(type_obj, default=None):
+        base_type = type_obj['name']
         if default == None:
             if base_type == "string":
                 return '""'
-            elif base_type == "array" or base_type == "dictionary":
+            elif base_type == "list" or base_type == "dictionary":
                 return '{}'
             elif base_type == "int" or base_type == "float":
                 return '0'
@@ -24,8 +25,9 @@ if not 'lua' in shared:
     shared['lua']['default'] = lua_default
 
 
-    def lua_type(base_type):
-        if base_type == "array" or base_type == "dictionary":
+    def lua_type(type_obj):
+        base_type = type_obj['name']
+        if base_type == "list" or base_type == "dictionary":
             return "table"
         elif base_type == "int" or base_type == "float":
             return "number"
@@ -36,7 +38,8 @@ if not 'lua' in shared:
     shared['lua']['type'] = lua_type
 
 
-    def lua_cast(base_type):
+    def lua_cast(type_obj):
+        base_type = type_obj['name']
         if base_type == "string":
             return "tostring"
         elif base_type == "int" or base_type == "float":

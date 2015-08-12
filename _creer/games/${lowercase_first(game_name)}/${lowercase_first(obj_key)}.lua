@@ -5,14 +5,14 @@ parent_classes = obj['parentClasses'] %>
 local class = require("utilities.class")
 % if len(parent_classes) > 0:
 % for parent_class in parent_classes:
-local ${parent_class} = require("${game_name}.${uncapitalize(parent_class)}")
+local ${parent_class} = require("games.${lowercase_first(game_name)}.${lowercase_first(parent_class)}")
 % endfor
 % else:
 <% if obj_key == "Game":
     parent_classes = [ 'BaseGame' ]
 else:
     parent_classes = [ 'BaseGameObject' ]
-%>local ${parent_classes[0]} = require("${uncapitalize(parent_classes[0])}")
+%>local ${parent_classes[0]} = require("${lowercase_first(parent_classes[0])}")
 % endif
 
 ${merge("-- ", "requires", "-- you can add addtional require(s) here")}
@@ -28,8 +28,9 @@ function ${obj_key}:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-% for attr_name, attr_parms in obj['attributes'].items():
-    -- ${attr_parms['description']}
+% for attr_name in obj['attribute_names']:
+<% attr_parms = obj['attributes'][attr_name]
+%>    -- ${attr_parms['description']}
     self.${attr_name} = ${shared['lua']['default'](attr_parms["type"], attr_parms["default"] if 'default' in attr_parms else None)}
 % endfor
 % if obj_key == "Game":
@@ -38,14 +39,15 @@ function ${obj_key}:init(...)
 
     self._gameObjectClasses = {
 % for game_obj_key, game_obj in game_objs.items():
-        ${game_obj_key} = require("${game_name}.${uncapitalize(game_obj_key)}"),
+        ${game_obj_key} = require("games.${lowercase_first(game_name)}.${lowercase_first(game_obj_key)}"),
 % endfor
     }
 % endif
 end
 
-% for function_name, function_parms in obj['functions'].items():
---- ${function_parms['description']}
+% for function_name in obj['function_names']:
+<% function_parms = obj['functions'][function_name]
+%>--- ${function_parms['description']}
 % if 'arguments' in function_parms:
 % for arg_parms in function_parms['arguments']:
 -- @param {${shared['lua']['type'](arg_parms['type'])}} ${arg_parms['name']}: ${arg_parms['description']}
@@ -55,7 +57,7 @@ end
 -- @returns <${shared['lua']['type'](function_parms['returns']['type'])}> ${function_parms['returns']['description']}
 % endif
 function ${obj_key}:${function_name}(${", ".join(function_parms['argument_names'])})
-    return ${shared['lua']['cast'](function_parms['returns']['type']) if function_parms['returns'] != None else ""}(self._client:runOnServer(self, "${function_name}", {
+    return ${shared['lua']['cast'](function_parms['returns']['type']) if function_parms['returns'] != None else ""}(self:_runOnServer(self, "${function_name}", {
 % for argument_name in function_parms['argument_names']:
         ${argument_name} = ${argument_name},
 % endfor
@@ -63,6 +65,6 @@ function ${obj_key}:${function_name}(${", ".join(function_parms['argument_names'
 end
 % endfor
 
-${merge("-- ", "functions", "-- if you want to add any client side logic (such as checking functions) this is where you can add them")}
+${merge("-- ", "functions", "-- if you want to add any client side logic (such as state checking functions) this is where you can add them")}
 
 return ${obj_key}

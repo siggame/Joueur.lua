@@ -33,8 +33,9 @@ end
 
 --- Game Logic Functions: functions you must fill out to send data to the game server to actually play the game! ---
 
-% for function_name, function_parms in ai['functions'].items():
---- ${function_parms['description']}
+% for function_name in ai['function_names']:
+<% function_parms = ai['functions'][function_name]
+%>--- ${function_parms['description']}
 % if 'arguments' in function_parms:
 % for arg_parms in function_parms['arguments']:
 -- @param {${arg_parms['type']}} ${arg_parms['name']}: ${arg_parms['description']}

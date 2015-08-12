@@ -6,20 +6,22 @@ local inspect = require("utilities.inspect")
 local EOT_CHAR = string.char(4)
 
 ---
--- @class Client: talks to the server recieving game information and sending commands to execute via TCP socket. Clients perform no game logic
+-- @class Client: singleton that talks to the server recieving game information and sending commands to execute via TCP socket. Clients perform no game logic
 local Client = class()
 
-function Client:init(game, ai, server, port, options)
-    self.game = game
-    self.ai = ai
-    self.server = server
-    self.port = port
-
-    self._printIO = options.printIO
+function Client:init()
     self._timeoutTime = 0 -- sec
     self._receivedBufferSize = 1024
     self._receivedBuffer = ""
     self._eventsStack = Table()
+end
+
+function Client:setup(game, ai, server, port, options)
+    self.game = game
+    self.ai = ai
+    self.server = server
+    self.port = port
+    self._printIO = options.printIO
 
     print("connecting to: " .. self.server .. ":" .. self.port)
 
@@ -70,12 +72,13 @@ function Client:runOnServer(caller, functionName, args)
     })
 
     local ranData = self:waitForEvent("ran")
+
     return serializer.deserialize(ranData, self.game)
 end
 
 function Client:waitForEvent(event)
     while true do
-        self:waitForEvents() -- blocks
+        self:waitForEvents() -- blocks till there is at least one event to handle
 
         -- we should now have some events to handle
         while #self._eventsStack > 0 do
@@ -91,7 +94,7 @@ end
 
 function Client:waitForEvents()
     if #self._eventsStack > 0 then
-        return
+        return -- as we already have events to handle, no need to wait for more
     end
 
     self.socket:settimeout(0)
@@ -163,4 +166,4 @@ function Client:_autoHandleOver()
     self:disconnect()
 end
 
-return Client
+return Client() -- and instnace, not the class. Client is a singleton object wrapped up in a class
