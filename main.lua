@@ -3,6 +3,7 @@ require("utilities.string") -- extends the base string metatable
 local client = require("client")
 local argparse = require("utilities.argparse")
 local GameManager = require("gameManager")
+local safeCall = require("safeCall")
 
 local parser = argparse():description("Runs the Cadre Lua client to connect to a game server and play games with its AI.")
 parser:argument("game"):description("the name of the game you want to play on the server")
@@ -18,9 +19,13 @@ local splitServer = args.server:split(":")
 args.server = splitServer[1]
 args.port = tonumber(splitServer[2] or args.port)
 
-local game = require("games." .. args.game .. ".game")()
-local ai = require("games." .. args.game .. ".ai")(game)
-local gameManager = GameManager(game)
+local game, ai, gameManager = nil, nil, nil
+
+safeCall(function()
+    game = require("games." .. args.game .. ".game")()
+    ai = require("games." .. args.game .. ".ai")(game)
+    gameManager = GameManager(game)
+end, "GAME_NOT_FOUND", "Could not find game files for '" .. args.game .. "'")
 
 client:setup(game, ai, gameManager, args.server, args.port, args)
 
@@ -42,13 +47,18 @@ local startData = client:waitForEvent("start")
 print("Game starting")
 
 ai:setPlayer(game:getGameObject(startData.playerID))
-ai:start()
-ai:gameUpdated()
+safeCall(function()
+    ai:start()
+    ai:gameUpdated()
+end, "AI_ERRORED", "AI errored when game starting")
 
 while true do -- the client will decide when to os.exit
     local data = client:waitForEvent("order")
 
-    local returned = ai:_doOrder(data.order, data.args)
+    local returned = nil
+    safeCall(function()
+        returned = ai:_doOrder(data.order, data.args)
+    end, "AI_ERRORED", "Ai errored when runing order '" .. data.order .. "'")
 
     client:send("finished", {
         finished = data.order,

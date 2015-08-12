@@ -2,7 +2,8 @@ local class = require("utilities.class")
 local serializer = require("utilities.serializer")
 local json = require("utilities.dkjson")
 local socket = require("socket")
-local inspect = require("utilities.inspect")
+local safeCall = require("safeCall")
+local handleError = require("handleError")
 local EOT_CHAR = string.char(4)
 
 ---
@@ -29,10 +30,10 @@ function Client:setup(game, ai, gameManager, server, port, options)
     self.socket, message = socket.connect(self.server, self.port)
 
     if self.socket == nil then
-        print("ERROR CONNECTING:", message)
-        os.exit()
+        handleError("COULD_NOT_CONNECT", "Could not connect to " .. self.server .. ":" .. self.port .. ".", message)
     else
         self.socket:settimeout(self._timeoutTime)
+        handleError.socket = self.socket
         print("successfully connected to server...")
     end
 end
@@ -56,14 +57,6 @@ function Client:send(event, data)
         .. EOT_CHAR
     )
 end
-
-function Client:disconnect(errorType)
-    print("disconnecting from server...")
-    self.socket:close()
-    os.exit(errorType and 1 or 0)
-end
-
-
 
 function Client:runOnServer(caller, functionName, args)
     self:send("run", {
@@ -103,7 +96,7 @@ function Client:waitForEvents()
         local full, status, partial = self.socket:receive(self._bufferSize) -- should block for timeout
 
         if status == "closed" then
-            self:disconnect("closed")
+            handleError("CANNOT_READ_SOCKET", "Socket closed.")
         end
 
         local sent = full or partial
@@ -119,7 +112,12 @@ function Client:waitForEvents()
             self._receivedBuffer = split:pop() -- the last item will either be "" if the last char was an EOT_CHAR, or a partial data we need to buffer anyways
 
             for i, jsonStr in ipairs(split:reverse()) do -- reveres so the first item we recieved is last in the events STACK
-                local sent = json.decode(jsonStr, nil, serializer.null)
+                local sent = nil
+
+                safeCall(function()
+                    sent = json.decode(jsonStr, nil, serializer.null)
+                end, "MALFORMED_JSON", "Error parsing json: '" .. jsonStr .. "'")
+
                 self._eventsStack:insert(sent)
             end
 
@@ -138,23 +136,28 @@ function Client:_autoHandle(event, data)
     if callback then
         return callback(self, data)
     else
-        print("Error: cannot auto handle event", event)
-        self:disconnect("unhandled")
+        handleError("UNKNOWN_EVENT_FROM_SERVER", "Cannot auto handle event '" + event + "'")
     end
 end
 
 function Client:_autoHandleDelta(delta)
-    self.gameManager:applyDeltaState(delta)
+    safeCall(function()
+        self.gameManager:applyDeltaState(delta)
+    end, "DELTA_MERGE_FAILURE", "Error applying delta state.")
 
     if self.ai.player then -- the AI is ready for updates
-        self.ai:gameUpdated()
+        safeCall(function()
+            self.ai:gameUpdated()
+        end, "AI_ERRORED", "AI errored in gameUpdate() after delta.")
     end
 end
 
 function Client:_autoHandleInvalid(data)
-    self.ai:invalid(data)
-    print("sent invalid command data", inspect(data), "erroring out")
-    self:disconnect("invalid")
+    pcall(function() -- pcall instead of safeCall because this is an error handling function anyways
+        self.ai:invalid(data)
+    end)
+    
+    handleError("INVALID_EVENT", nil, "Got invalid event from server with data: " + inspect(data))
 end
 
 function Client:_autoHandleOver()
@@ -163,8 +166,11 @@ function Client:_autoHandleOver()
 
     print("Game is over.", won and "I Won!" or "I Lost :(", "because: " .. reason)
 
-    self.ai:ended(won, reason)
-    self:disconnect()
+    safeCall(function()
+        self.ai:ended(won, reason)
+    end, "AI_ERRORED", "AI errored in ai:ended(won, reason)")
+    self.socket:close()
+    os.exit(0)
 end
 
-return Client() -- and instnace, not the class. Client is a singleton object wrapped up in a class
+return Client() -- creates a new instance, not the class constructor. Client is a singleton object wrapped up in a class
