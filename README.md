@@ -31,4 +31,4 @@ That's it. Make sure there is a server at `-h`. It defaults to localhost if not 
 
 ## Other notes
 
-This is a polished proof-of-concept part of the Cadre framework. There are plently of bugs and issues present. The purpose at this time is not to be perfect, but to show that this framework is robust and meets all the needs of MST's ACM SIG-GAME.
+All game object's attributes are publicly exposed as normal keys in a table. We don't use any metamethod __index trickery at the moment. So do not set these attributes, or you could get merge errors.
