@@ -70,6 +70,10 @@ function Client:runOnServer(caller, functionName, args)
     return serializer.deserialize(ranData, self.game)
 end
 
+function Client:play()
+    self:waitForEvent(false)
+end
+
 function Client:waitForEvent(event)
     while true do
         self:waitForEvents() -- blocks till there is at least one event to handle
@@ -171,6 +175,18 @@ function Client:_autoHandleOver()
     end, "AI_ERRORED", "AI errored in ai:ended(won, reason)")
     self.socket:close()
     os.exit(0)
+end
+
+function Client:_autoHandleOrder(data)
+    local returned = nil
+    safeCall(function()
+        returned = self.ai:_doOrder(data.order, data.args)
+    end, "AI_ERRORED", "AI errored when running order '" .. data.order .. "'")
+
+    self:send("finished", {
+        finished = data.order,
+        returned = returned,
+    })
 end
 
 return Client() -- creates a new instance, not the class constructor. Client is a singleton object wrapped up in a class

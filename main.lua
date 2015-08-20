@@ -50,18 +50,6 @@ ai:setPlayer(game:getGameObject(startData.playerID))
 safeCall(function()
     ai:start()
     ai:gameUpdated()
-end, "AI_ERRORED", "AI errored when game starting")
+end, "AI_ERRORED", "AI errored when game starting.")
 
-while true do -- the client will decide when to os.exit
-    local data = client:waitForEvent("order")
-
-    local returned = nil
-    safeCall(function()
-        returned = ai:_doOrder(data.order, data.args)
-    end, "AI_ERRORED", "Ai errored when runing order '" .. data.order .. "'")
-
-    client:send("finished", {
-        finished = data.order,
-        returned = returned,
-    })
-end
+client:play()
