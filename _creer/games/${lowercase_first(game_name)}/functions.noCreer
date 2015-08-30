@@ -18,12 +18,20 @@ if not 'lua' in shared:
             else:
                 return "nil"
         else:
-            if base_type == "string":
-                return '"' + default + '"'
-            elif base_type == "boolean":
-                return str(default).lower()
+            return lua_value(type_obj, default)
     shared['lua']['default'] = lua_default
 
+    def lua_value(type_obj, default):
+        base_type = type_obj['name']
+        if base_type == "string":
+            return '"' + default + '"'
+        elif base_type == "boolean":
+            return str(default).lower()
+        elif base_type == "int" or base_type == "float":
+            return str(default)
+        else:
+            return "nil"
+    shared['lua']['value'] = lua_value
 
     def lua_type(type_obj):
         base_type = type_obj['name']

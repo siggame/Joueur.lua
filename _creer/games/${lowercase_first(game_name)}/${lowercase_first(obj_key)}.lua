@@ -57,6 +57,16 @@ end
 -- @returns <${shared['lua']['type'](function_parms['returns']['type'])}> ${function_parms['returns']['description']}
 % endif
 function ${obj_key}:${function_name}(${", ".join(function_parms['argument_names'])})
+% if 'arguments' in function_parms:
+% for arg_parms in function_parms['arguments']:
+% if arg_parms['optional']:
+    if ${arg_parms['name']} == nil then
+        ${arg_parms['name']} = ${shared['lua']['value'](arg_parms['type'], arg_parms['default'])}
+    end
+
+% endif
+% endfor
+% endif
     return ${shared['lua']['cast'](function_parms['returns']['type']) if function_parms['returns'] != None else ""}(self:_runOnServer("${function_name}", {
 % for argument_name in function_parms['argument_names']:
         ${argument_name} = ${argument_name},
