@@ -161,7 +161,7 @@ function Client:_autoHandleInvalid(data)
         self.ai:invalid(data)
     end)
     
-    handleError("INVALID_EVENT", nil, "Got invalid event from server with data: " + inspect(data))
+    handleError("INVALID_EVENT", nil, "Got invalid event from server.")
 end
 
 function Client:_autoHandleOver()

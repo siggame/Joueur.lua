@@ -17,7 +17,7 @@ local errorCodes = {
 }
 
 function handleErrorMetatable:__call(codeName, message, err)
-    print("Error:", codeName)
+    print("---\nError:", codeName, "\n")
 
     if message then
         print(message .. "\n---")
