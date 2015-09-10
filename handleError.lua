@@ -13,6 +13,7 @@ local errorCodes = {
     INVALID_EVENT = 28,
     GAME_NOT_FOUND = 29,
     MALFORMED_JSON = 30,
+    UNAUTHENTICATED = 31,
     AI_ERRORED = 42,
 }
 

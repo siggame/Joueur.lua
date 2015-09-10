@@ -164,6 +164,10 @@ function Client:_autoHandleInvalid(data)
     handleError("INVALID_EVENT", nil, "Got invalid event from server.")
 end
 
+function Client:_autoHandleUnauthenticated(data)
+    handleError("UNAUTHENTICATED", nil, "Could not log into server.")
+end
+
 function Client:_autoHandleOver()
     local won = self.ai.player.won
     local reason = won and self.ai.player.reasonWon or self.ai.player.reasonLost
