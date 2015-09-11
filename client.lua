@@ -184,11 +184,11 @@ end
 function Client:_autoHandleOrder(data)
     local returned = nil
     safeCall(function()
-        returned = self.ai:_doOrder(data.order, data.args)
-    end, "AI_ERRORED", "AI errored when running order '" .. data.order .. "'")
+        returned = self.ai:_doOrder(data.name, data.args)
+    end, "AI_ERRORED", "AI errored when running order '" .. data.name .. "'")
 
     self:send("finished", {
-        finished = data.order,
+        orderIndex = data.index,
         returned = returned,
     })
 end
