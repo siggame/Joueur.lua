@@ -10,7 +10,7 @@ end
 
 function GameManager:setConstants(constants)
     self._serverConstants = constants
-    self.DELTA_LIST_LENGTH = self._serverConstants.DELTA_ARRAY_LENGTH
+    self.DELTA_LIST_LENGTH = self._serverConstants.DELTA_LIST_LENGTH
     self.DELTA_REMOVED = self._serverConstants.DELTA_REMOVED
 end
 
