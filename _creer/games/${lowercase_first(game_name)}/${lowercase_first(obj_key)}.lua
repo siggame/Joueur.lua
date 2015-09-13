@@ -2,7 +2,7 @@
 -- This is a simple class to represent the ${obj_key} object in the game. You can extend it by adding utility functions here in this file.
 <%include file="functions.noCreer" /><%
 parent_classes = obj['parentClasses'] %>
-local class = require("utilities.class")
+local class = require("joueur.utilities.class")
 % if len(parent_classes) > 0:
 % for parent_class in parent_classes:
 local ${parent_class} = require("games.${lowercase_first(game_name)}.${lowercase_first(parent_class)}")
@@ -12,7 +12,7 @@ local ${parent_class} = require("games.${lowercase_first(game_name)}.${lowercase
     parent_classes = [ 'BaseGame' ]
 else:
     parent_classes = [ 'BaseGameObject' ]
-%>local ${parent_classes[0]} = require("${lowercase_first(parent_classes[0])}")
+%>local ${parent_classes[0]} = require("joueur.${lowercase_first(parent_classes[0])}")
 % endif
 
 ${merge("-- ", "requires", "-- you can add addtional require(s) here")}

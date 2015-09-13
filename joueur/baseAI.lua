@@ -1,4 +1,4 @@
-local class = require("utilities.class")
+local class = require("joueur.utilities.class")
 
 ---
 -- @class BaseAI: the base functions all AIs should do

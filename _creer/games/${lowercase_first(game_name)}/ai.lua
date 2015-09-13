@@ -1,8 +1,8 @@
 -- ${header}
 -- This is where you build your AI for the ${game_name} game.
 <%include file="functions.noCreer" />
-local class = require("utilities.class")
-local BaseAI = require("baseAI")
+local class = require("joueur.utilities.class")
+local BaseAI = require("joueur.baseAI")
 
 ${merge("-- ", "requires", "-- you can add addtional require(s) here")}
 

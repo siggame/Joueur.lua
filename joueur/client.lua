@@ -1,9 +1,9 @@
-local class = require("utilities.class")
-local serializer = require("utilities.serializer")
-local json = require("utilities.dkjson")
+local class = require("joueur.utilities.class")
+local serializer = require("joueur.serializer")
+local json = require("joueur.utilities.dkjson")
 local socket = require("socket")
-local safeCall = require("safeCall")
-local handleError = require("handleError")
+local safeCall = require("joueur.safeCall")
+local handleError = require("joueur.handleError")
 local EOT_CHAR = string.char(4)
 
 ---

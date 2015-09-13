@@ -1,5 +1,5 @@
-local serializer = require("utilities.serializer")
-local class = require("utilities.class")
+local serializer = require("joueur.serializer")
+local class = require("joueur.utilities.class")
 
 -- @class GameManager: manages the games state and does delta merges. Competitiors do not modify
 local GameManager = class(deltaMergeable)
@@ -10,8 +10,8 @@ end
 
 function GameManager:setConstants(constants)
     self._serverConstants = constants
-    self.DELTA_LIST_LENGTH = self._serverConstants.DELTA_LIST_LENGTH
-    self.DELTA_REMOVED = self._serverConstants.DELTA_REMOVED
+    self._DELTA_LIST_LENGTH = self._serverConstants.DELTA_LIST_LENGTH
+    self._DELTA_REMOVED = self._serverConstants.DELTA_REMOVED
 end
 
 --- applies a delta state (change in state information) to self game
@@ -34,10 +34,10 @@ end
 
 --- recursively merges delta changes to the game.
 function GameManager:_mergeDelta(state, delta)
-    local deltaLength = delta[self.DELTA_LIST_LENGTH]
+    local deltaLength = delta[self._DELTA_LIST_LENGTH]
 
     if deltaLength then -- this part in the state is a list
-        delta[self.DELTA_LIST_LENGTH] = nil -- we don't want to copy self key/value over to the state, it was just to signify it is an array
+        delta[self._DELTA_LIST_LENGTH] = nil -- we don't want to copy self key/value over to the state, it was just to signify it is an array
         while #state > deltaLength do -- pop elements off the array until the array is short enough. an increase in array size will be added below as arrays resize when keys larger are set
             table.pop(state)
         end
@@ -52,7 +52,7 @@ function GameManager:_mergeDelta(state, delta)
     end
 
     for key, d in pairs(delta) do
-        if d == self.DELTA_REMOVED then
+        if d == self._DELTA_REMOVED then
             state[key] = nil
         elseif serializer.isGameObjectReference(d) then
             state[key] = self.game:getGameObject(d.id)

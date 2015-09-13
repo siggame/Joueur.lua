@@ -1,6 +1,6 @@
 -- Serializer: functions to serialize and unserialize json communications strings
-local class = require("utilities.class")
-local BaseGameObject = require("baseGameObject")
+local class = require("joueur.utilities.class")
+local BaseGameObject = require("joueur.baseGameObject")
 
 local serializer = {}
 
