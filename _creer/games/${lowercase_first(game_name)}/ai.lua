@@ -48,8 +48,8 @@ function AI:${function_name}(${", ".join(function_parms['argument_names'])})
 ${merge("    -- ", function_name,
 """    -- Put your game logic here for {0}
     return {1}
-""".format(function_name, shared['lua']['default'](function_parms['returns']['type'], function_parms['returns']['default'])))
-}
+""".format(function_name, shared['lua']['default'](function_parms['returns']['type'], function_parms['returns']['default']) if function_parms['returns'] else "nil")
+)}
 end
 % endfor
 
