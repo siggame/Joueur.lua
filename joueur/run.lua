@@ -23,6 +23,7 @@ return function(args)
         clientType = "Lua",
         playerName = args.playerName or ai:getName() or "Lua Player",
         password = args.password,
+        gameSettings = args.gameSettings,
     })
 
     local lobbyData = client:waitForEvent("lobbied")

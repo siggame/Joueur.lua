@@ -10,6 +10,7 @@ parser:option("-p", "--port"):description("port to connect to host server throug
 parser:option("-n", "--name"):description("the name you want to use as your AI's player name")
 parser:option("-w", "--password"):description("the password required for authentication on official servers")
 parser:option("-r", "--session"):description("the requested game session you want to play in on the server"):default("*")
+parser:option("--gameSettings"):description("Any settings for the game server to force. Must be url parms formatted (key=value&otherKey=otherValue)")
 parser:flag("--printIO"):description("(debugging) print IO through the TCP socket to the terminal")
 
 run(parser:parse())
