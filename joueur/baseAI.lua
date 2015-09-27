@@ -47,9 +47,10 @@ end
 
 ---
 -- called when we (the client) send some invalid response to the server. It should be echoed back here
--- @param data {table} the invalid data we sent, echoed back here
-function BaseAI:invalid(data)
-    print("AI was told this is invalid", data)
+-- @param message {string} the reason why we are getting an invalid event
+-- @param [data] {table} optional data about why it is invalid
+function BaseAI:invalid(message, data)
+    print("AI was told this is invalid", message, data)
 end
 
 

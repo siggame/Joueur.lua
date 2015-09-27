@@ -157,15 +157,13 @@ function Client:_autoHandleDelta(delta)
 end
 
 function Client:_autoHandleInvalid(data)
-    pcall(function() -- pcall instead of safeCall because this is an error handling function anyways
-        self.ai:invalid(data)
-    end)
-    
-    handleError("INVALID_EVENT", nil, "Got invalid event from server.")
+    safeCall(function()
+        self.ai:invalid(data.message, data.data)
+    end, "AI_ERRORED", "AI errored in invalid().")
 end
 
-function Client:_autoHandleUnauthenticated(data)
-    handleError("UNAUTHENTICATED", nil, "Could not log into server.")
+function Client:_autoHandleFatal(data)
+    handleError("FATAL_EVENT", nil, "A fatal error occured '" .. data.message .. "'.")
 end
 
 function Client:_autoHandleOver()

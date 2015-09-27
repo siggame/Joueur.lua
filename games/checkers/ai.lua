@@ -61,7 +61,7 @@ function AI:runTurn()
         checker, x, y = self:findCheckerToMove()
 
         if checker then
-            checker:move(x, y)
+            checker = checker:move(x, y)
         end
     end
 

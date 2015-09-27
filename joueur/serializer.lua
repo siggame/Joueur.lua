@@ -37,6 +37,10 @@ function serializer.serialize(data)
 end
 
 function serializer.deserialize(data, game)
+    if type(data) ~= "table" then
+        return data
+    end
+
     if serializer.isGameObjectReference(data) then
         return game:getGameObject(data.id)
     end
