@@ -23,7 +23,13 @@ All inspiration taken from [MST's SIG-GAME framework](https://github.com/siggame
 Make sure you have Lua installed and then
 
 ```
-lua ./main.lua -g GAME_NAME -h HOST -p PORT -n PLAYER_NAME
+lua ./main.lua  -s HOST -p PORT -n PLAYER_NAME GAME_NAME
+```
+
+For example
+
+```
+lua ./main.lua  -s localhost -p 3000 -n taka Checkers
 ```
 
 That's it. Make sure there is a server at `-h`. It defaults to localhost if not given. The game you want to play must be present on the server. 
