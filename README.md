@@ -20,20 +20,23 @@ All inspiration taken from [MST's SIG-GAME framework](https://github.com/siggame
 
 ## How to Run
 
-Make sure you have Lua installed and then
+Make sure you have Lua v5.1 installed.
+
+### Windows
+
+Just download [LuaDist](http://luadist.org/). That package has everything you need to run the Lua client, and actually has LuaJIT to run Lua. Place it the contents anywhere, then make sure to add the path to the bin/ folder in LuaDist to your Path. Then you can:
 
 ```
-lua ./main.lua  -s HOST -p PORT -n PLAYER_NAME GAME_NAME
+lua main.lua GAME_NAME -s SERVER -p PORT
 ```
 
-For example
+### Linux
+
+Make sure you have the package lua 5.1 and luajit installed, then:
 
 ```
-lua ./main.lua  -s localhost -p 3000 -n taka Checkers
+./run GAME_NAME -s SERVER -p PORT
 ```
-
-That's it. Make sure there is a server at `-s`. It defaults to localhost if not given. The game you want to play must be present on the server. 
-
 
 ## Other notes
 
