@@ -9,11 +9,11 @@ return function(args)
 
     local game, ai, gameManager = nil, nil, nil
 
-    --safeCall(function()
+    safeCall(function()
         game = require("games." .. args.game .. ".game")()
         ai = require("games." .. args.game .. ".ai")(game)
         gameManager = GameManager(game)
-    --end, "GAME_NOT_FOUND", "Could not find game files for '" .. args.game .. "'")
+    end, "GAME_NOT_FOUND", "Could not find game files for '" .. args.game .. "'")
 
     client:setup(game, ai, gameManager, args.server, args.port, args)
 
