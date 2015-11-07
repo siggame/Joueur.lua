@@ -166,7 +166,7 @@ function Client:_autoHandleFatal(data)
     handleError("FATAL_EVENT", nil, "A fatal error occured '" .. data.message .. "'.")
 end
 
-function Client:_autoHandleOver()
+function Client:_autoHandleOver(data)
     local won = self.ai.player.won
     local reason = won and self.ai.player.reasonWon or self.ai.player.reasonLost
 
@@ -176,6 +176,11 @@ function Client:_autoHandleOver()
         self.ai:ended(won, reason)
     end, "AI_ERRORED", "AI errored in ai:ended(won, reason)")
     self.socket:close()
+
+    if data.message then
+        print(data.message)
+    end
+
     os.exit(0)
 end
 
