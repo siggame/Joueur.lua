@@ -66,7 +66,7 @@ function AI:runTurn()
     local policeDepartment = self.player.policeDepartments[1]
     if self:canBribe(policeDepartment) then
         -- Get the first enemy warehouse
-        local toRaid = player.otherPlayer.warehouses[1]
+        local toRaid = self.player.otherPlayer.warehouses[1]
         -- Make sure it is alive to be raided
         if toRaid.health > 0 then
             -- Raid the first enemy warehouse
@@ -101,7 +101,7 @@ end
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 
 function AI:canBribe(building)
-    return (building and building.health > 0 and not building.bribed and building.owner == self.playerID)
+    return (building and building.health > 0 and not building.bribed and building.owner == self.player)
 end
 
 -- <<-- /Creer-Merge: functions -->>
