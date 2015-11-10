@@ -10,8 +10,8 @@ return function(args)
     local game, ai, gameManager = nil, nil, nil
 
     safeCall(function()
-        game = require("games." .. args.game .. ".game")()
-        ai = require("games." .. args.game .. ".ai")(game)
+        game = require("games." .. args.game:uncapitalize() .. ".game")()
+        ai = require("games." .. args.game:uncapitalize() .. ".ai")(game)
         gameManager = GameManager(game)
     end, "GAME_NOT_FOUND", "Could not find game files for '" .. args.game .. "'")
 
