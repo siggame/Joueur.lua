@@ -33,8 +33,8 @@ function AI:gameUpdated()
 end
 
 --- this is called when the game ends, you can clean up your data and dump files here if need be
--- @param {boolean} won == true means you won, won == false means you lost
--- @param {string} reason you won or lost
+-- @param boolean won == true means you won, won == false means you lost
+-- @param string reason you won or lost
 function AI:ended(won, reason)
     -- <<-- Creer-Merge: ended -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     -- replace with your ended
@@ -44,16 +44,66 @@ end
 --- Game Logic Functions: functions you must fill out to send data to the game server to actually play the game! ---
 
 --- This is called every time the AI is asked to respond with a command during their turn
--- @returns {boolean} represents if you want to end your turn. true means end the turn, false means to keep your turn going and re-call runTurn()
+-- @returns boolean represents if you want to end your turn. true means end the turn, false means to keep your turn going and re-call runTurn()
 function AI:runTurn()
     -- <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-    -- Put your game logic here for runTurn
+
+    -- Get my first warehouse
+    local warehouse = self.player.warehouses[1]
+    if self:canBribe(warehouse) then
+        -- ignite the first enemy building
+        warehouse:ignite(self.player.otherPlayer.buildings[1])
+    end
+
+    -- Get my first fire department
+    local fireDepartment = self.player.fireDepartments[1]
+    if self:canBribe(fireDepartment) then
+        -- extinguish my first building
+        fireDepartment:extinguish(self.player.buildings[1])
+    end
+
+    -- Get my first police department
+    local policeDepartment = self.player.policeDepartments[1]
+    if self:canBribe(policeDepartment) then
+        -- Get the first enemy warehouse
+        local toRaid = player.otherPlayer.warehouses[1]
+        -- Make sure it is alive to be raided
+        if toRaid.health > 0 then
+            -- Raid the first enemy warehouse
+            policeDepartment:raid(self.player.otherPlayer.warehouses[1])
+        end
+    end
+
+    -- Get my first weather station
+    local weatherStation1 = self.player.weatherStations[1]
+    if self:canBribe(weatherStation1) then
+        -- Make sure the intensity isn't at max
+        if self.game.nextForecast.intensity < self.game.maxForecastIntensity then
+            weatherStation1:intensify()
+        else
+            -- Otherwise decrease the intensity
+            weatherStation1:intensify(true)
+        end
+    end
+
+    -- Get my second weather station
+    local weatherStation2 = self.player.weatherStations[2]
+    if self:canBribe(weatherStation2) then
+        -- Rotate counter-clockwise
+        weatherStation2:rotate()
+    end
+
     return true
+
     -- <<-- /Creer-Merge: runTurn -->>
 end
 
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- if you need additional functions for your AI you can add them here
+
+function AI:canBribe(building)
+    return (building and building.health > 0 and not building.bribed and building.owner == self.playerID)
+end
+
 -- <<-- /Creer-Merge: functions -->>
 
 return AI
