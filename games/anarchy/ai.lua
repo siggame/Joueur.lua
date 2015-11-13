@@ -58,8 +58,11 @@ function AI:runTurn()
     -- Get my first fire department
     local fireDepartment = self.player.fireDepartments[1]
     if self:canBribe(fireDepartment) then
-        -- extinguish my first building
-        fireDepartment:extinguish(self.player.buildings[1])
+        -- extinguish my first building if it's not my headquarters
+        local myBuilding = self.player.buildings[1]
+        if not myBuilding.isHeadquarters then
+            fireDepartment:extinguish(myBuilding)
+        end
     end
 
     -- Get my first police department
@@ -67,8 +70,8 @@ function AI:runTurn()
     if self:canBribe(policeDepartment) then
         -- Get the first enemy warehouse
         local toRaid = self.player.otherPlayer.warehouses[1]
-        -- Make sure it is alive to be raided
-        if toRaid.health > 0 then
+        -- Make sure it is alive to be raided and the headquarters
+        if toRaid.health > 0 and not toRaid.isHeadquarters then
             -- Raid the first enemy warehouse
             policeDepartment:raid(self.player.otherPlayer.warehouses[1])
         end
