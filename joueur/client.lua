@@ -99,7 +99,7 @@ function Client:waitForEvents()
     while true do -- block until we recieve something. using normal socket:settimeout won't allow for keyboard interupts on some systems
         local full, status, partial = self.socket:receive(self._bufferSize) -- should block for timeout
 
-        if status == "closed" then
+        if status == "closed" and not (full or partial) then
             handleError("CANNOT_READ_SOCKET", "Socket closed.")
         end
 
