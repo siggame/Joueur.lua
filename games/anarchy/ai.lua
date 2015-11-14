@@ -78,7 +78,7 @@ function AI:runTurn()
     -- Get my second weather station
     local weatherStation2 = self.player.weatherStations[2]
     if self:canBribe(weatherStation2) then
-        -- Rotate counter-clockwise
+        -- Rotate clockwise
         weatherStation2:rotate()
     end
 
