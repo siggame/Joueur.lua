@@ -4,6 +4,7 @@ local json = require("joueur.utilities.dkjson")
 local socket = require("socket")
 local safeCall = require("joueur.safeCall")
 local handleError = require("joueur.handleError")
+local color = require("joueur.ansiColorCoder")
 local EOT_CHAR = string.char(4)
 
 ---
@@ -25,7 +26,7 @@ function Client:setup(game, ai, gameManager, server, port, options)
     self.port = port
     self._printIO = options.printIO
 
-    print("connecting to: " .. self.server .. ":" .. self.port)
+    print(color.text("cyan") .. "Connecting to: " .. self.server .. ":" .. self.port .. color.reset())
 
     self.socket, message = socket.connect(self.server, self.port)
 
@@ -34,7 +35,6 @@ function Client:setup(game, ai, gameManager, server, port, options)
     else
         self.socket:settimeout(self._timeoutTime)
         handleError.socket = self.socket
-        print("successfully connected to server...")
     end
 end
 
@@ -170,7 +170,7 @@ function Client:_autoHandleOver(data)
     local won = self.ai.player.won
     local reason = won and self.ai.player.reasonWon or self.ai.player.reasonLost
 
-    print("Game is over.", won and "I Won!" or "I Lost :(", "because: " .. reason)
+    print(color.text("green") .. "Game is over.", won and "I Won!" or "I Lost :(", "because: " .. reason .. color.reset())
 
     safeCall(function()
         self.ai:ended(won, reason)
@@ -178,7 +178,7 @@ function Client:_autoHandleOver(data)
     self.socket:close()
 
     if data.message then
-        print(data.message)
+        print(color.text("cyan") .. data.message .. color.reset())
     end
 
     os.exit(0)

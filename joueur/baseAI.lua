@@ -1,4 +1,5 @@
 local class = require("joueur.utilities.class")
+local color = require("joueur.ansiColorCoder")
 
 ---
 -- @class BaseAI: the base functions all AIs should do
@@ -48,9 +49,8 @@ end
 ---
 -- called when we (the client) send some invalid response to the server. It should be echoed back here
 -- @param message {string} the reason why we are getting an invalid event
--- @param [data] {table} optional data about why it is invalid
-function BaseAI:invalid(message, data)
-    print("AI was told this is invalid", message, data)
+function BaseAI:invalid(message)
+    print(color.text("yellow") .. "Invalid: " .. message .. color.reset())
 end
 
 

@@ -1,3 +1,4 @@
+local color = require("joueur.ansiColorCoder")
 local handleErrorMetatable = {}
 
 local errorCodes = {
@@ -18,7 +19,7 @@ local errorCodes = {
 }
 
 function handleErrorMetatable:__call(codeName, message, err)
-    print("---\nError:", codeName, "\n")
+    print(color.text("red") .. "---\nError:", codeName, "\n")
 
     if message then
         print(message .. "\n---")
@@ -28,7 +29,7 @@ function handleErrorMetatable:__call(codeName, message, err)
         print(tostring(err) .. "\n---")
     end
 
-    print(debug.traceback() .. "\n---")
+    print(debug.traceback() .. "\n---" .. color.reset())
 
     if self.socket then
         self.socket:close()
