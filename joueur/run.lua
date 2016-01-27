@@ -47,7 +47,8 @@ return function(args)
         gameName = args.game,
         requestedSession = args.session,
         clientType = "Lua",
-        playerName = args.playerName or ai:getName() or "Lua Player",
+        playerName = args.name or ai:getName() or "Lua Player",
+        playerIndex = args.index,
         password = args.password,
         gameSettings = args.gameSettings,
     })
