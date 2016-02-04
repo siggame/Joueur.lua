@@ -24,4 +24,4 @@ lua main.lua GAME_NAME -s r99acm.device.mst.edu -r myOwnGameSession
 
 #### make
 
-There is a `Makefile` provided, but it is empty as Lua is an intepreted language. If you want to add `make` steps feel free to, but you may want to check with an Arena dev to make sure the Arena has the packages you need to use in `make`.
+There is a `Makefile` provided, but it is empty as Lua is an interpreted language. If you want to add `make` steps feel free to, but you may want to check with an Arena dev to make sure the Arena has the packages you need to use in `make`.
