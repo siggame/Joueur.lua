@@ -4,33 +4,46 @@ local class = require("joueur.utilities.class")
 local BaseAI = require("joueur.baseAI")
 
 --- @class AI: the AI functions for the Chess game.
+
+--- the AI functions for the Chess game.
+-- @classmod AI
+
 local AI = class(BaseAI)
 
--- this is the name you send to the server to play as.
+--- The reference to the Game instance this AI is playing.
+-- @field[Game] self.game
+-- @see Game
+
+--- The reference to the Player this AI controls in the Game.
+-- @field[Player] self.player
+-- @see Player
+
+--- this is the name you send to the server to play as.
 function AI:getName()
     return "Chess Lua Player" -- REPLACE THIS WITH YOUR TEAM NAME!
 end
 
+--- this is called once the game starts and your AI knows its playerID and game. You can initialize your AI here.
 function AI:start()
     -- replace with your start logic
 end
 
--- this is called when the game's state updates, so if you are tracking anything you can update it here.
+--- this is called when the game's state updates, so if you are tracking anything you can update it here.
 function AI:gameUpdated()
     -- replace with your game updated logic
 end
 
 --- this is called when the game ends, you can clean up your data and dump files here if need be
--- @param {boolean} won == true means you won, won == false means you lost
--- @param {string} reason you won or lost
+-- @tparam boolean won true means you won, won == false means you lost
+-- @tparam string reason why you won or lost
 function AI:ended(won, reason)
     -- replace with your ended
 end
 
---- Game Logic Functions: functions you must fill out to send data to the game server to actually play the game! ---
+-- Game Logic Functions: functions you must fill out to send data to the game server to actually play the game! --
 
---- This is called every time the AI is asked to respond with a command during their turn
--- @returns {boolean} represents if you want to end your turn. true means end the turn, false means to keep your turn going and re-call runTurn()
+--- This is called every time it is this AI.player's turn.
+-- @treturn bool Represents if you want to end your turn. True means end your turn, False means to keep your turn going and re-call this function.
 function AI:runTurn()
     -- Here is where you'll want to code your AI.
 
@@ -84,7 +97,7 @@ function AI:runTurn()
 
     -- 2) print the opponent's last move to the console
     if #self.game.moves > 0 then
-        print("Opponent's Last Move: '" .. self.game.moves[#self.game.moves] .. "'")
+        print("Opponent's Last Move: '" .. self.game.moves[#self.game.moves].san .. "'")
     end
 
     -- 3) print how much time remaining this AI has to calculate moves
@@ -92,9 +105,9 @@ function AI:runTurn()
 
     -- 4) make a random (and probably invalid) move.
     local randomPiece = self.player.pieces:randomElement()
-    local randomRank = string.char(string.byte("a") + math.random(8) - 1)
-    local randomFile = math.random(8)
-    randomPiece:move(randomRank, randomFile)
+    local randomFile = string.char(string.byte("a") + math.random(8) - 1)
+    local randomRank = math.random(8)
+    randomPiece:move(randomFile, randomRank)
 
     return true -- to signify we are done with our turn.
 end

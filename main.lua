@@ -1,3 +1,6 @@
+-- Please do not modify this file.
+-- Instead have a look at `README.md` for how to start writing you AI.
+
 require("joueur.utilities.table") -- extends the base table metatable
 require("joueur.utilities.string") -- extends the base string metatable
 local argparse = require("joueur.utilities.argparse")
