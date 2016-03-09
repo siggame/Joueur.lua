@@ -99,17 +99,19 @@ function Client:waitForEvents()
     while true do -- block until we recieve something. using normal socket:settimeout won't allow for keyboard interupts on some systems
         local full, status, partial = self.socket:receive(self._bufferSize) -- should block for timeout
 
-        if status == "closed" and not (full or partial) then
+        local sent = full or partial
+        if sent == "" then
+            sent = nil
+        end
+
+        if status == "closed" and not sent then
             handleError("CANNOT_READ_SOCKET", "Socket closed.")
         end
 
-        local sent = full or partial
-
-        if sent ~= "" and sent ~= nil then -- we got something from the server
+        if sent then -- we got something from the server
             if self._printIO then
                 print("FROM SERVER <--", sent)
             end
-
             local total = self._receivedBuffer .. sent
             local split = total:split(EOT_CHAR) --  split on "end of text" character (basically end of transmition)
 
