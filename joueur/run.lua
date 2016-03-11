@@ -6,9 +6,9 @@ local function isModuleAvailable(name)
     else
         for _, searcher in ipairs(package.searchers or package.loaders) do
             local loader = searcher(name)
-            if type(loader) == 'function' then
+            if type(loader) == "function" then
                 package.preload[name] = loader
-                 return true
+                return true
             end
         end
         return false
@@ -25,26 +25,31 @@ return function(args)
     args.server = splitServer[1]
     args.port = tonumber(splitServer[2] or args.port)
 
+    client:connect(args.server, args.port, args)
+
+    client:send("alias", args.game)
+    local gameName = client:waitForEvent("named")
+    local moduleGameName = gameName:uncapitalize()
+
     local game, ai = nil, nil
 
-    if not isModuleAvailable("games." .. args.game:uncapitalize() .. ".game") then
-        handleError("GAME_NOT_FOUND", "Could not find game files for '" .. args.game .. "'")
+    if not isModuleAvailable("games." .. moduleGameName .. ".game") then
+        handleError("GAME_NOT_FOUND", "Could not find game files for '" .. gameName .. "'")
     end
 
     safeCall(function()
-        game = require("games." .. args.game:uncapitalize() .. ".game")()
-    end, "REFLECTION_FAILED", "Error requiring the Game module for '" .. args.game .. "'.")
+        game = require("games." .. moduleGameName .. ".game")()
+    end, "REFLECTION_FAILED", "Error requiring the Game module for '" .. gameName .. "'.")
 
     safeCall(function()
-        ai = require("games." .. args.game:uncapitalize() .. ".ai")(game)
-    end, "AI_ERRORED", "Could not require the AI for game '" .. args.game .. "'. Probably a syntax error in your AI.")
+        ai = require("games." .. moduleGameName .. ".ai")(game)
+    end, "AI_ERRORED", "Could not require the AI for game '" .. gameName .. "'. Probably a syntax error in your AI.")
 
     local gameManager = GameManager(game)
-
-    client:setup(game, ai, gameManager, args.server, args.port, args)
+    client:setup(game, ai, gameManager, args)
 
     client:send("play", {
-        gameName = args.game,
+        gameName = gameName,
         requestedSession = args.session,
         clientType = "Lua",
         playerName = args.name or ai:getName() or "Lua Player",

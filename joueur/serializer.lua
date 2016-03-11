@@ -19,6 +19,10 @@ function serializer.isGameObjectReference(obj)
 end
 
 function serializer.serialize(data)
+    if type(data) ~= "table" then
+        return data
+    end
+
     if class.isInstance(data, BaseGameObject) then
         return {id = data.id}
     end
