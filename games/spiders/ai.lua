@@ -80,8 +80,13 @@ function AI:runTurn()
         end
     elseif spider.gameObjectName == "Weaver" then
         local weaver = spider
-        if #weaver.nest.webs > 0 then -- cut one of them
-            weaver:cut(weaver.nest.webs:randomElement())
+        if #weaver.nest.webs > 0 then -- weave one of them
+            -- 50% of the time do a strengthening weave, the other 50% of the time weaken
+            if math.random(2) == 2 then
+                weaver:strengthen(weaver.nest.webs:randomElement())
+            else
+                weaver:weaken(weaver.nest.webs:randomElement())
+             end
         elseif #weaver.nest.spiders > 1 then -- try to attack one of them
             -- get a random other spider to see if we can attack
             local otherSpider = weaver.nest.spiders:randomElement()
