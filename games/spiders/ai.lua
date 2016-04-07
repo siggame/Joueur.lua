@@ -47,70 +47,85 @@ function AI:runTurn()
     -- get a random spider to try to do things with
     local spider = self.player.spiders:randomElement()
 
-    -- if that spider is a Spitter
-    if spider.gameObjectName == "Spitter" then
-        -- try to spit, but we need to make sure there is not an existing web as Spitters cannot spit new Webs between two Nests if there is an existing Web connecting the two
-        local spitter = spider
-        local enemysNest = self.player.otherPlayer.broodMother.nest
-
-        -- loop through to check to make sure there is not already a Web to the enemys Nest
-        existingWeb = None
-        for i, web in ipairs(enemysNest.webs) do
-            if web.nestA == spitter.nest or web.nestB == spitter.nest then
-                existingWeb = web
-                break
-            end
-        end
-
-        if existingWeb then -- we can't spit to that nest, so instead move over it
-            spitter:move(existingWeb)
-        else
-            spitter:spit(enemysNest)
-        end
-    elseif spider.gameObjectName == "Cutter" then
-        local cutter = spider
-        if #cutter.nest.webs > 0 then -- cut one of them
-            cutter:cut(cutter.nest.webs:randomElement())
-        elseif #cutter.nest.spiders > 1 then -- try to attack one of them
-            -- get a random other spider to see if we can attack
-            local otherSpider = cutter.nest.spiders:randomElement()
-            if otherSpider.owner ~= cutter.owner then -- he isn't owned by our player, [try to] kill him!
-                cutter:attack(otherSpider)
-            end
-        end
-    elseif spider.gameObjectName == "Weaver" then
-        local weaver = spider
-        if #weaver.nest.webs > 0 then -- weave one of them
-            -- 50% of the time do a strengthening weave, the other 50% of the time weaken
-            if math.random(2) == 2 then
-                weaver:strengthen(weaver.nest.webs:randomElement())
-            else
-                weaver:weaken(weaver.nest.webs:randomElement())
-             end
-        elseif #weaver.nest.spiders > 1 then -- try to attack one of them
-            -- get a random other spider to see if we can attack
-            local otherSpider = weaver.nest.spiders:randomElement()
-            if otherSpider.owner ~= weaver.owner then -- he isn't owned by our player, [try to] kill him!
-                weaver:attack(otherSpider)
-            end
-        end
-    elseif spider.gameObjectName == "BroodMother" then
+    if spider.gameObjectName == "BroodMother" then
         local broodMother = spider
 
-        -- try to consume a Spiderling
-        if #broodMother.nest.spiders > 1 then -- there is another spider on this Nest, so let's try to consume one
-            -- get a random other spider to see if it's not us
-            local otherSpider = spider.nest.spiders:randomElement()
-            if otherSpider ~= broodMother then -- we can comsume this poor soul
-                broodMother:consume(otherSpider)
+        local choice = math.random(2)
+
+        if choice == 1 then -- try to consume a Spiderling
+            if #broodMother.nest.spiders > 1 then -- there is another spider on this Nest, so let's try to consume one
+                -- get a random other spider to see if it's not us
+                local otherSpider = spider.nest.spiders:randomElement()
+                if otherSpider ~= broodMother then -- we can comsume this poor soul
+                    print("Broodmother #" .. broodMother.id .. " consuming " .. otherSpider.gameObjectName .. " #" .. otherSpider.id)
+                    broodMother:consume(otherSpider)
+                end
+            end
+        else -- try to spawn a Spiderling
+            if broodMother.eggs > 0 then -- then spawn a Spiderling
+                -- get a random spiderling type to spawn a new Spiderling of that type
+                local randomSpiderlingType = table.randomElement({"Cutter", "Weaver", "Spitter"})
+                print("Broodmother #" .. broodMother.id .. " spawning " .. randomSpiderlingType)
+                broodMother:spawn(randomSpiderlingType)
             end
         end
+    else -- it is a Spiderling
+        local spiderling = spider
 
-        -- try to spawn a Spiderling
-        if broodMother.eggs > 0 then -- then spawn a Spiderling
-            -- get a random spiderling type to spawn a new Spiderling of that type
-            local randomSpiderlingType = table.randomElement({"Cutter", "Weaver", "Spitter"})
-            broodMother:spawn(randomSpiderlingType)
+        if spiderling.busy == "" then -- it is NOT busy
+            local choice = math.random(3) -- do a random choice of 3 options
+
+            if choice == 1 then -- try to move somewhere
+                if #spiderling.nest.webs > 0 then
+                    local web = spiderling.nest.webs:randomElement()
+                    print("Spiderling " .. spiderling.gameObjectName .. " #" .. spiderling.id .. " moving on Web #" .. web.id)
+                    spiderling:move(web)
+                end
+            elseif choice == 2 then -- try to attack something
+                if #spiderling.nest.spiders > 1 then -- there is someone besides us on the nest, let's try to attack!
+                    local otherSpider = spiderling.nest.spiders:randomElement()
+                    if otherSpider.owner ~= spiderling.owner then -- attack the enemy!
+                        spiderling.attack(otherSpider)
+                    end
+                end
+            else -- only thing left is to do something unique based on what type of Spiderling we are
+                -- if that spider is a Spitter
+                if spiderling.gameObjectName == "Spitter" then -- try to spit
+                    local spitter = spiderling
+                    local enemysNest = self.player.otherPlayer.broodMother.nest
+
+                    -- loop through to check to make sure there is not already a Web to the enemys Nest
+                    existingWeb = nil
+                    for i, web in ipairs(enemysNest.webs) do
+                        if web.nestA == spitter.nest or web.nestB == spitter.nest then
+                            existingWeb = web
+                            break
+                        end
+                    end
+
+                    if not existingWeb then -- because no web exists between here and the enemy's nest, spit a web to it
+                        print("Spitter #" .. spitter.id .. " spitting to Nest #" .. enemysNest.id)
+                        spitter:spit(enemysNest)
+                    end
+                elseif spiderling.gameObjectName == "Cutter" then -- try to cut
+                    local cutter = spiderling
+                    if #cutter.nest.webs > 0 then -- cut one of the Webs
+                        local web = cutter.nest.webs:randomElement()
+                        print("Cutter #" .. cutter.id .. " cutting Web #" .. web.id)
+                        cutter:cut(web)
+                    end
+                elseif spiderling.gameObjectName == "Weaver" then -- try to strengthen or weaken
+                    local weaver = spiderling
+                    if #weaver.nest.webs > 0 then -- weave one of the Webs
+                        -- 50% of the time do a strengthening weave, the other 50% of the time weaken
+                        if math.random(2) == 2 then
+                            weaver:strengthen(weaver.nest.webs:randomElement())
+                        else
+                            weaver:weaken(weaver.nest.webs:randomElement())
+                        end
+                     end
+                end
+            end
         end
     end
 
