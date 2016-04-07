@@ -109,7 +109,7 @@ function AI:runTurn()
         -- try to spawn a Spiderling
         if broodMother.eggs > 0 then -- then spawn a Spiderling
             -- get a random spiderling type to spawn a new Spiderling of that type
-            local randomSpiderlingType = table.randomElement({"Cutter", "Weaver", "BroodMother"})
+            local randomSpiderlingType = table.randomElement({"Cutter", "Weaver", "Spitter"})
             broodMother:spawn(randomSpiderlingType)
         end
     end
