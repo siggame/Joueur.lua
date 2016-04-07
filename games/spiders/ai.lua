@@ -42,7 +42,73 @@ end
 --- This is called every time it is this AI.player's turn.
 -- @treturn bool Represents if you want to end your turn. True means end your turn, False means to keep your turn going and re-call this function.
 function AI:runTurn()
-    -- Put your game logic here for runTurn
+    -- This is ShellAI, it is very simple, and demonstrates how to use all the game objects in Spiders
+
+    -- get a random spider to try to do things with
+    local spider = self.player.spiders:randomElement()
+
+    -- if that spider is a Spitter
+    if spider.gameObjectName == "Spitter" then
+        -- try to spit, but we need to make sure there is not an existing web as Spitters cannot spit new Webs between two Nests if there is an existing Web connecting the two
+        local spitter = spider
+        local enemysNest = self.player.otherPlayer.broodMother.nest
+
+        -- loop through to check to make sure there is not already a Web to the enemys Nest
+        existingWeb = None
+        for i, web in ipairs(enemysNest.webs) do
+            if web.nestA == spitter.nest or web.nestB == spitter.nest then
+                existingWeb = web
+                break
+            end
+        end
+
+        if existingWeb then -- we can't spit to that nest, so instead move over it
+            spitter:move(existingWeb)
+        else
+            spitter:spit(enemysNest)
+        end
+    elseif spider.gameObjectName == "Cutter" then
+        local cutter = spider
+        if #cutter.nest.webs > 0 then -- cut one of them
+            cutter:cut(cutter.nest.webs:randomElement())
+        elseif #cutter.nest.spiders > 1 then -- try to attack one of them
+            -- get a random other spider to see if we can attack
+            local otherSpider = cutter.nest.spiders:randomElement()
+            if otherSpider.owner ~= cutter.owner then -- he isn't owned by our player, [try to] kill him!
+                cutter:attack(otherSpider)
+            end
+        end
+    elseif spider.gameObjectName == "Weaver" then
+        local weaver = spider
+        if #weaver.nest.webs > 0 then -- cut one of them
+            weaver:cut(weaver.nest.webs:randomElement())
+        elseif #weaver.nest.spiders > 1 then -- try to attack one of them
+            -- get a random other spider to see if we can attack
+            local otherSpider = weaver.nest.spiders:randomElement()
+            if otherSpider.owner ~= weaver.owner then -- he isn't owned by our player, [try to] kill him!
+                weaver:attack(otherSpider)
+            end
+        end
+    elseif spider.gameObjectName == "BroodMother" then
+        local broodMother = spider
+
+        -- try to consume a Spiderling
+        if #broodMother.nest.spiders > 1 then -- there is another spider on this Nest, so let's try to consume one
+            -- get a random other spider to see if it's not us
+            local otherSpider = spider.nest.spiders:randomElement()
+            if otherSpider ~= broodMother then -- we can comsume this poor soul
+                broodMother:consume(otherSpider)
+            end
+        end
+
+        -- try to spawn a Spiderling
+        if broodMother.eggs > 0 then -- then spawn a Spiderling
+            -- get a random spiderling type to spawn a new Spiderling of that type
+            local randomSpiderlingType = table.randomElement({"Cutter", "Weaver", "BroodMother"})
+            broodMother:spawn(randomSpiderlingType)
+        end
+    end
+
     return true
 end
 
