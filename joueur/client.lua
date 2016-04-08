@@ -18,10 +18,7 @@ function Client:init()
     self._eventsStack = Table()
 end
 
-function Client:setup(game, ai, gameManager, server, port, options)
-    self.game = game
-    self.ai = ai
-    self.gameManager = gameManager
+function Client:connect(server, port, options)
     self.server = server
     self.port = port
     self._printIO = options.printIO
@@ -38,11 +35,17 @@ function Client:setup(game, ai, gameManager, server, port, options)
     end
 end
 
+function Client:setup(game, ai, gameManager, options)
+    self.game = game
+    self.ai = ai
+    self.gameManager = gameManager
+end
+
 
 
 function Client:_sendRaw(str)
     if self._printIO then
-        print("TO SERVER -->", str)
+        print(color.text("magenta") .. "TO SERVER --> " .. str .. color.reset())
     end
     self.socket:send(str)
 end
@@ -99,17 +102,19 @@ function Client:waitForEvents()
     while true do -- block until we recieve something. using normal socket:settimeout won't allow for keyboard interupts on some systems
         local full, status, partial = self.socket:receive(self._bufferSize) -- should block for timeout
 
-        if status == "closed" and not (full or partial) then
+        local sent = full or partial
+        if sent == "" then
+            sent = nil
+        end
+
+        if status == "closed" and not sent then
             handleError("CANNOT_READ_SOCKET", "Socket closed.")
         end
 
-        local sent = full or partial
-
-        if sent ~= "" and sent ~= nil then -- we got something from the server
+        if sent then -- we got something from the server
             if self._printIO then
-                print("FROM SERVER <--", sent)
+                print(color.text("magenta") .. "FROM SERVER <-- " .. sent .. color.reset())
             end
-
             local total = self._receivedBuffer .. sent
             local split = total:split(EOT_CHAR) --  split on "end of text" character (basically end of transmition)
 
@@ -170,7 +175,7 @@ function Client:_autoHandleOver(data)
     local won = self.ai.player.won
     local reason = won and self.ai.player.reasonWon or self.ai.player.reasonLost
 
-    print(color.text("green") .. "Game is over.", won and "I Won!" or "I Lost :(", "because: " .. reason .. color.reset())
+    print(color.text("green") .. "Game is over. " .. (won and "I Won!" or "I Lost :(") .. " because: " .. reason .. color.reset())
 
     safeCall(function()
         self.ai:ended(won, reason)
