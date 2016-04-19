@@ -50,9 +50,9 @@ function AI:runTurn()
     if spider.gameObjectName == "BroodMother" then
         local broodMother = spider
 
-        local choice = math.random(2)
+        local choice = math.random(10)
 
-        if choice == 1 then -- try to consume a Spiderling
+        if choice == 1 then -- try to consume a Spiderling 10% of the time
             if #broodMother.nest.spiders > 1 then -- there is another spider on this Nest, so let's try to consume one
                 -- get a random other spider to see if it's not us
                 local otherSpider = spider.nest.spiders:randomElement()
@@ -62,7 +62,7 @@ function AI:runTurn()
                 end
             end
         else -- try to spawn a Spiderling
-            if broodMother.eggs > 0 then -- then spawn a Spiderling
+            if broodMother.eggs > 0 then -- then we can spawn a Spiderling
                 -- get a random spiderling type to spawn a new Spiderling of that type
                 local randomSpiderlingType = table.randomElement({"Cutter", "Weaver", "Spitter"})
                 print("Broodmother #" .. broodMother.id .. " spawning " .. randomSpiderlingType)
@@ -85,7 +85,7 @@ function AI:runTurn()
                 if #spiderling.nest.spiders > 1 then -- there is someone besides us on the nest, let's try to attack!
                     local otherSpider = spiderling.nest.spiders:randomElement()
                     if otherSpider.owner ~= spiderling.owner then -- attack the enemy!
-                        spiderling.attack(otherSpider)
+                        spiderling:attack(otherSpider)
                     end
                 end
             else -- only thing left is to do something unique based on what type of Spiderling we are
