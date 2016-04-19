@@ -54,7 +54,7 @@ end
 -- @tparam Nest nest The nest to calculate the distance to
 -- @treturn number The euclidean distance between the two Nests
 function Nest:distanceTo(nest)
-    return math.sqrt( (nest.x - self.x)^2 +(nest.y - self.y)^2 )
+    return math.sqrt( (nest.x - self.x)^2 + (nest.y - self.y)^2 )
 end
 
 -- <<-- /Creer-Merge: functions -->>
