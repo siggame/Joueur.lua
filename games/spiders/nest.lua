@@ -49,7 +49,14 @@ end
 
 
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- if you want to add any client side logic (such as state checking functions) this is where you can add them
+
+--- Calculates the distance from this Nest to another Nest
+-- @tparam Nest nest The nest to calculate the distance to
+-- @treturn number The euclidean distance between the two Nests
+function Nest:distanceTo(nest)
+    return math.sqrt( (nest.x - self.x)^2 + (nest.y - self.y)^2 )
+end
+
 -- <<-- /Creer-Merge: functions -->>
 
 return Nest
