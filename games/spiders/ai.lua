@@ -55,7 +55,7 @@ function AI:runTurn()
         if choice == 1 then -- try to consume a Spiderling 10% of the time
             if #broodMother.nest.spiders > 1 then -- there is another spider on this Nest, so let's try to consume one
                 -- get a random other spider to see if it's not us
-                local otherSpider = spider.nest.spiders:randomElement()
+                local otherSpider = broodMother.nest.spiders:randomElement()
                 if otherSpider ~= broodMother then -- we can comsume this poor soul
                     print("Broodmother #" .. broodMother.id .. " consuming " .. otherSpider.gameObjectName .. " #" .. otherSpider.id)
                     broodMother:consume(otherSpider)
@@ -95,7 +95,7 @@ function AI:runTurn()
                     local enemysNest = self.player.otherPlayer.broodMother.nest
 
                     -- loop through to check to make sure there is not already a Web to the enemys Nest
-                    existingWeb = nil
+                    local existingWeb = nil
                     for i, web in ipairs(enemysNest.webs) do
                         if web.nestA == spitter.nest or web.nestB == spitter.nest then
                             existingWeb = web
@@ -123,7 +123,7 @@ function AI:runTurn()
                         else
                             weaver:weaken(weaver.nest.webs:randomElement())
                         end
-                     end
+                    end
                 end
             end
         end
