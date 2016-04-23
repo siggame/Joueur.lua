@@ -18,7 +18,11 @@ if os.path.isdir("./output"):
     shutil.rmtree("./output")
 
 with open("../README.md", "r") as md_readme:
-    html_readme = markdown.markdown(md_readme.read())
+    readme = md_readme.read()
+
+readme = readme.replace("GAME_NAME", game_name).replace("game_name", lower_game_name)
+
+html_readme = markdown.markdown(readme)
 
 with open("./config.ld", "w+") as config:
     config.write('full_description=[[{}]]'.format(html_readme))
