@@ -1,4 +1,3 @@
--- ${header}
 -- This is where you build your AI for the ${game_name} game.
 <%include file="functions.noCreer" />
 local class = require("joueur.utilities.class")
@@ -40,14 +39,15 @@ function AI:ended(won, reason)
 ${merge("    -- ", "ended", "    -- replace with your ended")}
 end
 
--- Game Logic Functions: functions you must fill out to send data to the game server to actually play the game! --
 
+-- Game Logic Functions: functions you must fill out to send data to the game server to actually play the game! --
 % for function_name in ai['function_names']:
+
 <% function_parms = ai['functions'][function_name]
 %>--- ${function_parms['description']}
 % if 'arguments' in function_parms:
 % for arg_parms in function_parms['arguments']:
--- @tparam ${arg_parms['type']} ${arg_parms['name']} ${arg_parms['description']}
+-- @tparam ${shared['lua']['type'](arg_parms['type'])} ${arg_parms['name']} ${arg_parms['description']}
 % endfor
 % endif
 % if function_parms['returns'] != None:
@@ -61,6 +61,7 @@ ${merge("    -- ", function_name,
 )}
 end
 % endfor
+
 
 ${merge("-- ", "functions", "-- if you need additional functions for your AI you can add them here")}
 

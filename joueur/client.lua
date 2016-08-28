@@ -192,7 +192,7 @@ end
 function Client:_autoHandleOrder(data)
     local returned = nil
     safeCall(function()
-        returned = self.ai:_doOrder(data.name, data.args)
+        returned = self.ai:_doOrder(data.name, serializer.deserialize(data.args, self.game))
     end, "AI_ERRORED", "AI errored when running order '" .. data.name .. "'")
 
     self:send("finished", {

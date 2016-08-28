@@ -64,6 +64,6 @@ function serializer.deserialize(data, game)
     return deserialized
 end
 
-serializer.null = "&NULL" -- used for json because turning null to nil means the key is deleted in parsed json structures
+serializer.null = "&NULL" -- used for json because turning null to nil means the key is deleted in parsed json tables
 
 return serializer
