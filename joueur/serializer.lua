@@ -19,6 +19,10 @@ function serializer.isGameObjectReference(obj)
 end
 
 function serializer.serialize(data)
+    if type(data) ~= "table" then
+        return data
+    end
+
     if class.isInstance(data, BaseGameObject) then
         return {id = data.id}
     end
@@ -60,6 +64,6 @@ function serializer.deserialize(data, game)
     return deserialized
 end
 
-serializer.null = "&NULL" -- used for json because turning null to nil means the key is deleted in parsed json structures
+serializer.null = "&NULL" -- used for json because turning null to nil means the key is deleted in parsed json tables
 
 return serializer

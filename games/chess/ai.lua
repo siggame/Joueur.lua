@@ -40,6 +40,7 @@ function AI:ended(won, reason)
     -- replace with your ended
 end
 
+
 -- Game Logic Functions: functions you must fill out to send data to the game server to actually play the game! --
 
 --- This is called every time it is this AI.player's turn.
@@ -85,7 +86,6 @@ function AI:runTurn()
                         code = code:lower()
                     end
                 end
-
                 str = str .. " " .. code .. " "
             end
 
