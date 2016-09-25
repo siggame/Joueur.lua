@@ -33,6 +33,10 @@ function Game:init(...)
     self.gameObjects = Table()
     --- All the jobs that Cowboys can be assigned within the saloon.
     self.jobs = Table()
+    --- The number of Tiles in the map along the y (vertical) axis.
+    self.mapHeight = 0
+    --- The number of Tiles in the map along the x (horizontal) axis.
+    self.mapWidth = 0
     --- The maximum number of Cowboys a Player can bring into the saloon.
     self.maxCowboys = 0
     --- The maximum number of turns before the game will automatically end.
@@ -43,6 +47,8 @@ function Game:init(...)
     self.rowdynessToSiesta = 0
     --- A unique identifier for the game instance that is being played.
     self.session = ""
+    --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
+    self.tiles = Table()
 
 
 

@@ -17,13 +17,13 @@ function Bottle:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The direction any Cowboys hit by this will move, can be 'North', 'East', 'South', 'West'.
+    --- The direction any Cowboys hit by this will move, can be 'North', 'East', 'South', or 'West'.
     self.drunkDirection = ""
     --- True if this Bottle has impacted and has been destroyed (removed from the Game). False if still in the game flying through the saloon.
     self.isDestroyed = false
     --- The Tile this bottle is currently flying over.
     self.location = nil
-    --- The Tile this Bottle will fly to next turn, if it does not impact anything on it's path.
+    --- The Tile this Bottle will fly to next turn, if it does not impact anything on its path between the two.
     self.nextLocation = nil
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.

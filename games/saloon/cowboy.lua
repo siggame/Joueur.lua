@@ -19,7 +19,7 @@ function Cowboy:init(...)
 
     --- If the Cowboy can be moved this turn via its owner.
     self.canMove = 0
-    --- The direction this Cowboy is moving, can be 'North', 'East', 'South', 'West'.
+    --- The direction this Cowboy is moving while drunk. Will be 'North', 'East', 'South', or 'West' when drunk; or '' (empty string) when not drunk.
     self.drunkDirection = ""
     --- How much focus this Cowboy has. Different Jobs do different things with their Cowboy's focus.
     self.focus = 0
@@ -57,7 +57,7 @@ end
 
 --- Does their job's action on a Tile.
 -- @tparam Tile tile The Tile you want this Cowboy to act on.
--- @tparam[opt=""] string drunkDirection The direction the bottle will cause drunk cowboys to be in, can be 'North', 'East', 'South', 'West'.
+-- @tparam[opt=""] string drunkDirection The direction the bottle will cause drunk cowboys to be in, can be 'North', 'East', 'South', or 'West'.
 -- @treturn bool True if the act worked, false otherwise.
 function Cowboy:act(tile, drunkDirection)
     if drunkDirection == nil then
