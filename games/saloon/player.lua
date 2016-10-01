@@ -57,14 +57,9 @@ function Player:init(...)
 
 end
 
---- The Cowboy that was previously a 'Young Gun', and has now been promoted to a different job if successful, null otherwise.
-function Player:returns()
-    return (self:_runOnServer("returns", {
-    }))
-end
-
 --- Sends in the Young Gun to the nearest Tile into the Saloon, and promotes them to a new job.
 -- @tparam string job The job you want the Young Gun being brought in to be called in to do, changing their job to it.
+-- @treturn Cowboy The Cowboy that was previously a 'Young Gun', and has now been promoted to a different job if successful, null otherwise.
 function Player:sendIn(job)
     return (self:_runOnServer("sendIn", {
         job = job,
