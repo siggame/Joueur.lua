@@ -17,8 +17,8 @@ function Tile:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- All the beer Bottles currently flying over this Tile.
-    self.bottles = Table()
+    --- The beer Bottle currently flying over this Tile.
+    self.bottle = nil
     --- The Cowboy that is on this Tile, or null if empty.
     self.cowboy = nil
     --- The furnishing that is on this Tile, or null if empty.
@@ -27,14 +27,14 @@ function Tile:init(...)
     self.hasHazard = false
     --- If this Tile is a wall of the Saloon, and can never be pathed through.
     self.isWall = false
-    --- The Tile above this one (x, y-1). Null if out of bounds of the map.
-    self.tileAbove = nil
-    --- The Tile below this one (x, y+1). Null if out of bounds of the map.
-    self.tileBelow = nil
-    --- The Tile to the left of this one (x-1, y). Null if out of bounds of the map.
-    self.tileLeft = nil
-    --- The Tile to the right of this one (x+1, y). Null if out of bounds of the map.
-    self.tileRight = nil
+    --- The Tile to the 'East' of this one (x+1, y). Null if out of bounds of the map.
+    self.tileEast = nil
+    --- The Tile to the 'North' of this one (x, y-1). Null if out of bounds of the map.
+    self.tileNorth = nil
+    --- The Tile to the 'South' of this one (x, y+1). Null if out of bounds of the map.
+    self.tileSouth = nil
+    --- The Tile to the 'West' of this one (x-1, y). Null if out of bounds of the map.
+    self.tileWest = nil
     --- The x (horizontal) position of this Tile.
     self.x = 0
     --- The y (vertical) position of this Tile.

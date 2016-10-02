@@ -33,12 +33,12 @@ function Cowboy:init(...)
     self.job = ""
     --- The Player that owns and can control this Cowboy.
     self.owner = nil
-    --- How many turns this unit has remaining for their siesta. 0 means they are awake, and can act.
-    self.siesta = 0
     --- The Tile that this Cowboy is located on.
     self.tile = nil
     --- How many times this unit has been drunk before taking their siesta and reseting this to 0.
     self.tolerance = 0
+    --- How many turns this unit has remaining before it is no longer busy and can `act()` or `play()` again.
+    self.turnsBusy = 0
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
     -- @field[string] self.gameObjectName

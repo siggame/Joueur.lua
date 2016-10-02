@@ -19,6 +19,8 @@ function Furnishing:init(...)
 
     --- How much health this Furnishing currently has.
     self.health = 0
+    --- If this Furnishing has been destroyed, and has been removed from the game.
+    self.isDestroyed = false
     --- True if this Furnishing is a piano and can be played, False otherwise.
     self.isPiano = false
     --- The Tile that this Furnishing is located on.

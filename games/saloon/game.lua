@@ -47,6 +47,8 @@ function Game:init(...)
     self.rowdynessToSiesta = 0
     --- A unique identifier for the game instance that is being played.
     self.session = ""
+    --- How long siestas are for a player's team.
+    self.siestaLength = 0
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     self.tiles = Table()
 

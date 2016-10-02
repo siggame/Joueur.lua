@@ -37,10 +37,14 @@ function Player:init(...)
     self.rowdyness = 0
     --- How many times their team has played a piano.
     self.score = 0
+    --- 0 when not having a team siesta. When greater than 0 represents how many turns left for the team siesta to complete.
+    self.siesta = 0
     --- The amount of time (in ns) remaining for this AI to send commands.
     self.timeRemaining = 0
     --- If the player won the game or not.
     self.won = false
+    --- The only 'Yong Gun' Cowboy this player owns, or null if they called in their young gun during their turn.
+    self.youngGun = nil
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
     -- @field[string] self.gameObjectName
