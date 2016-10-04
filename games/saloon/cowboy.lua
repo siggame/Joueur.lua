@@ -18,7 +18,7 @@ function Cowboy:init(...)
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
     --- If the Cowboy can be moved this turn via its owner.
-    self.canMove = 0
+    self.canMove = false
     --- The direction this Cowboy is moving while drunk. Will be 'North', 'East', 'South', or 'West' when drunk; or '' (empty string) when not drunk.
     self.drunkDirection = ""
     --- How much focus this Cowboy has. Different Jobs do different things with their Cowboy's focus.
