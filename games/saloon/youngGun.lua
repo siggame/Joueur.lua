@@ -1,4 +1,4 @@
--- Furnishing: An furnishing in the Saloon that must be pathed around, or destroyed.
+-- YoungGun: An eager young person that wants to join your gang, and will call in the veteran Cowboys you need to win the brawl in the saloon.
 -- DO NOT MODIFY THIS FILE
 -- Never try to directly create an instance of this class, or modify its member variables.
 -- Instead, you should only be reading its variables and calling its functions.
@@ -11,23 +11,21 @@ local GameObject = require("games.saloon.gameObject")
 -- you can add addtional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
---- An furnishing in the Saloon that must be pathed around, or destroyed.
--- @classmod Furnishing
-local Furnishing = class(GameObject)
+--- An eager young person that wants to join your gang, and will call in the veteran Cowboys you need to win the brawl in the saloon.
+-- @classmod YoungGun
+local YoungGun = class(GameObject)
 
--- initializes a Furnishing with basic logic as provided by the Creer code generator
-function Furnishing:init(...)
+-- initializes a YoungGun with basic logic as provided by the Creer code generator
+function YoungGun:init(...)
     GameObject.init(self, ...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- How much health this Furnishing currently has.
-    self.health = 0
-    --- If this Furnishing has been destroyed, and has been removed from the game.
-    self.isDestroyed = false
-    --- True if this Furnishing is a piano and can be played, False otherwise.
-    self.isPiano = false
-    --- The Tile that this Furnishing is located on.
+    --- True if the YoungGun can call in a Cowboy, false otherwise.
+    self.canCallIn = false
+    --- The Player that owns and can control this YoungGun.
+    self.owner = nil
+    --- The Tile this YoungGun is currently on. Cowboys they send in will be on the nearest non-balcony Tile.
     self.tile = nil
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
@@ -45,8 +43,17 @@ function Furnishing:init(...)
 
 end
 
+--- Tells the YoungGun to call in a new Cowbow of the given job to the open Tile nearest to them.
+-- @tparam string job The job you want the Cowboy being brought to have.
+-- @treturn Cowboy The new Cowboy that was called in if valid. They will not be added to any `cowboys` array-like tables until the turn ends. nil otherwise.
+function YoungGun:callIn(job)
+    return (self:_runOnServer("callIn", {
+        job = job,
+    }))
+end
+
 --- (inherited) Adds a message to this GameObject's logs. Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
--- @function Furnishing:log
+-- @function YoungGun:log
 -- @see GameObject:log
 -- @tparam string message A string to add to this GameObject's log. Intended for debugging.
 
@@ -55,4 +62,4 @@ end
 -- if you want to add any client side logic (such as state checking functions) this is where you can add them
 -- <<-- /Creer-Merge: functions -->>
 
-return Furnishing
+return YoungGun

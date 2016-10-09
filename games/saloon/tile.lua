@@ -1,4 +1,8 @@
--- This is a simple class to represent the Tile object in the game. You can extend it by adding utility functions here in this file.
+-- Tile: A Tile in the game that makes up the 2D map grid.
+-- DO NOT MODIFY THIS FILE
+-- Never try to directly create an instance of this class, or modify its member variables.
+-- Instead, you should only be reading its variables and calling its functions.
+
 
 local class = require("joueur.utilities.class")
 local GameObject = require("games.saloon.gameObject")
@@ -19,26 +23,28 @@ function Tile:init(...)
 
     --- The beer Bottle currently flying over this Tile.
     self.bottle = nil
-    --- The Cowboy that is on this Tile, or null if empty.
+    --- The Cowboy that is on this Tile, nil otherwise.
     self.cowboy = nil
-    --- The furnishing that is on this Tile, or null if empty.
+    --- The furnishing that is on this Tile, nil otherwise.
     self.furnishing = nil
     --- If this Tile is pathable, but has a hazard that damages Cowboys that path through it.
     self.hasHazard = false
-    --- If this Tile is a wall of the Saloon, and can never be pathed through.
-    self.isWall = false
-    --- The Tile to the 'East' of this one (x+1, y). Null if out of bounds of the map.
+    --- If this Tile is a balcony of the Saloon that YoungGuns walk around on, and can never be pathed through by Cowboys.
+    self.isBalcony = false
+    --- The Tile to the 'East' of this one (x+1, y). nil if out of bounds of the map.
     self.tileEast = nil
-    --- The Tile to the 'North' of this one (x, y-1). Null if out of bounds of the map.
+    --- The Tile to the 'North' of this one (x, y-1). nil if out of bounds of the map.
     self.tileNorth = nil
-    --- The Tile to the 'South' of this one (x, y+1). Null if out of bounds of the map.
+    --- The Tile to the 'South' of this one (x, y+1). nil if out of bounds of the map.
     self.tileSouth = nil
-    --- The Tile to the 'West' of this one (x-1, y). Null if out of bounds of the map.
+    --- The Tile to the 'West' of this one (x-1, y). nil if out of bounds of the map.
     self.tileWest = nil
     --- The x (horizontal) position of this Tile.
     self.x = 0
     --- The y (vertical) position of this Tile.
     self.y = 0
+    --- The YoungGun on this tile, nil otherwise.
+    self.youngGun = nil
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
     -- @field[string] self.gameObjectName

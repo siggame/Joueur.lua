@@ -1,4 +1,8 @@
--- This is a simple class to represent the Cowboy object in the game. You can extend it by adding utility functions here in this file.
+-- Cowboy: A person on the map that can move around and interact within the saloon.
+-- DO NOT MODIFY THIS FILE
+-- Never try to directly create an instance of this class, or modify its member variables.
+-- Instead, you should only be reading its variables and calling its functions.
+
 
 local class = require("joueur.utilities.class")
 local GameObject = require("games.saloon.gameObject")

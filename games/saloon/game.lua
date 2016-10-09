@@ -1,4 +1,8 @@
--- This is a simple class to represent the Game object in the game. You can extend it by adding utility functions here in this file.
+-- Game: Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Coyboys.
+-- DO NOT MODIFY THIS FILE
+-- Never try to directly create an instance of this class, or modify its member variables.
+-- Instead, you should only be reading its variables and calling its functions.
+
 
 local class = require("joueur.utilities.class")
 local BaseGame = require("joueur.baseGame")
@@ -31,14 +35,14 @@ function Game:init(...)
     self.furnishings = Table()
     --- A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
     self.gameObjects = Table()
-    --- All the jobs that Cowboys can be assigned within the saloon.
+    --- All the jobs that Cowboys can be called in with.
     self.jobs = Table()
     --- The number of Tiles in the map along the y (vertical) axis.
     self.mapHeight = 0
     --- The number of Tiles in the map along the x (horizontal) axis.
     self.mapWidth = 0
-    --- The maximum number of Cowboys a Player can bring into the saloon.
-    self.maxCowboys = 0
+    --- The maximum number of Cowboys a Player can bring into the saloon of each specific job.
+    self.maxCowboysPerJob = 0
     --- The maximum number of turns before the game will automatically end.
     self.maxTurns = 100
     --- List of all the players in the game.
@@ -63,6 +67,7 @@ function Game:init(...)
         GameObject = require("games.saloon.gameObject"),
         Player = require("games.saloon.player"),
         Tile = require("games.saloon.tile"),
+        YoungGun = require("games.saloon.youngGun"),
     }
 end
 
