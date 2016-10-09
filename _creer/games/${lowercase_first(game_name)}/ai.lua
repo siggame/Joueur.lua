@@ -44,14 +44,14 @@ end
 % for function_name in ai['function_names']:
 
 <% function_parms = ai['functions'][function_name]
-%>--- ${function_parms['description']}
+%>--- ${shared['lua']['format_description'](function_parms['description'])}
 % if 'arguments' in function_parms:
 % for arg_parms in function_parms['arguments']:
--- @tparam ${shared['lua']['type'](arg_parms['type'])} ${arg_parms['name']} ${arg_parms['description']}
+-- @tparam ${shared['lua']['type'](arg_parms['type'])} ${arg_parms['name']} ${shared['lua']['format_description'](arg_parms['description'])}
 % endfor
 % endif
 % if function_parms['returns'] != None:
--- @treturn ${shared['lua']['type'](function_parms['returns']['type'])} ${function_parms['returns']['description']}
+-- @treturn ${shared['lua']['type'](function_parms['returns']['type'])} ${shared['lua']['format_description'](function_parms['returns']['description'])}
 % endif
 function AI:${function_name}(${", ".join(function_parms['argument_names'])})
 ${merge("    -- ", function_name,

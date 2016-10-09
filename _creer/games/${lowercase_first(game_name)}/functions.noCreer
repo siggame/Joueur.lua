@@ -62,4 +62,12 @@ if not 'lua' in shared:
             return ""
     shared['lua']['cast'] = lua_cast
 
+    def lua_format_description(description):
+        return description \
+            .replace("null", "nil") \
+            .replace("Null", "nil") \
+            .replace("dictionary", "table") \
+            .replace("list", "array-like table")
+    shared['lua']['format_description'] = lua_format_description
+
 %>
