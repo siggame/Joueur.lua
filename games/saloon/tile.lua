@@ -68,7 +68,42 @@ end
 
 
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- if you want to add any client side logic (such as state checking functions) this is where you can add them
+
+Tile.directions = Table("North", "East", "South", "West")
+
+-- Gets the neighbors of this Tile
+--
+-- @memberOf Tile
+-- @instance
+-- @returns {Array.<Tile>} - The neighboring (adjacent) Tiles to this tile
+function Tile:getNeighbors()
+    local neighbors = Table()
+    for i, direction in ipairs(self.directions) do
+        local neighbor = self["tile" .. direction]
+        if neighbor then
+            neighbors:insert(neighbor)
+        end
+    end
+    return neighbors
+end
+
+-- Checks if a Tile is pathable to units
+--
+-- @memberOf Tile
+-- @instance
+-- @returns {boolean} - True if pathable, false otherwise
+function Tile:isPathable()
+    return not (self.isBalcony or self.cowboy or self.furnishing)
+end
+
+function Tile:hasNeighbor(tile)
+    if tile then
+        return self.tileNorth == tile or self.tileEast == tile or self.tileSouth == tile or self.tileEast == tile
+    else
+        return false
+    end
+end
+
 -- <<-- /Creer-Merge: functions -->>
 
 return Tile
