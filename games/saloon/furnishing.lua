@@ -27,6 +27,8 @@ function Furnishing:init(...)
     self.isDestroyed = false
     --- True if this Furnishing is a piano and can be played, False otherwise.
     self.isPiano = false
+    --- If this is a piano and a Cowboy is playing it this turn.
+    self.isPlaying = false
     --- The Tile that this Furnishing is located on.
     self.tile = nil
 

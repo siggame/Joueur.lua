@@ -1,4 +1,4 @@
--- Game: Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Coyboys.
+-- Game: Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Cowboys.
 -- DO NOT MODIFY THIS FILE
 -- Never try to directly create an instance of this class, or modify its member variables.
 -- Instead, you should only be reading its variables and calling its functions.
@@ -11,7 +11,7 @@ local BaseGame = require("joueur.baseGame")
 -- you can add addtional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
---- Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Coyboys.
+--- Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Cowboys.
 -- @classmod Game
 local Game = class(BaseGame)
 
@@ -25,6 +25,8 @@ function Game:init(...)
 
     --- All the beer Bottles currently flying across the saloon in the game.
     self.bottles = Table()
+    --- How much damage is applied to neighboring things bit by the Sharpshooter between turns.
+    self.brawlerDamage = 0
     --- Every Cowboy in the game.
     self.cowboys = Table()
     --- The player whose turn it is currently. That player can send commands. Other players cannot.
@@ -51,6 +53,8 @@ function Game:init(...)
     self.rowdynessToSiesta = 0
     --- A unique identifier for the game instance that is being played.
     self.session = ""
+    --- How much damage is applied to things hit by Sharpshooters when they act.
+    self.sharpshooterDamage = 0
     --- How long siestas are for a player's team.
     self.siestaLength = 0
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.

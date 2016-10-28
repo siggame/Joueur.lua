@@ -21,11 +21,13 @@ function YoungGun:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
+    --- The Tile that a Cowboy will be called in on if this YoungGun calls in a Cowboy.
+    self.callInTile = nil
     --- True if the YoungGun can call in a Cowboy, false otherwise.
     self.canCallIn = false
     --- The Player that owns and can control this YoungGun.
     self.owner = nil
-    --- The Tile this YoungGun is currently on. Cowboys they send in will be on the nearest non-balcony Tile.
+    --- The Tile this YoungGun is currently on.
     self.tile = nil
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
@@ -43,7 +45,7 @@ function YoungGun:init(...)
 
 end
 
---- Tells the YoungGun to call in a new Cowbow of the given job to the open Tile nearest to them.
+--- Tells the YoungGun to call in a new Cowboy of the given job to the open Tile nearest to them.
 -- @tparam string job The job you want the Cowboy being brought to have.
 -- @treturn Cowboy The new Cowboy that was called in if valid. They will not be added to any `cowboys` array-like tables until the turn ends. nil otherwise.
 function YoungGun:callIn(job)
