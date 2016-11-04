@@ -38,7 +38,7 @@ function Player:init(...)
     --- The reason why the player won the game.
     self.reasonWon = ""
     --- How rowdy their team is. When it gets too high their team takes a collective siesta.
-    self.rowdyness = 0
+    self.rowdiness = 0
     --- How many times their team has played a piano.
     self.score = 0
     --- 0 when not having a team siesta. When greater than 0 represents how many turns left for the team siesta to complete.

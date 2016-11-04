@@ -23,6 +23,8 @@ function Game:init(...)
     -- @field[string] self.name
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
+    --- How many turns a Bartender will be busy for after throwing a Bottle.
+    self.bartenderCooldown = 0
     --- All the beer Bottles currently flying across the saloon in the game.
     self.bottles = Table()
     --- How much damage is applied to neighboring things bit by the Sharpshooter between turns.
@@ -49,8 +51,8 @@ function Game:init(...)
     self.maxTurns = 100
     --- List of all the players in the game.
     self.players = Table()
-    --- When a player's rowdyness reaches or exceeds this number their Cowboys take a collective siesta.
-    self.rowdynessToSiesta = 0
+    --- When a player's rowdiness reaches or exceeds this number their Cowboys take a collective siesta.
+    self.rowdinessToSiesta = 0
     --- A unique identifier for the game instance that is being played.
     self.session = ""
     --- How much damage is applied to things hit by Sharpshooters when they act.
@@ -59,6 +61,8 @@ function Game:init(...)
     self.siestaLength = 0
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     self.tiles = Table()
+    --- How many turns a Cowboy will be drunk for if a bottle breaks on it.
+    self.turnsDrunk = 0
 
 
 
