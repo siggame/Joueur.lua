@@ -7,10 +7,6 @@
 local class = require("joueur.utilities.class")
 local BaseGame = require("joueur.baseGame")
 
--- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- you can add addtional require(s) here
--- <<-- /Creer-Merge: requires -->>
-
 --- Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Cowboys.
 -- @classmod Game
 local Game = class(BaseGame)
@@ -23,6 +19,8 @@ function Game:init(...)
     -- @field[string] self.name
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
+    --- How many turns a Bartender will be busy for after throwing a Bottle.
+    self.bartenderCooldown = 0
     --- All the beer Bottles currently flying across the saloon in the game.
     self.bottles = Table()
     --- How much damage is applied to neighboring things bit by the Sharpshooter between turns.
@@ -49,8 +47,8 @@ function Game:init(...)
     self.maxTurns = 100
     --- List of all the players in the game.
     self.players = Table()
-    --- When a player's rowdyness reaches or exceeds this number their Cowboys take a collective siesta.
-    self.rowdynessToSiesta = 0
+    --- When a player's rowdiness reaches or exceeds this number their Cowboys take a collective siesta.
+    self.rowdinessToSiesta = 0
     --- A unique identifier for the game instance that is being played.
     self.session = ""
     --- How much damage is applied to things hit by Sharpshooters when they act.
@@ -59,6 +57,8 @@ function Game:init(...)
     self.siestaLength = 0
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     self.tiles = Table()
+    --- How many turns a Cowboy will be drunk for if a bottle breaks on it.
+    self.turnsDrunk = 0
 
 
 
@@ -75,9 +75,16 @@ function Game:init(...)
     }
 end
 
+--- Gets the Tile at a specified (x, y) position
+-- @tparam number x integer between 0 and the mapWidth
+-- @tparam number y integer between 0 and the mapHeight
+-- @treturns Tile the Tile at (x, y) or nil if out of bounds
+function Game:getTileAt(x, y)
+    if x < 0 or y < 0 or x >= self.mapWidth or y >= self.mapHeight then -- out of bounds
+        return nil;
+    end
 
--- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- if you want to add any client side logic (such as state checking functions) this is where you can add them
--- <<-- /Creer-Merge: functions -->>
+    return self.tiles[1 + x + y * self.mapWidth] -- 1 + ... because Lua lists are indexed at 1, so we add 1 to indexes, but we don't for the x, y positions
+end
 
 return Game

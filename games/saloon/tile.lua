@@ -7,10 +7,6 @@
 local class = require("joueur.utilities.class")
 local GameObject = require("games.saloon.gameObject")
 
--- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- you can add addtional require(s) here
--- <<-- /Creer-Merge: requires -->>
-
 --- A Tile in the game that makes up the 2D map grid.
 -- @classmod Tile
 local Tile = class(GameObject)
@@ -67,15 +63,11 @@ end
 -- @tparam string message A string to add to this GameObject's log. Intended for debugging.
 
 
--- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 
 Tile.directions = Table("North", "East", "South", "West")
 
--- Gets the neighbors of this Tile
---
--- @memberOf Tile
--- @instance
--- @returns {Array.<Tile>} - The neighboring (adjacent) Tiles to this tile
+--- Gets the neighbors of this Tile
+-- @treturns Table(Tile) The neighboring (adjacent) Tiles to this tile
 function Tile:getNeighbors()
     local neighbors = Table()
     for i, direction in ipairs(self.directions) do
@@ -87,15 +79,15 @@ function Tile:getNeighbors()
     return neighbors
 end
 
--- Checks if a Tile is pathable to units
---
--- @memberOf Tile
--- @instance
--- @returns {boolean} - True if pathable, false otherwise
+--- Checks if a Tile is pathable to units
+-- @treturns bool True if pathable, false otherwise
 function Tile:isPathable()
     return not (self.isBalcony or self.cowboy or self.furnishing)
 end
 
+--- Checks if this Tile has a specific neighboring Tile
+-- @tparam Tile tile the tile to check against
+-- @treturns bool true if the tile is a neighbor of this Tile, false otherwise
 function Tile:hasNeighbor(tile)
     if tile then
         return self.tileNorth == tile or self.tileEast == tile or self.tileSouth == tile or self.tileEast == tile
@@ -103,7 +95,5 @@ function Tile:hasNeighbor(tile)
         return false
     end
 end
-
--- <<-- /Creer-Merge: functions -->>
 
 return Tile

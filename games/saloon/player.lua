@@ -7,9 +7,8 @@
 local class = require("joueur.utilities.class")
 local GameObject = require("games.saloon.gameObject")
 
--- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 -- you can add addtional require(s) here
--- <<-- /Creer-Merge: requires -->>
+
 
 --- A player in this game. Every AI controls one player.
 -- @classmod Player
@@ -38,7 +37,7 @@ function Player:init(...)
     --- The reason why the player won the game.
     self.reasonWon = ""
     --- How rowdy their team is. When it gets too high their team takes a collective siesta.
-    self.rowdyness = 0
+    self.rowdiness = 0
     --- How many times their team has played a piano.
     self.score = 0
     --- 0 when not having a team siesta. When greater than 0 represents how many turns left for the team siesta to complete.
@@ -71,8 +70,7 @@ end
 -- @tparam string message A string to add to this GameObject's log. Intended for debugging.
 
 
--- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 -- if you want to add any client side logic (such as state checking functions) this is where you can add them
--- <<-- /Creer-Merge: functions -->>
+
 
 return Player
