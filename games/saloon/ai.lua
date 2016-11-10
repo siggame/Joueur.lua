@@ -76,7 +76,8 @@ function AI:runTurn()
 
     ----- 1. Try to spawn a Cowboy -----
 
-    local callInJob = self.game.jobs:randomElement() -- grab a random job to try to call in
+    -- Randomly select a job.
+    local callInJob = self.game.jobs:randomElement()
     local jobCount = 0
     for i, myCowboy in ipairs(self.player.cowboys) do
         if not myCowboy.isDead and myCowboy.job == callInJob then
@@ -84,15 +85,18 @@ function AI:runTurn()
         end
     end
 
-    -- check to make sure we can call in this job
+    -- Call in the new cowboy with that job if there aren't too many
+    --   cowboys with that job already.
     if self.player.youngGun.canCallIn and jobCount < self.game.maxCowboysPerJob then
         print("1. Calling in: " .. callInJob);
         self.player.youngGun:callIn(callInJob);
     end
 
-    -- make sure we found a cowboy to try to do things with
+    --  Now let's use him
     if cowboy then
         ----- 2. Try to move to a Piano -----
+
+        -- find a piano
         local piano = nil -- find a piano
         for i, furnishing in ipairs(self.game.furnishings) do
             if furnishing.isPiano and not furnishing.isDestroyed then
@@ -101,7 +105,8 @@ function AI:runTurn()
             end
         end
 
-        -- if the cowboy can move and is not dead and there is a piano to move to
+        -- There will always be pianos or the game will end. No need to check for existence.
+        -- Attempt to move toward the piano by finding a path.
         if cowboy.canMove and not cowboy.isDead then
             print("Trying to do stuff with Cowboy #" .. cowboy.id)
 
@@ -141,24 +146,25 @@ function AI:runTurn()
 
         -- make sure the cowboy is alive and is not busy
         if not cowboy.isDead and cowboy.turnsBusy == 0 then
-            -- The Cowboy.act() function works differently based on job, and requires a neighboring tile to act on
+            -- Get a random neighboring tile.
             local randomNeighbor = cowboy.tile:getNeighbors():randomElement()
 
+            -- Based on job, act accordingly.
             if cowboy.job == "Bartender" then
-                    -- Bartenders throw Bottles in a direction, and the Bottle makes cowboys drunk which causes them to walk in random directions
-                    -- so throw the bottle on a random neighboring tile, and make drunks move in a random direction
-                    local direction = cowboy.tile.directions:randomElement()
-                    print("4. Bartender acting on Tile #" .. randomNeighbor.id .. " in direction " .. direction)
-                    cowboy:act(randomNeighbor, direction)
+                -- Bartenders throw Bottles in a direction, and the Bottle makes cowboys drunk which causes them to walk in random directions
+                -- so throw the bottle on a random neighboring tile, and make drunks move in a random direction
+                local direction = cowboy.tile.directions:randomElement()
+                print("4. Bartender acting on Tile #" .. randomNeighbor.id .. " in direction " .. direction)
+                cowboy:act(randomNeighbor, direction)
             elseif cowboy.job == "Brawler" then
-                    -- Brawlers cannot act, they instead automatically attack all neighboring tiles on the end of their owner's turn.
-                    print("4. Brawlers cannot act.")
+                -- Brawlers cannot act, they instead automatically attack all neighboring tiles on the end of their owner's turn.
+                print("4. Brawlers cannot act.")
             elseif "Sharpshooter" then
-                    -- Sharpshooters build focus by standing still, they can then act(tile) on a neighboring tile to fire in that direction
-                    if cowboy.focus > 0 then
-                        print("4. Sharpshooter acting on Tile #" .. randomNeighbor.id)
-                        cowboy:act(randomNeighbor) -- fire in a random direction
-                    end
+                -- Sharpshooters build focus by standing still, they can then act(tile) on a neighboring tile to fire in that direction
+                if cowboy.focus > 0 then
+                    print("4. Sharpshooter acting on Tile #" .. randomNeighbor.id)
+                    cowboy:act(randomNeighbor) -- fire in a random direction
+                end
             end
         end
     end
@@ -174,43 +180,52 @@ end
 -- @tparam Tile goal the goal Tile
 -- @treturns Table(Tile) An array of Tiles representing the path, the the first element being a valid adjacent Tile to the start, and the last element being the goal.
 function AI:findPath(start, goal)
-    local queue = Table(start)
-    local parents = Table()
-    local queued = Table()
+    if start == goal then
+        -- no need to make a path to here...
+        return Table()
+    end
 
-    while #queue > 0 do
-        -- pop the first tile off the front of the queue
-        local tile = queue:popFront()
+    -- queue of the tiles that will have their neighbors searched for 'goal'
+    local fringe = Table()
 
-        -- look at all this tile's neighbors
-        for i, neighbor in ipairs(tile:getNeighbors()) do
-            if neighbor == goal then -- we found the path!
-                -- let's reconstruct the path to this end goal, starting and the end and retracing our steps back to the start
+    -- How we got to each tile that went into the fringe.
+    local cameFrom = Table()
+
+    -- Enqueue start as the first tile to have its neighbors searched.
+    fringe:insert(start);
+
+    -- keep exploring neighbors of neighbors... until there are no more.
+    while #fringe > 0 do
+        -- the tile we are currently exploring.
+        local inspect = fringe:popFront();
+
+        -- cycle through the tile's neighbors.
+        for i, neighbor in ipairs(inspect:getNeighbors()) do
+            -- if we found the goal, we have the path!
+            if neighbor == goal then
+                -- Follow the path backward to the start from the goal and return it.
                 local path = Table(goal)
 
-                -- go backward to build the path till we find the starting tile
-                while tile ~= start do
-                    -- push the tile in the path on the front (so the end of the path is the end of the array)
-                    path:pushFront(tile)
-                    -- and set the next tile to look at
-                    tile = parents[tile.id]
+                -- Starting at the tile we are currently at, insert them retracing our steps till we get to the starting tile
+                while inspect ~= start do
+                    path:pushFront(inspect)
+                    inspect = cameFrom[inspect.id]
                 end
 
-                return path
+                return path;
             end
+            -- else we did not find the goal, so enqueue this tile's neighbors to be inspected
 
-            -- check if the neighbor we are looking at needs to be queued
-            if not queued[neighbor.id] and neighbor:isPathable() then
-                -- queue it, and record that it's been queued so we don't investigate it multiple times
-                queue:insert(neighbor)
-                queued[neighbor.id] = true
-
-                -- record how we got to this tile, for path reconstruction
-                parents[neighbor.id] = tile
+            -- if the tile exists, has not been explored or added to the fringe yet, and it is pathable
+            if neighbor and not cameFrom[neighbor.id] and neighbor:isPathable() then
+                -- add it to the tiles to be explored and add where it came from for path reconstruction.
+                fringe:insert(neighbor)
+                cameFrom[neighbor.id] = inspect
             end
         end
     end
 
+    -- if we got here, no path was found
     return Table()
 end
 

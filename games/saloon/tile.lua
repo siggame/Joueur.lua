@@ -63,7 +63,7 @@ end
 -- @tparam string message A string to add to this GameObject's log. Intended for debugging.
 
 
-
+--- The valid directions that tiles can be in, "North", "East", "South", or "West"
 Tile.directions = Table("North", "East", "South", "West")
 
 --- Gets the neighbors of this Tile
