@@ -3,7 +3,7 @@
 local class = require("joueur.utilities.class")
 local BaseAI = require("joueur.baseAI")
 
-${merge("-- ", "requires", "-- you can add addtional require(s) here")}
+${merge("-- ", "requires", "-- you can add additional require(s) here", optional=True)}
 
 --- the AI functions for the ${game_name} game.
 -- @classmod AI
@@ -63,6 +63,6 @@ end
 % endfor
 
 
-${merge("-- ", "functions", "-- if you need additional functions for your AI you can add them here")}
+${merge("-- ", "functions", "-- if you need additional functions for your AI you can add them here", optional=True)}
 
 return AI

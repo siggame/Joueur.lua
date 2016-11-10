@@ -21,7 +21,7 @@ else:
 seperator = "_SEP"
 do_inherited = False
 %>
-${merge("-- ", "requires", "-- you can add addtional require(s) here")}
+${merge("-- ", "requires", "-- you can add additional require(s) here", optional=True)}
 
 --- ${shared['lua']['format_description'](obj['description'])}
 -- @classmod ${obj_key}
@@ -107,6 +107,6 @@ end
 
 % endfor
 
-${merge("-- ", "functions", "-- if you want to add any client side logic (such as state checking functions) this is where you can add them")}
+${merge("-- ", "functions", "-- if you want to add any client side logic this is where you can add them", optional=True)}
 
 return ${obj_key}
