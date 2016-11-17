@@ -8,7 +8,7 @@ local color = require("joueur.ansiColorCoder")
 local EOT_CHAR = string.char(4)
 
 ---
--- @class Client: singleton that talks to the server recieving game information and sending commands to execute via TCP socket. Clients perform no game logic
+-- @class Client: singleton that talks to the server receiving game information and sending commands to execute via TCP socket. Clients perform no game logic
 local Client = class()
 
 function Client:init()
@@ -31,6 +31,7 @@ function Client:connect(server, port, options)
         handleError("COULD_NOT_CONNECT", "Could not connect to " .. self.server .. ":" .. self.port .. ".", message)
     else
         self.socket:settimeout(self._timeoutTime)
+        self.socket:setoption("tcp-nodelay", true) -- disable nagle
         handleError.socket = self.socket
     end
 end
@@ -99,7 +100,7 @@ function Client:waitForEvents()
     end
 
     self.socket:settimeout(0)
-    while true do -- block until we recieve something. using normal socket:settimeout won't allow for keyboard interupts on some systems
+    while true do -- block until we receive something. using normal socket:settimeout won't allow for keyboard interrupts on some systems
         local full, status, partial = self.socket:receive(self._bufferSize) -- should block for timeout
 
         local sent = full or partial
@@ -116,11 +117,11 @@ function Client:waitForEvents()
                 print(color.text("magenta") .. "FROM SERVER <-- " .. sent .. color.reset())
             end
             local total = self._receivedBuffer .. sent
-            local split = total:split(EOT_CHAR) --  split on "end of text" character (basically end of transmition)
+            local split = total:split(EOT_CHAR) --  split on "end of text" character (basically end of transmission)
 
             self._receivedBuffer = split:pop() -- the last item will either be "" if the last char was an EOT_CHAR, or a partial data we need to buffer anyways
 
-            for i, jsonStr in ipairs(split:reverse()) do -- reveres so the first item we recieved is last in the events STACK
+            for i, jsonStr in ipairs(split:reverse()) do -- reveres so the first item we received is last in the events STACK
                 local sent = nil
 
                 safeCall(function()
@@ -168,7 +169,7 @@ function Client:_autoHandleInvalid(data)
 end
 
 function Client:_autoHandleFatal(data)
-    handleError("FATAL_EVENT", nil, "A fatal error occured '" .. data.message .. "'.")
+    handleError("FATAL_EVENT", nil, "A fatal error occurred '" .. data.message .. "'.")
 end
 
 function Client:_autoHandleOver(data)

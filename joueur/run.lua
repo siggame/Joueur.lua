@@ -1,4 +1,5 @@
 local color = require("joueur.ansiColorCoder")
+local socket = require("socket")
 
 local function isModuleAvailable(name)
     if package.loaded[name] then
