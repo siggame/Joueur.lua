@@ -49,6 +49,8 @@ return function(args)
     local gameManager = GameManager(game)
     client:setup(game, ai, gameManager, args)
 
+    ai:setSettings(args.aiSettings)
+
     client:send("play", {
         gameName = gameName,
         requestedSession = args.session,

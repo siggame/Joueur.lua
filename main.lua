@@ -15,6 +15,7 @@ parser:option("-i", "--index"):description("the player number you want to be, wi
 parser:option("-w", "--password"):description("the password required for authentication on official servers")
 parser:option("-r", "--session"):description("the requested game session you want to play in on the server"):default("*")
 parser:option("--gameSettings"):description("Any settings for the game server to force. Must be url parms formatted (key=value&otherKey=otherValue)")
+parser:option("--aiSettings"):description("Any settings for the AI. Delimit pairs by an ampersand (key=value&otherKey=otherValue)")
 parser:flag("--printIO"):description("(debugging) print IO through the TCP socket to the terminal")
 
 run(parser:parse())
