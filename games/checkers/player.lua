@@ -1,10 +1,14 @@
--- This is a simple class to represent the Player object in the game. You can extend it by adding utility functions here in this file.
+-- Player: A player in this game. Every AI controls one player.
+-- DO NOT MODIFY THIS FILE
+-- Never try to directly create an instance of this class, or modify its member variables.
+-- Instead, you should only be reading its variables and calling its functions.
+
 
 local class = require("joueur.utilities.class")
 local GameObject = require("games.checkers.gameObject")
 
 -- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- you can add addtional require(s) here
+-- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
 --- A player in this game. Every AI controls one player.
@@ -26,7 +30,7 @@ function Player:init(...)
     --- The name of the player.
     self.name = "Anonymous"
     --- This player's opponent in the game.
-    self.otherPlayer = nil
+    self.opponent = nil
     --- The reason why the player lost the game.
     self.reasonLost = ""
     --- The reason why the player won the game.
@@ -60,7 +64,7 @@ end
 
 
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- if you want to add any client side logic (such as state checking functions) this is where you can add them
+-- if you want to add any client side logic this is where you can add them
 -- <<-- /Creer-Merge: functions -->>
 
 return Player

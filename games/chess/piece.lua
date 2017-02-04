@@ -1,10 +1,14 @@
--- This is a simple class to represent the Piece object in the game. You can extend it by adding utility functions here in this file.
+-- Piece: A chess piece.
+-- DO NOT MODIFY THIS FILE
+-- Never try to directly create an instance of this class, or modify its member variables.
+-- Instead, you should only be reading its variables and calling its functions.
+
 
 local class = require("joueur.utilities.class")
 local GameObject = require("games.chess.gameObject")
 
 -- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- you can add addtional require(s) here
+-- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
 --- A chess piece.
@@ -49,7 +53,7 @@ end
 -- @tparam string file The file coordinate to move to. Must be [a-h].
 -- @tparam number rank The rank coordinate to move to. Must be [1-8].
 -- @tparam[opt=""] string promotionType If this is a Pawn moving to the end of the board then this parameter is what to promote it to. When used must be 'Queen', 'Knight', 'Rook', or 'Bishop'.
--- @treturn Move The Move you did if successful, otherwise null if invalid. In addition if your move was invalid you will lose.
+-- @treturn Move The Move you did if successful, otherwise nil if invalid. In addition if your move was invalid you will lose.
 function Piece:move(file, rank, promotionType)
     if promotionType == nil then
         promotionType = ""
@@ -69,7 +73,7 @@ end
 
 
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- if you want to add any client side logic (such as state checking functions) this is where you can add them
+-- if you want to add any client side logic this is where you can add them
 -- <<-- /Creer-Merge: functions -->>
 
 return Piece

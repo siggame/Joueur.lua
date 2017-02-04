@@ -4,7 +4,7 @@ local class = require("joueur.utilities.class")
 local BaseAI = require("joueur.baseAI")
 
 -- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- you can add addtional require(s) here
+-- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
 --- the AI functions for the Checkers game.

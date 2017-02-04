@@ -8,7 +8,7 @@ local class = require("joueur.utilities.class")
 local BaseGame = require("joueur.baseGame")
 
 -- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- you can add addtional require(s) here
+-- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
 --- Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Cowboys.
@@ -81,7 +81,7 @@ end
 
 
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- if you want to add any client side logic (such as state checking functions) this is where you can add them
+-- if you want to add any client side logic this is where you can add them
 -- <<-- /Creer-Merge: functions -->>
 
 return Game

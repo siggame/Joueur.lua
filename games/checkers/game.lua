@@ -1,10 +1,14 @@
--- This is a simple class to represent the Game object in the game. You can extend it by adding utility functions here in this file.
+-- Game: The simple version of American Checkers. An 8x8 board with 12 checkers on each side that must move diagonally to the opposing side until kinged.
+-- DO NOT MODIFY THIS FILE
+-- Never try to directly create an instance of this class, or modify its member variables.
+-- Instead, you should only be reading its variables and calling its functions.
+
 
 local class = require("joueur.utilities.class")
 local BaseGame = require("joueur.baseGame")
 
 -- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- you can add addtional require(s) here
+-- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
 --- The simple version of American Checkers. An 8x8 board with 12 checkers on each side that must move diagonally to the opposing side until kinged.
@@ -55,7 +59,7 @@ end
 
 
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- if you want to add any client side logic (such as state checking functions) this is where you can add them
+-- if you want to add any client side logic this is where you can add them
 -- <<-- /Creer-Merge: functions -->>
 
 return Game
