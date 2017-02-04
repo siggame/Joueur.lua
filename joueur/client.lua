@@ -18,17 +18,17 @@ function Client:init()
     self._eventsStack = Table()
 end
 
-function Client:connect(server, port, options)
-    self.server = server
+function Client:connect(hostname, port, options)
+    self.hostname = hostname
     self.port = port
     self._printIO = options.printIO
 
-    print(color.text("cyan") .. "Connecting to: " .. self.server .. ":" .. self.port .. color.reset())
+    print(color.text("cyan") .. "Connecting to: " .. self.hostname .. ":" .. self.port .. color.reset())
 
-    self.socket, message = socket.connect(self.server, self.port)
+    self.socket, message = socket.connect(self.hostname, self.port)
 
     if self.socket == nil then
-        handleError("COULD_NOT_CONNECT", "Could not connect to " .. self.server .. ":" .. self.port .. ".", message)
+        handleError("COULD_NOT_CONNECT", "Could not connect to " .. self.hostname .. ":" .. self.port .. ".", message)
     else
         self.socket:settimeout(self._timeoutTime)
         self.socket:setoption("tcp-nodelay", true) -- disable nagle
@@ -184,7 +184,8 @@ function Client:_autoHandleOver(data)
     self.socket:close()
 
     if data.message then
-        print(color.text("cyan") .. data.message .. color.reset())
+        local message = data.message:replace("__HOSTNAME__", self.hostname)
+        print(color.text("cyan") .. message .. color.reset())
     end
 
     os.exit(0)

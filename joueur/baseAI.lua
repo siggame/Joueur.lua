@@ -32,10 +32,12 @@ function BaseAI:gameUpdated()
 end
 
 function BaseAI:setSettings(aiSettings)
-    local settings = aiSettings:split("&")
-    for i, pair in ipairs(settings) do
-        local kv = pair:split("=")
-        self._settings[kv[1]] = kv[2]
+    if aiSettings then
+        local settings = aiSettings:split("&")
+        for i, pair in ipairs(settings) do
+            local kv = pair:split("=")
+            self._settings[kv[1]] = kv[2]
+        end
     end
 end
 
