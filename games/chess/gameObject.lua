@@ -1,11 +1,11 @@
--- This is a simple class to represent the GameObject object in the game. You can extend it by adding utility functions here in this file.
+-- GameObject: An object in the game. The most basic class that all game classes should inherit from automatically.
+-- DO NOT MODIFY THIS FILE
+-- Never try to directly create an instance of this class, or modify its member variables.
+-- Instead, you should only be reading its variables and calling its functions.
+
 
 local class = require("joueur.utilities.class")
 local BaseGameObject = require("joueur.baseGameObject")
-
--- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- you can add addtional require(s) here
--- <<-- /Creer-Merge: requires -->>
 
 --- An object in the game. The most basic class that all game classes should inherit from automatically.
 -- @classmod GameObject
@@ -23,8 +23,6 @@ function GameObject:init(...)
     self.id = ""
     --- Any strings logged will be stored here. Intended for debugging.
     self.logs = Table()
-
-
 end
 
 --- Adds a message to this GameObject's logs. Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
@@ -34,10 +32,5 @@ function GameObject:log(message)
         message = message,
     }))
 end
-
-
--- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- if you want to add any client side logic (such as state checking functions) this is where you can add them
--- <<-- /Creer-Merge: functions -->>
 
 return GameObject

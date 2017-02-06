@@ -1,11 +1,11 @@
--- This is a simple class to represent the Move object in the game. You can extend it by adding utility functions here in this file.
+-- Move: Contains all details about a Piece's move in the game.
+-- DO NOT MODIFY THIS FILE
+-- Never try to directly create an instance of this class, or modify its member variables.
+-- Instead, you should only be reading its variables and calling its functions.
+
 
 local class = require("joueur.utilities.class")
 local GameObject = require("games.chess.gameObject")
-
--- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- you can add addtional require(s) here
--- <<-- /Creer-Merge: requires -->>
 
 --- Contains all details about a Piece's move in the game.
 -- @classmod Move
@@ -17,7 +17,7 @@ function Move:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The Piece captured by this Move, null if no capture.
+    --- The Piece captured by this Move, nil if no capture.
     self.captured = nil
     --- The file the Piece moved from.
     self.fromFile = ""
@@ -25,7 +25,7 @@ function Move:init(...)
     self.fromRank = 0
     --- The Piece that was moved.
     self.piece = nil
-    --- The Piece type this Move's Piece was promoted to from a Pawn, empty string if no promotion occured.
+    --- The Piece type this Move's Piece was promoted to from a Pawn, empty string if no promotion occurred.
     self.promotion = ""
     --- The standard algebraic notation (SAN) representation of the move.
     self.san = ""
@@ -45,18 +45,11 @@ function Move:init(...)
     --- (inherited) Any strings logged will be stored here. Intended for debugging.
     -- @field[{string, ...}] self.logs
     -- @see GameObject.logs
-
-
 end
 
 --- (inherited) Adds a message to this GameObject's logs. Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
 -- @function Move:log
 -- @see GameObject:log
 -- @tparam string message A string to add to this GameObject's log. Intended for debugging.
-
-
--- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- if you want to add any client side logic (such as state checking functions) this is where you can add them
--- <<-- /Creer-Merge: functions -->>
 
 return Move

@@ -1,7 +1,7 @@
 local serializer = require("joueur.serializer")
 local class = require("joueur.utilities.class")
 
--- @class GameManager: manages the games state and does delta merges. Competitiors do not modify
+-- @class GameManager: manages the games state and does delta merges. Competitors do not modify
 local GameManager = class(deltaMergeable)
 
 function GameManager:init(game)
@@ -23,7 +23,7 @@ function GameManager:applyDeltaState(delta)
     self:_mergeDelta(self.game, delta)
 end
 
---- game objects can be refences in the delta states for cycles, they will all point to the game objects here.
+--- game objects can be references in the delta states for cycles, they will all point to the game objects here.
 function GameManager:_initGameObjects(gameObjects)
     for id, gameObject in pairs(gameObjects) do
         if not self.game.gameObjects[id] then
@@ -42,7 +42,7 @@ function GameManager:_mergeDelta(state, delta)
             table.pop(state)
         end
 
-        -- arrays in lua start at 1 instead of 0 like in Javascript, so act like the delta sent starts at 1 too by increasing all key values by 1
+        -- arrays in lua start at 1 instead of 0 like in JavaScript, so act like the delta sent starts at 1 too by increasing all key values by 1
         local list = Table()
         for key, value in pairs(delta) do
             list[tonumber(key) + 1] = value

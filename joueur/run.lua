@@ -1,4 +1,5 @@
 local color = require("joueur.ansiColorCoder")
+local socket = require("socket")
 
 local function isModuleAvailable(name)
     if package.loaded[name] then
@@ -47,6 +48,8 @@ return function(args)
 
     local gameManager = GameManager(game)
     client:setup(game, ai, gameManager, args)
+
+    ai:setSettings(args.aiSettings)
 
     client:send("play", {
         gameName = gameName,

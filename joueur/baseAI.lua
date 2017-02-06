@@ -10,6 +10,7 @@ local BaseAI = class()
 -- @param {Game} the game this AI should be playing
 function BaseAI:init(game)
     self.game = game
+    self._settings = Table()
 end
 
 ---
@@ -28,6 +29,23 @@ end
 -- called every time the game is updated, intended to be overridden by the competitor's AI Class
 function BaseAI:gameUpdated()
     -- intended to be overridden by the AI class, purposed left empty here to not penalize competitors for forgetting to call the parent method
+end
+
+function BaseAI:setSettings(aiSettings)
+    if aiSettings then
+        local settings = aiSettings:split("&")
+        for i, pair in ipairs(settings) do
+            local kv = pair:split("=")
+            self._settings[kv[1]] = kv[2]
+        end
+    end
+end
+
+--- Gets an AI setting passed to the program via the `--aiSettings` flag. If the flag was set it will be returned as a string value, None otherwise.
+-- @tparam string The key of the setting you wish to get the value for
+-- @treturns string A string representing the value set via command line, or nil if the key was not set
+function BaseAI:getSetting(key)
+    return self._settings[key]
 end
 
 ---

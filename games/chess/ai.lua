@@ -3,8 +3,6 @@
 local class = require("joueur.utilities.class")
 local BaseAI = require("joueur.baseAI")
 
---- @class AI: the AI functions for the Chess game.
-
 --- the AI functions for the Chess game.
 -- @classmod AI
 
@@ -55,20 +53,43 @@ function AI:runTurn()
     --    4) makes a random (and probably invalid) move.
 
     -- 1) print the board to the console
-    for file = 9, -1, -1 do
+    self:printCurrentBoard()
+
+    -- 2) print the opponent's last move to the console
+    if #self.game.moves > 0 then
+        print("Opponent's Last Move: '" .. self.game.moves[#self.game.moves].san .. "'")
+    end
+
+    -- 3) print how much time remaining this AI has to calculate moves
+    print("Time Remaining: " .. self.player.timeRemaining .. " ns")
+
+    -- 4) make a random (and probably invalid) move.
+    local randomPiece = self.player.pieces:randomElement()
+    local randomFile = string.char(string.byte("a") + math.random(8) - 1)
+    local randomRank = math.random(8)
+    randomPiece:move(randomFile, randomRank)
+
+    return true -- to signify we are done with our turn.
+end
+
+
+--- Prints the current board using pretty ASCII art
+-- Note: you can delete this function if you wish
+function AI:printCurrentBoard()
+    for rank = 9, -1, -1 do
         local str = ""
-        if file == 9 or file == 0 then -- the top or bottom of the board
+        if rank == 9 or rank == 0 then -- the top or bottom of the board
             str = "   +------------------------+"
-        elseif file == -1 then -- show the ranks
+        elseif rank == -1 then -- show the ranks
             str = "     a  b  c  d  e  f  g  h"
         else -- board
-            str = " " .. file .. " |"
-            -- fill in all the ranks with pieces at the current rank
-            for rankOffset = 0, 7 do
-                local rank = string.char(string.byte("a") + rankOffset) -- start at a, with with rank offset increasing the char
+            str = " " .. rank .. " |"
+            -- fill in all the ranks with pieces at the current file
+            for fileOffset = 0, 7 do
+                local file = string.char(string.byte("a") + fileOffset) -- start at a, with with file offset increasing the char
                 local currentPiece = nil
                 for i, piece in ipairs(self.game.pieces) do
-                    if piece.rank == rank and piece.file == file then -- we found the piece at (rank, file)
+                    if piece.file == file and piece.rank == rank then -- we found the piece at (file, rank)
                         currentPiece = piece
                         break
                     end
@@ -94,22 +115,6 @@ function AI:runTurn()
 
         print(str)
     end
-
-    -- 2) print the opponent's last move to the console
-    if #self.game.moves > 0 then
-        print("Opponent's Last Move: '" .. self.game.moves[#self.game.moves].san .. "'")
-    end
-
-    -- 3) print how much time remaining this AI has to calculate moves
-    print("Time Remaining: " .. self.player.timeRemaining .. " ns")
-
-    -- 4) make a random (and probably invalid) move.
-    local randomPiece = self.player.pieces:randomElement()
-    local randomFile = string.char(string.byte("a") + math.random(8) - 1)
-    local randomRank = math.random(8)
-    randomPiece:move(randomFile, randomRank)
-
-    return true -- to signify we are done with our turn.
 end
 
 return AI
