@@ -1,3 +1,8 @@
 #!/bin/bash
 
-luajit ./main.lua "$@"
+# use `luajit` if available as it's way faster, otherwise default to normal lua
+if hash luajit 2>/dev/null; then
+    luajit ./main.lua "$@"
+else
+    lua ./main.lua "$@"
+fi
