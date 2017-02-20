@@ -3,6 +3,7 @@ luac.out
 
 # docs output
 docs/output/
+*.log
 
 # luarocks build files
 *.src.rock
