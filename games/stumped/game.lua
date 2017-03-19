@@ -37,6 +37,8 @@ function Game:init(...)
     self.gameObjects = Table()
     --- All the Jobs that Beavers can have in the game.
     self.jobs = Table()
+    --- Constant number used to calculate what it costs to spawn a new lodge.
+    self.lodgeCostConstant = 0
     --- How many lodges must be complete at once to win the game.
     self.lodgesCompleteToWin = 0
     --- The number of Tiles in the map along the y (vertical) axis.
@@ -51,6 +53,8 @@ function Game:init(...)
     self.session = ""
     --- Every Spawner in the game.
     self.spawner = Table()
+    --- Constant number used to calculate how many breanches/fish Beavers harvest from spawners.
+    self.spawnerHarvestConstant = 0
     --- All the types of spawners in the game.
     self.spawnerTypes = Table()
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.

@@ -32,7 +32,7 @@ function Job:init(...)
     --- The amount of damage this job does per attack.
     self.damage = 0
     --- How many turns a beaver attacked by this job is distracted by.
-    self.distracts = 0
+    self.distractionPower = 0
     --- Scalar for how many fish this job harvests at once.
     self.fishing = 0
     --- The amount of starting health this job has.
@@ -58,11 +58,11 @@ function Job:init(...)
 end
 
 --- Recruits a Beaver of this Job to a lodge
--- @tparam Tile lodge The Tile that is a lodge owned by you that you wish to spawn the Beaver of this Job on.
+-- @tparam Tile tile The Tile that is a lodge owned by you that you wish to spawn the Beaver of this Job on.
 -- @treturn Beaver The recruited Beaver if successful, nil otherwise.
-function Job:recruit(lodge)
+function Job:recruit(tile)
     return (self:_runOnServer("recruit", {
-        lodge = lodge,
+        tile = tile,
     }))
 end
 

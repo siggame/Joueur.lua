@@ -21,9 +21,11 @@ function Spawner:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- How much of the resource is left.
+    --- True if this Spawner has been harvested this turn, and it will not heal at the end of the turn, false otherwise.
+    self.hasBeenHarvested = false
+    --- How much health this spawner has, which is used to calculate how much of its resource can be harvested.
     self.health = 0
-    --- The tile this resource is on.
+    --- The tile this Spawner is on.
     self.tile = nil
     --- What type of resource this is ('Fish' or 'Branch').
     self.type = ""

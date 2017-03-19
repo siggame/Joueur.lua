@@ -25,8 +25,6 @@ function Beaver:init(...)
     self.actions = 0
     --- The number of branches this beaver is holding.
     self.branches = 0
-    --- Number of turns this beaver is distracted for (0 means not distracted).
-    self.distracted = 0
     --- The number of fish this beaver is holding.
     self.fish = 0
     --- How much health this beaver has left.
@@ -37,8 +35,12 @@ function Beaver:init(...)
     self.moves = 0
     --- The Player that owns and can control this beaver.
     self.owner = nil
+    --- True if the Beaver has finished being recruited and can do things, False otherwise.
+    self.recruited = false
     --- The tile this beaver is on.
     self.tile = nil
+    --- Number of turns this beaver is distracted for (0 means not distracted).
+    self.turnsDistracted = 0
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
     -- @field[string] self.gameObjectName
@@ -56,11 +58,11 @@ function Beaver:init(...)
 end
 
 --- Attacks another adjacent beaver.
--- @tparam Tile tile The tile of the beaver you want to attack.
+-- @tparam Beaver beaver The beaver to attack. Must be on an adjacent tile.
 -- @treturn bool True if successfully attacked, false otherwise.
-function Beaver:attack(tile)
+function Beaver:attack(beaver)
     return not not (self:_runOnServer("attack", {
-        tile = tile,
+        beaver = beaver,
     }))
 end
 
@@ -72,31 +74,33 @@ function Beaver:buildLodge()
 end
 
 --- Drops some of the given resource on the beaver's tile. Fish dropped in water disappear instantly, and fish dropped on land die one per tile per turn.
+-- @tparam Tile tile The Tile to drop branches/fish on. Must be the same Tile that the Beaver is on, or an adjacent one.
 -- @tparam string resource The type of resource to drop ('branch' or 'fish').
--- @tparam[opt=0] number amount The amount of the resource to drop, numbers <= 0 will drop all of that type.
+-- @tparam[opt=0] number amount The amount of the resource to drop, numbers <= 0 will drop all the resource type.
 -- @treturn bool True if successfully dropped the resource, false otherwise.
-function Beaver:drop(resource, amount)
+function Beaver:drop(tile, resource, amount)
     if amount == nil then
         amount = 0
     end
 
     return not not (self:_runOnServer("drop", {
+        tile = tile,
         resource = resource,
         amount = amount,
     }))
 end
 
 --- Harvests the branches or fish from a Spawner on an adjacent tile.
--- @tparam Tile tile The tile you want to harvest.
+-- @tparam Spawner spawner The Spawner you want to harvest. Must be on an adjacent tile.
 -- @treturn bool True if successfully harvested, false otherwise.
-function Beaver:harvest(tile)
+function Beaver:harvest(spawner)
     return not not (self:_runOnServer("harvest", {
-        tile = tile,
+        spawner = spawner,
     }))
 end
 
 --- Moves this beaver from its current tile to an adjacent tile.
--- @tparam Tile tile The tile this beaver should move to. Costs 2 moves normally, 3 if moving upstream, and 1 if moving downstream.
+-- @tparam Tile tile The tile this beaver should move to.
 -- @treturn bool True if the move worked, false otherwise.
 function Beaver:move(tile)
     return not not (self:_runOnServer("move", {
@@ -105,15 +109,17 @@ function Beaver:move(tile)
 end
 
 --- Picks up some branches or fish on the beaver's tile.
+-- @tparam Tile tile The Tile to pickup branches/fish from. Must be the same Tile that the Beaver is on, or an adjacent one.
 -- @tparam string resource The type of resource to pickup ('branch' or 'fish').
--- @tparam[opt=0] number amount The amount of the resource to drop, numbers <= 0 will pickup all of that type.
+-- @tparam[opt=0] number amount The amount of the resource to drop, numbers <= 0 will pickup all of the resource type.
 -- @treturn bool True if successfully picked up a resource, false otherwise.
-function Beaver:pickup(resource, amount)
+function Beaver:pickup(tile, resource, amount)
     if amount == nil then
         amount = 0
     end
 
     return not not (self:_runOnServer("pickup", {
+        tile = tile,
         resource = resource,
         amount = amount,
     }))
