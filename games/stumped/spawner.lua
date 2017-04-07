@@ -1,4 +1,4 @@
--- Spawner: A resource spawner that generates branches or fish.
+-- Spawner: A resource spawner that generates branches or food.
 -- DO NOT MODIFY THIS FILE
 -- Never try to directly create an instance of this class, or modify its member variables.
 -- Instead, you should only be reading its variables and calling its functions.
@@ -11,7 +11,7 @@ local GameObject = require("games.stumped.gameObject")
 -- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
---- A resource spawner that generates branches or fish.
+--- A resource spawner that generates branches or food.
 -- @classmod Spawner
 local Spawner = class(GameObject)
 
@@ -23,11 +23,11 @@ function Spawner:init(...)
 
     --- True if this Spawner has been harvested this turn, and it will not heal at the end of the turn, false otherwise.
     self.hasBeenHarvested = false
-    --- How much health this spawner has, which is used to calculate how much of its resource can be harvested.
+    --- How much health this Spawner has, which is used to calculate how much of its resource can be harvested.
     self.health = 0
-    --- The tile this Spawner is on.
+    --- The Tile this Spawner is on.
     self.tile = nil
-    --- What type of resource this is ('Fish' or 'Branch').
+    --- What type of resource this is ('food' or 'branches').
     self.type = ""
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.

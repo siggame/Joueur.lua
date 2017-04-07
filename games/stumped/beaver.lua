@@ -21,25 +21,25 @@ function Beaver:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The number of actions remaining for the beaver this turn.
+    --- The number of actions remaining for the Beaver this turn.
     self.actions = 0
-    --- The number of branches this beaver is holding.
+    --- The amount of branches this Beaver is holding.
     self.branches = 0
-    --- The number of fish this beaver is holding.
-    self.fish = 0
-    --- How much health this beaver has left.
+    --- The amount of food this Beaver is holding.
+    self.food = 0
+    --- How much health this Beaver has left.
     self.health = 0
-    --- The Job this beaver was recruited to do.
+    --- The Job this Beaver was recruited to do.
     self.job = nil
-    --- How many moves this beaver has left this turn.
+    --- How many moves this Beaver has left this turn.
     self.moves = 0
-    --- The Player that owns and can control this beaver.
+    --- The Player that owns and can control this Beaver.
     self.owner = nil
     --- True if the Beaver has finished being recruited and can do things, False otherwise.
     self.recruited = false
-    --- The tile this beaver is on.
+    --- The Tile this Beaver is on.
     self.tile = nil
-    --- Number of turns this beaver is distracted for (0 means not distracted).
+    --- Number of turns this Beaver is distracted for (0 means not distracted).
     self.turnsDistracted = 0
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
@@ -58,7 +58,7 @@ function Beaver:init(...)
 end
 
 --- Attacks another adjacent beaver.
--- @tparam Beaver beaver The beaver to attack. Must be on an adjacent tile.
+-- @tparam Beaver beaver The Beaver to attack. Must be on an adjacent Tile.
 -- @treturn bool True if successfully attacked, false otherwise.
 function Beaver:attack(beaver)
     return not not (self:_runOnServer("attack", {
@@ -66,16 +66,16 @@ function Beaver:attack(beaver)
     }))
 end
 
---- Builds a lodge on the Beavers current tile.
+--- Builds a lodge on the Beavers current Tile.
 -- @treturn bool True if successfully built a lodge, false otherwise.
 function Beaver:buildLodge()
     return not not (self:_runOnServer("buildLodge", {
     }))
 end
 
---- Drops some of the given resource on the beaver's tile. Fish dropped in water disappear instantly, and fish dropped on land die one per tile per turn.
--- @tparam Tile tile The Tile to drop branches/fish on. Must be the same Tile that the Beaver is on, or an adjacent one.
--- @tparam string resource The type of resource to drop ('branch' or 'fish').
+--- Drops some of the given resource on the beaver's Tile.
+-- @tparam Tile tile The Tile to drop branches/food on. Must be the same Tile that the Beaver is on, or an adjacent one.
+-- @tparam string resource The type of resource to drop ('branch' or 'food').
 -- @tparam[opt=0] number amount The amount of the resource to drop, numbers <= 0 will drop all the resource type.
 -- @treturn bool True if successfully dropped the resource, false otherwise.
 function Beaver:drop(tile, resource, amount)
@@ -90,8 +90,8 @@ function Beaver:drop(tile, resource, amount)
     }))
 end
 
---- Harvests the branches or fish from a Spawner on an adjacent tile.
--- @tparam Spawner spawner The Spawner you want to harvest. Must be on an adjacent tile.
+--- Harvests the branches or food from a Spawner on an adjacent Tile.
+-- @tparam Spawner spawner The Spawner you want to harvest. Must be on an adjacent Tile.
 -- @treturn bool True if successfully harvested, false otherwise.
 function Beaver:harvest(spawner)
     return not not (self:_runOnServer("harvest", {
@@ -99,8 +99,8 @@ function Beaver:harvest(spawner)
     }))
 end
 
---- Moves this beaver from its current tile to an adjacent tile.
--- @tparam Tile tile The tile this beaver should move to.
+--- Moves this Beaver from its current Tile to an adjacent Tile.
+-- @tparam Tile tile The Tile this Beaver should move to.
 -- @treturn bool True if the move worked, false otherwise.
 function Beaver:move(tile)
     return not not (self:_runOnServer("move", {
@@ -108,9 +108,9 @@ function Beaver:move(tile)
     }))
 end
 
---- Picks up some branches or fish on the beaver's tile.
--- @tparam Tile tile The Tile to pickup branches/fish from. Must be the same Tile that the Beaver is on, or an adjacent one.
--- @tparam string resource The type of resource to pickup ('branch' or 'fish').
+--- Picks up some branches or food on the beaver's tile.
+-- @tparam Tile tile The Tile to pickup branches/food from. Must be the same Tile that the Beaver is on, or an adjacent one.
+-- @tparam string resource The type of resource to pickup ('branch' or 'food').
 -- @tparam[opt=0] number amount The amount of the resource to drop, numbers <= 0 will pickup all of the resource type.
 -- @treturn bool True if successfully picked up a resource, false otherwise.
 function Beaver:pickup(tile, resource, amount)

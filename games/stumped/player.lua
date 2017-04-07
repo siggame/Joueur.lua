@@ -23,11 +23,11 @@ function Player:init(...)
 
     --- The array-like table of Beavers owned by this Player.
     self.beavers = Table()
-    --- How many branches are required to build a lodge for this player.
+    --- How many branches are required to build a lodge for this Player.
     self.branchesToBuildLodge = 0
     --- What type of client this is, e.g. 'Python', 'JavaScript', or some other language. For potential data mining purposes.
     self.clientType = ""
-    --- A array-like table of tiles that contain lodges owned by this player.
+    --- A array-like table of Tiles that contain lodges owned by this player.
     self.lodges = Table()
     --- If the player lost the game or not.
     self.lost = false

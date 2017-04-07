@@ -21,25 +21,25 @@ function Job:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The number of actions this job can make per turn.
+    --- The number of actions this Job can make per turn.
     self.actions = 0
-    --- How many resources a beaver with this job can hold at once.
+    --- How many combined resources a beaver with this Job can hold at once.
     self.carryLimit = 0
-    --- Scalar for how many branches this job harvests at once.
+    --- Scalar for how many branches this Job harvests at once.
     self.chopping = 0
-    --- How many fish this Job costs to recruit.
+    --- How much food this Job costs to recruit.
     self.cost = 0
-    --- The amount of damage this job does per attack.
+    --- The amount of damage this Job does per attack.
     self.damage = 0
-    --- How many turns a beaver attacked by this job is distracted by.
+    --- How many turns a beaver attacked by this Job is distracted by.
     self.distractionPower = 0
-    --- Scalar for how many fish this job harvests at once.
-    self.fishing = 0
-    --- The amount of starting health this job has.
+    --- The amount of starting health this Job has.
     self.health = 0
-    --- The number of moves this job can make per turn.
+    --- The number of moves this Job can make per turn.
     self.moves = 0
-    --- The job title ('builder', 'fisher', etc).
+    --- Scalar for how much food this Job harvests at once.
+    self.munching = 0
+    --- The Job title.
     self.title = ""
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.

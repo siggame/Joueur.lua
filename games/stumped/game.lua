@@ -25,13 +25,11 @@ function Game:init(...)
 
     --- Every Beaver in the game.
     self.beavers = Table()
-    --- How many branches a lodge must have to be considered complete.
-    self.branchesToCompleteLodge = 0
     --- The player whose turn it is currently. That player can send commands. Other players cannot.
     self.currentPlayer = nil
     --- The current turn number, starting at 0 for the first player's turn.
     self.currentTurn = 0
-    --- When a Player has less Beavers than this number, recruiting other Beavers is free.
+    --- When a Player has less Beavers than this number, then recruiting other Beavers is free.
     self.freeBeaversCount = 0
     --- A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
     self.gameObjects = Table()
@@ -39,8 +37,8 @@ function Game:init(...)
     self.jobs = Table()
     --- Constant number used to calculate what it costs to spawn a new lodge.
     self.lodgeCostConstant = 0
-    --- How many lodges must be complete at once to win the game.
-    self.lodgesCompleteToWin = 0
+    --- How many lodges must be owned by a Player at once to win the game.
+    self.lodgesToWin = 0
     --- The number of Tiles in the map along the y (vertical) axis.
     self.mapHeight = 0
     --- The number of Tiles in the map along the x (horizontal) axis.
@@ -53,9 +51,9 @@ function Game:init(...)
     self.session = ""
     --- Every Spawner in the game.
     self.spawner = Table()
-    --- Constant number used to calculate how many breanches/fish Beavers harvest from spawners.
+    --- Constant number used to calculate how many breanches/food Beavers harvest from Spawners.
     self.spawnerHarvestConstant = 0
-    --- All the types of spawners in the game.
+    --- All the types of Spawners in the game.
     self.spawnerTypes = Table()
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     self.tiles = Table()

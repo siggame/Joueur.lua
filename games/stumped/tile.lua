@@ -21,17 +21,17 @@ function Tile:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The beaver on this tile if present, otherwise nil.
+    --- The Beaver on this Tile if present, otherwise nil.
     self.beaver = nil
-    --- The number of branches dropped on this tile.
+    --- The number of branches dropped on this Tile.
     self.branches = 0
-    --- The number of fish dropped on this tile.
-    self.fish = 0
-    --- The cardinal direction water is flowing on this tile ('North', 'East', 'South', 'West').
+    --- The cardinal direction water is flowing on this Tile ('North', 'East', 'South', 'West').
     self.flowDirection = ""
-    --- The owner of the beaver lodge on this tile, if present, otherwise nil.
+    --- The number of food dropped on this Tile.
+    self.food = 0
+    --- The owner of the Beaver lodge on this Tile, if present, otherwise nil.
     self.lodgeOwner = nil
-    --- The resource spawner on this tile if present, otherwise nil.
+    --- The resource Spawner on this Tile if present, otherwise nil.
     self.spawner = nil
     --- The Tile to the 'East' of this one (x+1, y). nil if out of bounds of the map.
     self.tileEast = nil
