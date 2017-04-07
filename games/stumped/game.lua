@@ -51,7 +51,7 @@ function Game:init(...)
     self.session = ""
     --- Every Spawner in the game.
     self.spawner = Table()
-    --- Constant number used to calculate how many breanches/food Beavers harvest from Spawners.
+    --- Constant number used to calculate how many branches/food Beavers harvest from Spawners.
     self.spawnerHarvestConstant = 0
     --- All the types of Spawners in the game.
     self.spawnerTypes = Table()
