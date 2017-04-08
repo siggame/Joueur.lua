@@ -7,9 +7,7 @@
 local class = require("joueur.utilities.class")
 local BaseGameObject = require("joueur.baseGameObject")
 
--- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- you can add additional require(s) here
--- <<-- /Creer-Merge: requires -->>
+
 
 --- An object in the game. The most basic class that all game classes should inherit from automatically.
 -- @classmod GameObject
@@ -40,8 +38,7 @@ function GameObject:log(message)
 end
 
 
--- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- if you want to add any client side logic this is where you can add them
--- <<-- /Creer-Merge: functions -->>
+
+
 
 return GameObject

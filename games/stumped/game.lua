@@ -7,9 +7,7 @@
 local class = require("joueur.utilities.class")
 local BaseGame = require("joueur.baseGame")
 
--- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- you can add additional require(s) here
--- <<-- /Creer-Merge: requires -->>
+
 
 --- Gather branches and build up your lodge as beavers fight to survive.
 -- @classmod Game
@@ -73,8 +71,18 @@ function Game:init(...)
 end
 
 
--- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- if you want to add any client side logic this is where you can add them
--- <<-- /Creer-Merge: functions -->>
+--- Gets the Tile at a specified (x, y) position
+-- @tparam number x integer between 0 and the mapWidth
+-- @tparam number y integer between 0 and the mapHeight
+-- @treturns Tile the Tile at (x, y) or nil if out of bounds
+function Game:getTileAt(x, y)
+    if x < 0 or y < 0 or x >= self.mapWidth or y >= self.mapHeight then -- out of bounds
+        return nil;
+    end
+
+    return self.tiles[1 + x + y * self.mapWidth] -- 1 + ... because Lua lists are indexed at 1, so we add 1 to indexes, but we don't for the x, y positions
+end
+
+
 
 return Game
