@@ -77,16 +77,19 @@ function AI:runTurn()
                 end
             end
 
-            -- use the pathfinding algorithm below to make a path to the spawner's target tile
-            local path = self:findPath(beaver.tile, target)
+            -- if we found a target, path try it path to it
+            if target then
+                -- use the pathfinding algorithm below to make a path to the spawner's target tile
+                local path = self:findPath(beaver.tile, target)
 
-            -- if there is a path, move to it
-            --      length 0 means no path could be found to the tile
-            --      length 1 means the target is adjacent, and we can't move onto the same tile as the spawner
-            --      length 2+ means we have to move towards it
-            if #path > 1 then
-                print("Moving " .. beaver .. " towards " .. target)
-                beaver:move(path[1])
+                -- if there is a path, move to it
+                --      length 0 means no path could be found to the tile
+                --      length 1 means the target is adjacent, and we can't move onto the same tile as the spawner
+                --      length 2+ means we have to move towards it
+                if #path > 1 then
+                    print("Moving " .. beaver .. " towards " .. target)
+                    beaver:move(path[1])
+                end
             end
         end
 
@@ -191,7 +194,7 @@ function AI:runTurn()
         local aliveBeavers = 0
         for i, myBeaver in ipairs(self.player.beavers) do
             if beaver.health > 0 then
-                aliveBeavers = aliveBeaver + 1
+                aliveBeavers = aliveBeavers + 1
             end
         end
 
@@ -208,7 +211,7 @@ function AI:runTurn()
         end
     end
 
-    print("Done with out turn")
+    print("Done with our turn")
     return true -- to signify that we are truly done with self turn
 end
 
