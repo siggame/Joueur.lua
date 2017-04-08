@@ -61,6 +61,59 @@ function AI:runTurn()
     -- <<-- /Creer-Merge: runTurn -->>
 end
 
+--- A very basic path finding algorithm (Breadth First Search) that when given a starting Tile, will return a valid path to the goal Tile.
+-- @tparam Tile start the starting Tile
+-- @tparam Tile goal the goal Tile
+-- @treturns Table(Tile) An array of Tiles representing the path, the the first element being a valid adjacent Tile to the start, and the last element being the goal.
+function AI:findPath(start, goal)
+    if start == goal then
+        -- no need to make a path to here...
+        return Table()
+    end
+
+    -- queue of the tiles that will have their neighbors searched for 'goal'
+    local fringe = Table()
+
+    -- How we got to each tile that went into the fringe.
+    local cameFrom = Table()
+
+    -- Enqueue start as the first tile to have its neighbors searched.
+    fringe:insert(start);
+
+    -- keep exploring neighbors of neighbors... until there are no more.
+    while #fringe > 0 do
+        -- the tile we are currently exploring.
+        local inspect = fringe:popFront();
+
+        -- cycle through the tile's neighbors.
+        for i, neighbor in ipairs(inspect:getNeighbors()) do
+            -- if we found the goal, we have the path!
+            if neighbor == goal then
+                -- Follow the path backward to the start from the goal and return it.
+                local path = Table(goal)
+
+                -- Starting at the tile we are currently at, insert them retracing our steps till we get to the starting tile
+                while inspect ~= start do
+                    path:pushFront(inspect)
+                    inspect = cameFrom[inspect.id]
+                end
+
+                return path;
+            end
+            -- else we did not find the goal, so enqueue this tile's neighbors to be inspected
+
+            -- if the tile exists, has not been explored or added to the fringe yet, and it is pathable
+            if neighbor and not cameFrom[neighbor.id] and neighbor:isPathable() then
+                -- add it to the tiles to be explored and add where it came from for path reconstruction.
+                fringe:insert(neighbor)
+                cameFrom[neighbor.id] = inspect
+            end
+        end
+    end
+
+    -- if we got here, no path was found
+    return Table()
+end
 
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 -- if you need additional functions for your AI you can add them here
