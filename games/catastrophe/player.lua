@@ -43,7 +43,7 @@ function Player:init(...)
     self.timeRemaining = 0
     --- Every Unit owned by this Player.
     self.units = Table()
-    --- The total upkeep of every Unit owned by this Player.
+    --- The total upkeep of every Unit owned by this Player. If there isn't enough food for every Unit, all Units become starved and do not consume food.
     self.upkeep = 0
     --- If the player won the game or not.
     self.won = false

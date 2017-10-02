@@ -23,13 +23,13 @@ function Structure:init(...)
 
     --- The range of this Structure's effect. For example, a radius of 1 means this Structure affects a 3x3 square centered on this Structure.
     self.effectRadius = 0
-    --- The number of materials in this Structure.
+    --- The number of materials in this Structure. Once this number reaches 0, this Structure is destroyed.
     self.materials = 0
     --- The owner of this Structure if any, otherwise nil.
     self.owner = nil
-    --- The Tile this structure is on.
+    --- The Tile this Structure is on.
     self.tile = nil
-    --- The type of structure this is.
+    --- The type of Structure this is ('shelter', 'monument', 'wall', 'road').
     self.type = ""
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.

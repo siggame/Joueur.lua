@@ -23,11 +23,11 @@ function Tile:init(...)
 
     --- The number of food dropped on this Tile.
     self.food = 0
-    --- The amount of food that can be harvested from this tile per turn.
+    --- The amount of food that can be harvested from this Tile per turn.
     self.harvestRate = 0
     --- The number of materials dropped on this Tile.
     self.materials = 0
-    --- The structure on this Tile if present, otherwise nil.
+    --- The Structure on this Tile if present, otherwise nil.
     self.structure = ""
     --- The Tile to the 'East' of this one (x+1, y). nil if out of bounds of the map.
     self.tileEast = nil
@@ -37,6 +37,8 @@ function Tile:init(...)
     self.tileSouth = nil
     --- The Tile to the 'West' of this one (x-1, y). nil if out of bounds of the map.
     self.tileWest = nil
+    --- The amount of turns before this resource can be harvested.
+    self.turnsToHarvest = 0
     --- What type of Tile this is.
     self.type = ""
     --- The Unit on this Tile if present, otherwise nil.

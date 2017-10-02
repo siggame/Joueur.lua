@@ -21,9 +21,9 @@ function Unit:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- Whether this unit has performed its action this turn.
+    --- Whether this Unit has performed its action this turn.
     self.acted = false
-    --- The amount of energy this unit has (from 0.0 to 1.0).
+    --- The amount of energy this Unit has (from 0.0 to 100.0).
     self.energy = 0
     --- The amount of food this Unit is holding.
     self.food = 0
@@ -31,19 +31,19 @@ function Unit:init(...)
     self.job = nil
     --- The amount of materials this Unit is holding.
     self.materials = 0
-    --- The tile this Unit is moving to. This only applies to neutral fresh humans spawned on the road.
+    --- The tile this Unit is moving to. This only applies to neutral fresh humans spawned on the road. Otherwise, the tile this Unit is on.
     self.movementTarget = nil
     --- How many moves this Unit has left this turn.
     self.moves = 0
-    --- The Player that owns and can control this Unit, or nil if the unit is neutral.
+    --- The Player that owns and can control this Unit, or nil if the Unit is neutral.
     self.owner = nil
-    --- The units in the same squad as this unit. Units in the same squad attack and defend together.
+    --- The Units in the same squad as this Unit. Units in the same squad attack and defend together.
     self.squad = Table()
-    --- Whether this unit is starving. Starving units regenerate energy at half the rate they normally would while resting.
+    --- Whether this Unit is starving. Starving Units regenerate energy at half the rate they normally would while resting.
     self.starving = false
     --- The Tile this Unit is on.
     self.tile = nil
-    --- The number of turns before this Unit dies. This only applies to neutral fresh humans created from combat.
+    --- The number of turns before this Unit dies. This only applies to neutral fresh humans created from combat. Otherwise, 0.
     self.turnsToDie = 0
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
@@ -61,7 +61,7 @@ function Unit:init(...)
 
 end
 
---- Attacks an adjacent tile. Costs an action for each unit in this squad. Units in this squad without an action don't participate in combat. Units in the squad cannot move after performing this action.
+--- Attacks an adjacent Tile. Costs an action for each Unit in this Unit's squad. Units in the squad without an action don't participate in combat. Units in combat cannot move afterwards.
 -- @tparam Tile tile The Tile to attack.
 -- @treturn bool True if successfully attacked, false otherwise.
 function Unit:attack(tile)
@@ -70,7 +70,7 @@ function Unit:attack(tile)
     }))
 end
 
---- Changes this Unit's Job. Must be at max energy (1.0) to change Jobs.
+--- Changes this Unit's Job. Must be at max energy (100.0) to change Jobs.
 -- @tparam Job job The Job to change to.
 -- @treturn bool True if successfully changed Jobs, false otherwise.
 function Unit:changeJob(job)
@@ -79,9 +79,9 @@ function Unit:changeJob(job)
     }))
 end
 
---- Constructs a structure on an adjacent Tile.
--- @tparam Tile tile The Tile to construct the structure on. It must have enough materials on it for a structure to be constructed.
--- @tparam string type The type of structure to construct on that tile.
+--- Constructs a Structure on an adjacent Tile.
+-- @tparam Tile tile The Tile to construct the Structure on. It must have enough materials on it for a Structure to be constructed.
+-- @tparam string type The type of Structure to construct on that Tile.
 -- @treturn bool True if successfully constructed a structure, false otherwise.
 function Unit:construct(tile, type)
     return not not (self:_runOnServer("construct", {
@@ -108,10 +108,10 @@ function Unit:deconstruct(tile)
     }))
 end
 
---- Drops some of the given resource on or adjacent to the unit's Tile. Does not count as an action.
+--- Drops some of the given resource on or adjacent to the Unit's Tile. Does not count as an action.
 -- @tparam Tile tile The Tile to drop materials/food on.
 -- @tparam string resource The type of resource to drop ('material' or 'food').
--- @tparam[opt=0] number amount The amount of the resource to drop, numbers <= 0 will drop all of the resource.
+-- @tparam[opt=0] number amount The amount of the resource to drop. Amounts <= 0 will drop as much as possible.
 -- @treturn bool True if successfully dropped the resource, false otherwise.
 function Unit:drop(tile, resource, amount)
     if amount == nil then
@@ -143,10 +143,10 @@ function Unit:move(tile)
     }))
 end
 
---- Picks up some materials or food on or adjacent to the unit's tile. Does not count as an action.
+--- Picks up some materials or food on or adjacent to the Unit's Tile. Does not count as an action.
 -- @tparam Tile tile The Tile to pickup materials/food from.
 -- @tparam string resource The type of resource to pickup ('material' or 'food').
--- @tparam[opt=0] number amount The amount of the resource to pickup, numbers <= 0 will pickup all of the resource possible.
+-- @tparam[opt=0] number amount The amount of the resource to pickup. Amounts <= 0 will pickup as much as possible.
 -- @treturn bool True if successfully picked up a resource, false otherwise.
 function Unit:pickup(tile, resource, amount)
     if amount == nil then
@@ -160,7 +160,7 @@ function Unit:pickup(tile, resource, amount)
     }))
 end
 
---- Regenerates energy. Must be in range of a friendly shelter to rest. Unit cannot move after performing this action.
+--- Regenerates energy. Must be in range of a friendly shelter to rest. Costs an action. Units cannot move after resting.
 -- @treturn bool True if successfully rested, false otherwise.
 function Unit:rest()
     return not not (self:_runOnServer("rest", {

@@ -22,7 +22,7 @@ function Job:init(...)
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
     --- The amount of energy this Job normally uses to perform its actions.
-    self.actCost = 0
+    self.actionCost = 0
     --- How many combined resources a Unit with this Job can hold at once.
     self.carryLimit = 0
     --- The number of moves this Job can make per turn.
@@ -31,7 +31,7 @@ function Job:init(...)
     self.regenRate = 0
     --- The Job title.
     self.title = ""
-    --- The amount of food per turn this Unit consumes. If there isn't enough food for every Unit, all units become starved and do not consume food.
+    --- The amount of food per turn this Unit consumes. If there isn't enough food for every Unit, all Units become starved and do not consume food.
     self.upkeep = 0
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.

@@ -23,7 +23,7 @@ function Game:init(...)
     -- @field[string] self.name
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The multiplier for the amount of energy regenerated when resting in a base with the cat overlord.
+    --- The multiplier for the amount of energy regenerated when resting in a shelter with the cat overlord.
     self.catEnergyMult = 0
     --- The player whose turn it is currently. That player can send commands. Other players cannot.
     self.currentPlayer = nil
@@ -31,6 +31,8 @@ function Game:init(...)
     self.currentTurn = 0
     --- A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
     self.gameObjects = Table()
+    --- The amount of turns it takes for a Tile that was just harvested to grow food again.
+    self.harvestCooldown = 0
     --- All the Jobs that Units can have in the game.
     self.jobs = Table()
     --- The number of Tiles in the map along the y (vertical) axis.
