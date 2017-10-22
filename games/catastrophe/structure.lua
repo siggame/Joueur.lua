@@ -29,7 +29,7 @@ function Structure:init(...)
     self.owner = nil
     --- The Tile this Structure is on.
     self.tile = nil
-    --- The type of Structure this is ('shelter', 'monument', 'wall', 'road').
+    --- The type of Structure this is ('shelter', 'monument', 'wall', 'road', 'neutral').
     self.type = ""
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.

@@ -71,7 +71,7 @@ function Unit:attack(tile)
 end
 
 --- Changes this Unit's Job. Must be at max energy (100.0) to change Jobs.
--- @tparam Job job The Job to change to.
+-- @tparam string job The name of the Job to change to.
 -- @treturn bool True if successfully changed Jobs, false otherwise.
 function Unit:changeJob(job)
     return not not (self:_runOnServer("changeJob", {
