@@ -35,24 +35,42 @@ function Game:init(...)
     self.harvestCooldown = 0
     --- All the Jobs that Units can have in the game.
     self.jobs = Table()
+    --- The amount that the harvest rate is lowered each season.
+    self.lowerHarvestAmount = 0
     --- The number of Tiles in the map along the y (vertical) axis.
     self.mapHeight = 0
     --- The number of Tiles in the map along the x (horizontal) axis.
     self.mapWidth = 0
     --- The maximum number of turns before the game will automatically end.
     self.maxTurns = 100
+    --- The multiplier for the cost of actions when performing them in range of a monument. Does not effect pickup cost.
+    self.monumentCostMult = 0
+    --- The number of materials in a monument.
+    self.monumentMaterials = 0
+    --- The number of materials in a neutral Structure.
+    self.neutralMaterials = 0
     --- List of all the players in the game.
     self.players = Table()
     --- A unique identifier for the game instance that is being played.
     self.session = ""
+    --- The number of materials in a shelter.
+    self.shelterMaterials = 0
     --- The multiplier for the amount of energy regenerated when resting while starving.
     self.starvingEnergyMult = 0
     --- Every Structure in the game.
     self.structures = Table()
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     self.tiles = Table()
+    --- After a food tile is harvested, the number of turns before it can be harvested again.
+    self.turnsBetweenHarvests = 0
+    --- The number of turns between fresh humans being spawned on the road.
+    self.turnsToCreateHuman = 0
+    --- The number of turns before the harvest rate is lowered (length of each season basically).
+    self.turnsToLowerHarvest = 0
     --- Every Unit in the game.
     self.units = Table()
+    --- The number of materials in a wall.
+    self.wallMaterials = 0
 
 
 
