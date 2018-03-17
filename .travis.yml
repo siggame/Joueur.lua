@@ -4,7 +4,7 @@ sudo: require
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y lua5.1 lua-ldoc
+  - sudo apt-get install -y lua5.1 lua-ldoc python3-pip
 
 script:
   - echo "do nothing"
