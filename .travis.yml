@@ -2,11 +2,9 @@ language: c # not actually used, but lua is not an option
 sudo: require
 python: "3.6"
 
-addons:
-  apt:
-    packages:
-      - lua
-      - lua-ldoc
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y lua lua-ldoc
 
 before_deploy:
   # run the docs
