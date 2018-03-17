@@ -1,6 +1,6 @@
-language: c # not actually used, but lua is not an option
+language: python
+python: "3.6.3"
 sudo: require
-python: "3.6"
 
 before_install:
   - sudo apt-get -qq update
