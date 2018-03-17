@@ -6,6 +6,9 @@ before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y lua5.1 lua-ldoc
 
+script:
+  - echo "do nothing"
+
 before_deploy:
   # run the docs
   - cd docs
