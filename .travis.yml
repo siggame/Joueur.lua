@@ -12,7 +12,7 @@ script:
 before_deploy:
   # run the docs
   - cd docs
-  - sudo pip3 install -r requirements.txt
+  - pip3 install --user -r requirements.txt
   - python3 generate_docs.py
   # file to tell GitHub pages not to try to run jekyll stuff (can break urls)
   - touch output/.nojekyll
