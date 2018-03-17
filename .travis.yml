@@ -1,6 +1,5 @@
-language: python
+language: c # not used
 python: "3.6.3"
-sudo: require
 
 before_install:
   - sudo apt-get -qq update
