@@ -59,7 +59,7 @@ end
 
 --- Attacks either crew, a ship, or a port on a Tile in range.
 -- @tparam Tile tile The Tile to attack.
--- @tparam string target Whether to attack 'crew', 'ship', or 'port'. Crew deal damage to crew, and ships deal damage to ships and ports. Consumes any remaining moves.
+-- @tparam string target Whether to attack 'crew', 'ship', or 'port'. Crew deal damage to crew, and ships deal damage to ships. Both can attack ports as well. Units cannot attack other units in ports. Consumes any remaining moves.
 -- @treturn bool True if successfully attacked, false otherwise.
 function Unit:attack(tile, target)
     return not not (self:_runOnServer("attack", {
@@ -70,7 +70,7 @@ end
 
 --- Builds a Port on the given Tile.
 -- @tparam Tile tile The Tile to build the Port on.
--- @treturn bool True if successfully constructed a Port, false otherwise.
+-- @treturn bool True if successfully built a Port, false otherwise.
 function Unit:build(tile)
     return not not (self:_runOnServer("build", {
         tile = tile,
@@ -78,7 +78,7 @@ function Unit:build(tile)
 end
 
 --- Buries gold on this Unit's Tile.
--- @tparam number amount How much gold this Unit should bury.
+-- @tparam number amount How much gold this Unit should bury. Amounts <= 0 will bury as much as possible.
 -- @treturn bool True if successfully buried, false otherwise.
 function Unit:bury(amount)
     return not not (self:_runOnServer("bury", {
@@ -86,7 +86,7 @@ function Unit:bury(amount)
     }))
 end
 
---- Puts gold into an adjacent Port. If that Port is the Player's main port, the gold is added to that Player. If that Port is owned by merchants, adds to the investment.
+--- Puts gold into an adjacent Port. If that Port is the Player's main port, the gold is added to that Player. If that Port is owned by merchants, it adds to that Port's investment.
 -- @tparam[opt=0] number amount The amount of gold to deposit. Amounts <= 0 will deposit all the gold on this Unit.
 -- @treturn bool True if successfully deposited, false otherwise.
 function Unit:deposit(amount)
@@ -122,17 +122,9 @@ function Unit:move(tile)
 end
 
 --- Regenerates this Unit's health. Must be used in range of a port.
--- @tparam Tile tile The Tile to move the crew to.
--- @tparam[opt=1] number amount The number of crew to move onto that Tile. Amount <= 0 will move all the crew to that Tile.
--- @treturn bool True if successfully split, false otherwise.
-function Unit:rest(tile, amount)
-    if amount == nil then
-        amount = 1
-    end
-
+-- @treturn bool True if successfully rested, false otherwise.
+function Unit:rest()
     return not not (self:_runOnServer("rest", {
-        tile = tile,
-        amount = amount,
     }))
 end
 

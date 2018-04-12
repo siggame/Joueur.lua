@@ -45,12 +45,18 @@ function Game:init(...)
     self.mapHeight = 0
     --- The number of Tiles in the map along the x (horizontal) axis.
     self.mapWidth = 0
-    --- The Euclidean distance from a Player port required to reach maxInterestRate.
+    --- The Euclidean distance from a Player Port required to reach maxInterestRate.
     self.maxInterestDistance = 0
     --- The maximum rate buried gold can increase over time.
     self.maxInterestRate = 0
     --- The maximum number of turns before the game will automatically end.
     self.maxTurns = 100
+    --- How much gold it costs a merchant Port to create a crew member.
+    self.merchantCrewCost = 0
+    --- How much gold merchant Ports get per turn. They gain (Port.investment * merchantInvestmentRate) gold each turn.
+    self.merchantInvestmentRate = 0
+    --- How much gold it costs a merchant Port to create a ship.
+    self.merchantShipCost = 0
     --- List of all the players in the game.
     self.players = Table()
     --- How much gold it costs to construct a port.
