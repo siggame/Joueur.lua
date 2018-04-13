@@ -53,12 +53,12 @@ function Game:init(...)
     self.merchantGoldRate = 0
     --- When a merchant ship spawns, the amount of additional gold it has relative to the Port's investment.
     self.merchantInterestRate = 0
-    --- Every Port in the game. Merchant ports have owner set to nil.
-    self.merchantPorts = Table()
     --- The Euclidean distance buried gold must be from the Player's Port to accumulate interest.
     self.minInterestDistance = 0
     --- List of all the players in the game.
     self.players = Table()
+    --- Every Port in the game. Merchant ports have owner set to nil.
+    self.ports = Table()
     --- How far a Unit can be from a Port to rest. Range is circular.
     self.restRange = 0
     --- A unique identifier for the game instance that is being played.
