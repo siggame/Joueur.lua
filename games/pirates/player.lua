@@ -34,7 +34,7 @@ function Player:init(...)
     --- This player's opponent in the game.
     self.opponent = nil
     --- The Port owned by this Player.
-    self.ports = nil
+    self.port = nil
     --- The reason why the player lost the game.
     self.reasonLost = ""
     --- The reason why the player won the game.
