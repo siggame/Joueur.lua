@@ -37,6 +37,8 @@ function Unit:init(...)
     self.path = Table()
     --- If a ship is on this Tile, how much health it has remaining. 0 for no ship.
     self.shipHealth = 0
+    --- (Merchants only) The number of turns this merchant ship won't be able to move. They will still attack. Merchant ships are stunned when they're attacked.
+    self.stunTurns = 0
     --- (Merchants only) The Port this Unit is moving to.
     self.targetPort = nil
     --- The Tile this Unit is on.
@@ -57,9 +59,9 @@ function Unit:init(...)
 
 end
 
---- Attacks either crew, a ship, or a port on a Tile in range.
+--- Attacks either the 'crew' or 'ship' on a Tile in range.
 -- @tparam Tile tile The Tile to attack.
--- @tparam string target Whether to attack 'crew', 'ship', or 'port'. Crew deal damage to crew, and ships deal damage to ships. Both can attack ports as well. Units cannot attack other units in ports. Consumes any remaining moves.
+-- @tparam string target Whether to attack 'crew' or 'ship'. Crew deal damage to crew and ships deal damage to ships. Consumes any remaining moves.
 -- @treturn bool True if successfully attacked, false otherwise.
 function Unit:attack(tile, target)
     return not not (self:_runOnServer("attack", {
@@ -68,16 +70,7 @@ function Unit:attack(tile, target)
     }))
 end
 
---- Builds a Port on the given Tile.
--- @tparam Tile tile The Tile to build the Port on.
--- @treturn bool True if successfully built a Port, false otherwise.
-function Unit:build(tile)
-    return not not (self:_runOnServer("build", {
-        tile = tile,
-    }))
-end
-
---- Buries gold on this Unit's Tile.
+--- Buries gold on this Unit's Tile. Gold must be a certain distance away for it to get interest (Game.minInterestDistance).
 -- @tparam number amount How much gold this Unit should bury. Amounts <= 0 will bury as much as possible.
 -- @treturn bool True if successfully buried, false otherwise.
 function Unit:bury(amount)
@@ -86,7 +79,7 @@ function Unit:bury(amount)
     }))
 end
 
---- Puts gold into an adjacent Port. If that Port is the Player's main port, the gold is added to that Player. If that Port is owned by merchants, it adds to that Port's investment.
+--- Puts gold into an adjacent Port. If that Port is the Player's port, the gold is added to that Player. If that Port is owned by merchants, it adds to that Port's investment.
 -- @tparam[opt=0] number amount The amount of gold to deposit. Amounts <= 0 will deposit all the gold on this Unit.
 -- @treturn bool True if successfully deposited, false otherwise.
 function Unit:deposit(amount)
@@ -112,7 +105,7 @@ function Unit:dig(amount)
     }))
 end
 
---- Moves this Unit from its current Tile to an adjacent Tile.
+--- Moves this Unit from its current Tile to an adjacent Tile. If this Unit merges with another one, the other Unit will be destroyed and its tile will be set to nil. Make sure to check that your Unit's tile is not nil before doing things with it.
 -- @tparam Tile tile The Tile this Unit should move to.
 -- @treturn bool True if it moved, false otherwise.
 function Unit:move(tile)
@@ -149,7 +142,7 @@ function Unit:split(tile, amount, gold)
     }))
 end
 
---- Takes gold from the Player. You can only withdraw from your main port.
+--- Takes gold from the Player. You can only withdraw from your own Port.
 -- @tparam[opt=0] number amount The amount of gold to withdraw. Amounts <= 0 will withdraw everything.
 -- @treturn bool True if successfully withdrawn, false otherwise.
 function Unit:withdraw(amount)

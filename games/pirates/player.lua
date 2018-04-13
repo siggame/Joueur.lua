@@ -33,14 +33,12 @@ function Player:init(...)
     self.name = "Anonymous"
     --- This player's opponent in the game.
     self.opponent = nil
-    --- The ports owned by this Player.
-    self.ports = Table()
+    --- The Port owned by this Player.
+    self.ports = nil
     --- The reason why the player lost the game.
     self.reasonLost = ""
     --- The reason why the player won the game.
     self.reasonWon = ""
-    --- This Player's starting port.
-    self.startingPort = nil
     --- The amount of time (in ns) remaining for this AI to send commands.
     self.timeRemaining = 0
     --- Every Unit owned by this Player.

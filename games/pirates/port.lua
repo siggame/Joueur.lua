@@ -21,15 +21,9 @@ function Port:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- Whether this Port has created a Unit this turn.
-    self.cooldown = false
-    --- Whether this Port can be destroyed.
-    self.destroyable = 0
-    --- (Merchants only) How much gold this Port has accumulated. Once this port can afford to create a ship, it will spend gold to construct one.
+    --- For players, how much more gold this Port can spend this turn. For merchants, how much gold this Port has accumulated (it will spawn a ship when the Port can afford one).
     self.gold = 0
-    --- How much health this Port has.
-    self.health = 0
-    --- (Merchants only) How much gold this Port accumulates each turn.
+    --- (Merchants only) How much gold was invested into this Port. Investment determines the strength and value of the next ship.
     self.investment = 0
     --- The owner of this Port, or nil if owned by merchants.
     self.owner = nil

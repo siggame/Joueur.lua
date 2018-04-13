@@ -21,6 +21,8 @@ function Tile:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
+    --- (Visualizer only) Whether this tile is deep sea or grassy. This has no effect on gameplay, but feel free to use it if you want.
+    self.decoration = false
     --- The amount of gold buried on this tile.
     self.gold = 0
     --- The Port on this Tile if present, otherwise nil.
