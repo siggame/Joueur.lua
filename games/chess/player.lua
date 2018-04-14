@@ -37,7 +37,7 @@ function Player:init(...)
     self.opponent = nil
     --- All the uncaptured chess Pieces owned by this player.
     self.pieces = Table()
-    --- The direction your Pieces must go along the rank axis until they reach the other side.
+    --- The direction your Pieces must go along the rank axis until they reach the other side. Will be +1 if the Player is 'White', or -1 if the Player is 'Black'.
     self.rankDirection = 0
     --- The reason why the player lost the game.
     self.reasonLost = ""
