@@ -21,12 +21,8 @@ function Machine:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The amount of ore that is in the machine. Cannot be higher than the refineInput value.
-    self.input = 0
     --- What type of ore the machine takes it, also determins the type of material it outputs.
     self.oreType = ""
-    --- The amount of material that is waiting to be collected in the machine.
-    self.output = 0
     --- The amount of ore that needs to be inputted into the machine.
     self.refineInput = 0
     --- The amount of material that out of the machine after running.
