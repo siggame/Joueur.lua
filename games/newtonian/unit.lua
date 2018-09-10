@@ -27,7 +27,7 @@ function Unit:init(...)
     self.blueium = 0
     --- The amount of blueium ore carried by this unit.
     self.blueiumOre = 0
-    --- If a ship is on this Tile, how much health it has remaining.
+    --- The remaining health of a unit.
     self.health = 0
     --- The Job this Unit does.
     self.job = nil
@@ -80,11 +80,13 @@ function Unit:attack(tile)
 end
 
 --- Drops material at the units feat
+-- @tparam Tile tile The tile the materials will be dropped on.
 -- @tparam number amount The amount of materials to dropped. Amounts <= 0 will drop all the materials on the Unit.
 -- @tparam string material The material the unit will drop.
 -- @treturn bool True if successfully deposited, false otherwise.
-function Unit:drop(amount, material)
+function Unit:drop(tile, amount, material)
     return not not (self:_runOnServer("drop", {
+        tile = tile,
         amount = amount,
         material = material,
     }))
@@ -100,11 +102,13 @@ function Unit:move(tile)
 end
 
 --- Picks up material at the units feat
+-- @tparam Tile tile The tile the materials will be dropped on.
 -- @tparam number amount The amount of materials to pick up. Amounts <= 0 will pick up all the materials on the Unit.
 -- @tparam string material The material the unit will pick up.
 -- @treturn bool True if successfully deposited, false otherwise.
-function Unit:pickup(amount, material)
+function Unit:pickup(tile, amount, material)
     return not not (self:_runOnServer("pickup", {
+        tile = tile,
         amount = amount,
         material = material,
     }))

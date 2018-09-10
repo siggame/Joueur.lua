@@ -55,10 +55,14 @@ function Game:init(...)
     self.session = ""
     --- The number of turns between spawning unit waves.
     self.spawnTime = 0
+    --- How many turns a unit is stunned.
+    self.stunTime = 0
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     self.tiles = Table()
     --- The amount of time (in nano-seconds) added after each player performs a turn.
     self.timeAddedPerTurn = 0
+    --- How many turns a unit is immune to being stunned.
+    self.timeImmune = 0
     --- Every Unit in the game.
     self.units = Table()
 

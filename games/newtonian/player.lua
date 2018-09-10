@@ -23,8 +23,6 @@ function Player:init(...)
 
     --- What type of client this is, e.g. 'Python', 'JavaScript', or some other language. For potential data mining purposes.
     self.clientType = ""
-    --- Every generator tile owned by this Player.
-    self.generatorTiles = Table()
     --- The amount of heat this Player has.
     self.heat = 0
     --- Time left till a intern spawns.
