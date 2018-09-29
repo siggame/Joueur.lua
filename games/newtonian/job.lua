@@ -1,4 +1,4 @@
--- Job: Information about a units's job.
+-- Job: Information about a unit's job.
 -- DO NOT MODIFY THIS FILE
 -- Never try to directly create an instance of this class, or modify its member variables.
 -- Instead, you should only be reading its variables and calling its functions.
@@ -11,7 +11,7 @@ local GameObject = require("games.newtonian.gameObject")
 -- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
---- Information about a units's job.
+--- Information about a unit's job.
 -- @classmod Job
 local Job = class(GameObject)
 
@@ -21,7 +21,7 @@ function Job:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- How many combined resources a beaver with this Job can hold at once.
+    --- How many combined resources a unit with this Job can hold at once.
     self.carryLimit = 0
     --- The amount of damage this Job does per attack.
     self.damage = 0

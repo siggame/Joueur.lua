@@ -27,41 +27,43 @@ function Game:init(...)
     self.currentPlayer = nil
     --- The current turn number, starting at 0 for the first player's turn.
     self.currentTurn = 0
-    --- Determins the rate at which the highest value victory points degrade.
+    --- Percent loss from the difference of Heat and Pressure. (0 to 1).
     self.degradeRate = 0
     --- A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
     self.gameObjects = Table()
-    --- How many interns a player can have.
+    --- The maximum number of interns a player can have.
     self.internCap = 0
-    --- Every job in the game.
+    --- A array-like table of all jobs. first item is intern, second is physicists, and third is manager.
     self.jobs = Table()
     --- Every Machine in the game.
     self.machines = Table()
-    --- How many managers a player can have.
+    --- The maximum number of managers a player can have.
     self.managerCap = 0
     --- The number of Tiles in the map along the y (vertical) axis.
     self.mapHeight = 0
     --- The number of Tiles in the map along the x (horizontal) axis.
     self.mapWidth = 0
+    --- The number of materials that spawn per spawn cycle.
+    self.materialSpawn = 0
     --- The maximum number of turns before the game will automatically end.
     self.maxTurns = 100
-    --- How many physicists a player can have.
+    --- The maximum number of physicists a player can have.
     self.physicistCap = 0
     --- List of all the players in the game.
     self.players = Table()
-    --- How much each refined ore adds when put in the generator.
+    --- The amount of victory points added when a refined ore is consumed by the generator.
     self.refinedValue = 0
     --- A unique identifier for the game instance that is being played.
     self.session = ""
-    --- The number of turns between spawning unit waves.
+    --- The amount of turns it takes a unit to spawn.
     self.spawnTime = 0
-    --- How many turns a unit is stunned.
+    --- The amount of turns a unit cannot do anything when stunned.
     self.stunTime = 0
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     self.tiles = Table()
     --- The amount of time (in nano-seconds) added after each player performs a turn.
     self.timeAddedPerTurn = 0
-    --- How many turns a unit is immune to being stunned.
+    --- The number turns a unit is immune to being stunned.
     self.timeImmune = 0
     --- Every Unit in the game.
     self.units = Table()

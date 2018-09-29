@@ -21,27 +21,27 @@ function Unit:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- Whether this Unit has performed its action this turn.
+    --- Whether or not this Unit has performed its action this turn.
     self.acted = false
-    --- The amount of blueium carried by this unit.
+    --- The amount of blueium carried by this unit. (0 to job carry capacity - other carried items).
     self.blueium = 0
-    --- The amount of blueium ore carried by this unit.
+    --- The amount of blueium ore carried by this unit. (0 to job carry capacity - other carried items).
     self.blueiumOre = 0
     --- The remaining health of a unit.
     self.health = 0
-    --- The Job this Unit does.
+    --- The Job this Unit has.
     self.job = nil
-    --- How many more times this Unit may move this turn.
+    --- The number of moves this unit has left this turn.
     self.moves = 0
     --- The Player that owns and can control this Unit.
     self.owner = nil
-    --- The amount of redium carried by this unit.
+    --- The amount of redium carried by this unit. (0 to job carry capacity - other carried items).
     self.redium = 0
-    --- The amount of redium ore carried by this unit.
+    --- The amount of redium ore carried by this unit. (0 to job carry capacity - other carried items).
     self.rediumOre = 0
-    --- Duration of stun immunity.
+    --- Duration of stun immunity. (0 to timeImmune).
     self.stunImmune = 0
-    --- Duration the unit is stunned.
+    --- Duration the unit is stunned. (0 to the game constant stunTime).
     self.stunTime = 0
     --- The Tile this Unit is on.
     self.tile = nil
@@ -61,7 +61,7 @@ function Unit:init(...)
 
 end
 
---- Makes the unit do something to a machine on its tile. Interns sabotage, physicists run, and managers protect.
+--- Makes the unit do something to a machine adjacent to its tile. Interns sabotage, physicists work. Interns stun physicist, physicist stuns manager, manager stuns intern.
 -- @tparam Tile tile The tile the unit acts on.
 -- @treturn bool True if successfully acted, false otherwise.
 function Unit:act(tile)
@@ -70,7 +70,7 @@ function Unit:act(tile)
     }))
 end
 
---- Attacks a unit on a ajacent tile.
+--- Attacks a unit on an adjacent tile.
 -- @tparam Tile tile The Tile to attack.
 -- @treturn bool True if successfully attacked, false otherwise.
 function Unit:attack(tile)
@@ -79,9 +79,9 @@ function Unit:attack(tile)
     }))
 end
 
---- Drops material at the units feat
+--- Drops materials at the units feet or adjacent tile.
 -- @tparam Tile tile The tile the materials will be dropped on.
--- @tparam number amount The amount of materials to dropped. Amounts <= 0 will drop all the materials on the Unit.
+-- @tparam number amount The number of materials to dropped. Amounts <= 0 will drop all the materials.
 -- @tparam string material The material the unit will drop.
 -- @treturn bool True if successfully deposited, false otherwise.
 function Unit:drop(tile, amount, material)
@@ -101,9 +101,9 @@ function Unit:move(tile)
     }))
 end
 
---- Picks up material at the units feat
--- @tparam Tile tile The tile the materials will be dropped on.
--- @tparam number amount The amount of materials to pick up. Amounts <= 0 will pick up all the materials on the Unit.
+--- Picks up material at the units feet or adjacent tile.
+-- @tparam Tile tile The tile the materials will be picked up from.
+-- @tparam number amount The amount of materials to pick up. Amounts <= 0 will pick up all the materials that the unit can.
 -- @tparam string material The material the unit will pick up.
 -- @treturn bool True if successfully deposited, false otherwise.
 function Unit:pickup(tile, amount, material)

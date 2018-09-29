@@ -23,19 +23,21 @@ function Player:init(...)
 
     --- What type of client this is, e.g. 'Python', 'JavaScript', or some other language. For potential data mining purposes.
     self.clientType = ""
+    --- Every generator Tile owned by this Player. (array-like tableed from the outer edges inward, from top to bottom).
+    self.generatorTiles = Table()
     --- The amount of heat this Player has.
     self.heat = 0
-    --- Time left till a intern spawns.
+    --- The time left till a intern spawns. (0 to spawnTime).
     self.internSpawn = 0
     --- If the player lost the game or not.
     self.lost = false
-    --- Time left till a manager spawns.
+    --- The time left till a manager spawns. (0 to spawnTime).
     self.managerSpawn = 0
     --- The name of the player.
     self.name = "Anonymous"
     --- This player's opponent in the game.
     self.opponent = nil
-    --- Time left till a physicist spawns.
+    --- The time left till a physicist spawns. (0 to spawnTime).
     self.physicistSpawn = 0
     --- The amount of pressure this Player has.
     self.pressure = 0
@@ -43,6 +45,8 @@ function Player:init(...)
     self.reasonLost = ""
     --- The reason why the player won the game.
     self.reasonWon = ""
+    --- All the tiles this Player's units can spawn on. (array-like tableed from the outer edges inward, from top to bottom).
+    self.spawnTiles = Table()
     --- The amount of time (in ns) remaining for this AI to send commands.
     self.timeRemaining = 0
     --- Every Unit owned by this Player.

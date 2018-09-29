@@ -1,4 +1,4 @@
--- Machine: A machine on a tile.
+-- Machine: A machine in the game. Used to refine ore.
 -- DO NOT MODIFY THIS FILE
 -- Never try to directly create an instance of this class, or modify its member variables.
 -- Instead, you should only be reading its variables and calling its functions.
@@ -11,7 +11,7 @@ local GameObject = require("games.newtonian.gameObject")
 -- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
---- A machine on a tile.
+--- A machine in the game. Used to refine ore.
 -- @classmod Machine
 local Machine = class(GameObject)
 
@@ -21,19 +21,17 @@ function Machine:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- What type of ore the machine takes it, also determins the type of material it outputs.
+    --- What type of ore the machine takes it. Also determines the type of material it outputs. (redium or blueium).
     self.oreType = ""
-    --- The amount of ore that needs to be inputted into the machine.
+    --- The amount of ore that needs to be inputted into the machine for it to be worked.
     self.refineInput = 0
-    --- The amount of material that out of the machine after running.
+    --- The amount of refined ore that is returned after the machine has been fully worked.
     self.refineOutput = 0
-    --- The amount of turns this machine takes to refine the ore.
+    --- The number of times this machine needs to be worked to refine ore.
     self.refineTime = 0
     --- The Tile this Machine is on.
     self.tile = nil
-    --- Time till the machine finishes running.
-    self.timeLeft = 0
-    --- Tracks how many times this machine has been worked.
+    --- Tracks how many times this machine has been worked. (0 to refineTime).
     self.worked = 0
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.

@@ -25,13 +25,13 @@ function Tile:init(...)
     self.blueium = 0
     --- The amount of blueium ore on this tile.
     self.blueiumOre = 0
-    --- (Visualizer only) Different tile tipes, cracked, slightly dirty, ect. This has no effect on gameplay, but feel free to use it if you want.
+    --- (Visualizer only) Different tile types, cracked, slightly dirty, etc. This has no effect on gameplay, but feel free to use it if you want.
     self.decoration = 0
-    --- The direction of a conveyor belt ('blank', 'north', 'east', 'south', or 'west'). blank mean no conveyor.
+    --- The direction of a conveyor belt ('blank', 'north', 'east', 'south', or 'west'). blank means conveyor doesn't move.
     self.direction = ""
-    --- Weither or not the tile is a wall.
+    --- Whether or not the tile is a wall.
     self.isWall = false
-    --- The machine on this Tile if present, otherwise nil.
+    --- The Machine on this Tile if present, otherwise nil.
     self.machine = nil
     --- The owner of this Tile, or nil if owned by no-one. Only for generators and spawn areas.
     self.owner = nil
