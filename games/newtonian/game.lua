@@ -67,6 +67,8 @@ function Game:init(...)
     self.timeImmune = 0
     --- Every Unit in the game.
     self.units = Table()
+    --- The amount of combined heat and pressure that you need to win.
+    self.victoryAmount = 0
 
 
 

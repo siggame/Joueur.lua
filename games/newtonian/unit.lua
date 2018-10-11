@@ -82,7 +82,7 @@ end
 --- Drops materials at the units feet or adjacent tile.
 -- @tparam Tile tile The tile the materials will be dropped on.
 -- @tparam number amount The number of materials to dropped. Amounts <= 0 will drop all the materials.
--- @tparam string material The material the unit will drop.
+-- @tparam string material The material the unit will drop. 'redium', 'blueium', 'redium ore', or 'blueium ore'.
 -- @treturn bool True if successfully deposited, false otherwise.
 function Unit:drop(tile, amount, material)
     return not not (self:_runOnServer("drop", {
@@ -104,7 +104,7 @@ end
 --- Picks up material at the units feet or adjacent tile.
 -- @tparam Tile tile The tile the materials will be picked up from.
 -- @tparam number amount The amount of materials to pick up. Amounts <= 0 will pick up all the materials that the unit can.
--- @tparam string material The material the unit will pick up.
+-- @tparam string material The material the unit will pick up. 'redium', 'blueium', 'redium ore', or 'blueium ore'.
 -- @treturn bool True if successfully deposited, false otherwise.
 function Unit:pickup(tile, amount, material)
     return not not (self:_runOnServer("pickup", {
