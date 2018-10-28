@@ -29,7 +29,7 @@ function Job:init(...)
     self.health = 0
     --- The number of moves this Job can make per turn.
     self.moves = 0
-    --- The Job title.
+    --- The Job title. 'intern', 'manager', or 'physicist'.
     self.title = ""
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
