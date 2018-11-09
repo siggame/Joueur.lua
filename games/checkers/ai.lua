@@ -70,7 +70,6 @@ function AI:runTurn()
     -- <<-- /Creer-Merge: runTurn -->>
 end
 
-
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 -- if you need additional functions for your AI you can add them here
 -- <<-- /Creer-Merge: functions -->>

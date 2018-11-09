@@ -40,6 +40,7 @@ function GameObject:log(message)
 end
 
 
+
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 -- if you want to add any client side logic this is where you can add them
 -- <<-- /Creer-Merge: functions -->>
