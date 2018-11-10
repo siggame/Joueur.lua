@@ -23,12 +23,12 @@ function Game:init(...)
     -- @field[string] self.name
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
+    --- The percent of max HP regained when a unit end their turn on a tile owned by their player.
+    self.RegenerateRate = 0
     --- The player whose turn it is currently. That player can send commands. Other players cannot.
     self.currentPlayer = nil
     --- The current turn number, starting at 0 for the first player's turn.
     self.currentTurn = 0
-    --- Percent loss from the difference of Heat and Pressure. (0 to 1).
-    self.degradeRate = 0
     --- A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
     self.gameObjects = Table()
     --- The maximum number of interns a player can have.

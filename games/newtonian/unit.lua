@@ -61,7 +61,7 @@ function Unit:init(...)
 
 end
 
---- Makes the unit do something to a machine adjacent to its tile. Interns sabotage, physicists work. Interns stun physicist, physicist stuns manager, manager stuns intern.
+--- Makes the unit do something to a machine or unit adjacent to its tile. Interns sabotage, physicists work. Interns stun physicist, physicist stuns manager, manager stuns intern.
 -- @tparam Tile tile The tile the unit acts on.
 -- @treturn bool True if successfully acted, false otherwise.
 function Unit:act(tile)
