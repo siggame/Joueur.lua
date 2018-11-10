@@ -27,7 +27,7 @@ function Game:init(...)
     self.currentPlayer = nil
     --- The current turn number, starting at 0 for the first player's turn.
     self.currentTurn = 0
-    --- Forsyth–Edwards Notation, a notation that describes the game board.
+    --- Forsythâ€“Edwards Notation, a notation that describes the game board.
     self.fen = ""
     --- A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
     self.gameObjects = Table()

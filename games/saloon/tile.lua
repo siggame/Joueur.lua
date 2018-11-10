@@ -67,6 +67,41 @@ end
 -- @tparam string message A string to add to this GameObject's log. Intended for debugging.
 
 
+--- The valid directions that tiles can be in, "North", "East", "South", or "West"
+Tile.directions = Table("North", "East", "South", "West")
+
+--- Gets the neighbors of this Tile
+-- @treturns Table(Tile) The neighboring (adjacent) Tiles to this tile
+function Tile:getNeighbors()
+    local neighbors = Table()
+    for i, direction in ipairs(self.directions) do
+        local neighbor = self["tile" .. direction]
+        if neighbor then
+            neighbors:insert(neighbor)
+        end
+    end
+    return neighbors
+end
+
+--- Checks if a Tile is pathable to units
+-- @treturns bool True if pathable, false otherwise
+function Tile:isPathable()
+    -- <<-- Creer-Merge: is_pathable_builtin -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
+    return false -- DEVELOPER ADD LOGIC HERE
+    -- <<-- /Creer-Merge: is_pathable_builtin -->>
+end
+
+--- Checks if this Tile has a specific neighboring Tile
+-- @tparam Tile tile the tile to check against
+-- @treturns bool true if the tile is a neighbor of this Tile, false otherwise
+function Tile:hasNeighbor(tile)
+    if tile then
+        return self.tileNorth == tile or self.tileEast == tile or self.tileSouth == tile or self.tileEast == tile
+    else
+        return false
+    end
+end
+
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 -- if you want to add any client side logic this is where you can add them
 -- <<-- /Creer-Merge: functions -->>

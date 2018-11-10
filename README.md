@@ -21,7 +21,7 @@ Make sure you have the package `lua5.1`, `lua-socket`, and `luajit` installed, t
 Just download [LuaDist][luadist]. That package has everything you need to run the Lua client, and actually has LuaJIT to run Lua. Place it the contents anywhere, then make sure to add the path to the bin/ folder in LuaDist to your Path. Then you can:
 
 ```
-lua main.lua GAME_NAME -s r99acm.device.mst.edu -r myOwnGameSession
+lua main.lua GAME_NAME -s game.siggame.io -r myOwnGameSession
 ```
 
 ### Vagrant

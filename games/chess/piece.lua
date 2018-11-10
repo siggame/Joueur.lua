@@ -31,7 +31,7 @@ function Piece:init(...)
     self.owner = nil
     --- The rank (row) coordinate of the Piece represented as a number [1-8], with 1 starting at the bottom of the board.
     self.rank = 0
-    --- The type of chess Piece this is, either: 'King', 'Queen', 'Knight', 'Rook', 'Bishop', or 'Pawn'.
+    --- The type of chess Piece this is, either 'King, 'Queen', 'Knight', 'Rook', 'Bishop', or 'Pawn'.
     self.type = ""
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
