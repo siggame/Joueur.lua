@@ -97,7 +97,10 @@ end
 -- @treturns bool True if pathable, false otherwise
 function Tile:isPathable()
     -- <<-- Creer-Merge: is_pathable_builtin -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-    return false -- DEVELOPER ADD LOGIC HERE
+    if self.isWall or self.unit != nil or self.machine != nil then
+        return false
+    else
+        return true
     -- <<-- /Creer-Merge: is_pathable_builtin -->>
 end
 
