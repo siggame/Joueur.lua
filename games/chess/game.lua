@@ -23,26 +23,16 @@ function Game:init(...)
     -- @field[string] self.name
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The player whose turn it is currently. That player can send commands. Other players cannot.
-    self.currentPlayer = nil
-    --- The current turn number, starting at 0 for the first player's turn.
-    self.currentTurn = 0
-    --- Forsythâ€“Edwards Notation, a notation that describes the game board.
+    --- Forsyth-Edwards Notation (fen), a notation that describes the game board state.
     self.fen = ""
     --- A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
     self.gameObjects = Table()
-    --- The maximum number of turns before the game will automatically end.
-    self.maxTurns = 100
-    --- The array-like table of Moves that have occurred, in order.
-    self.moves = Table()
-    --- All the uncaptured Pieces in the game.
-    self.pieces = Table()
+    --- The array-like table of [known] moves that have occured in the game, in Standard Algebriac Notation (SAN) format. The first element is the first move, with the last being the most recent.
+    self.history = Table()
     --- List of all the players in the game.
     self.players = Table()
     --- A unique identifier for the game instance that is being played.
     self.session = ""
-    --- How many turns until the game ends because no pawn has moved and no Piece has been taken.
-    self.turnsToDraw = 0
 
 
 
@@ -50,8 +40,6 @@ function Game:init(...)
 
     self._gameObjectClasses = {
         GameObject = require("games.chess.gameObject"),
-        Move = require("games.chess.move"),
-        Piece = require("games.chess.piece"),
         Player = require("games.chess.player"),
     }
 end

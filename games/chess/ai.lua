@@ -52,13 +52,13 @@ end
 
 -- Game Logic Functions: functions you must fill out to send data to the game server to actually play the game! --
 
---- This is called every time it is this AI.player's turn.
--- @treturn bool Represents if you want to end your turn. True means end your turn, False means to keep your turn going and re-call this function.
-function AI:runTurn()
-    -- <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-    -- Put your game logic here for runTurn
-    return true
-    -- <<-- /Creer-Merge: runTurn -->>
+--- This is called every time it is this AI.player's turn to make a move.
+-- @treturn string A string in Standard Algebriac Notation (SAN) for the move you want to make. If the move is invalid or not properly formatted you will lose the game.
+function AI:makeMove()
+    -- <<-- Creer-Merge: makeMove -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
+    -- Put your game logic here for makeMove
+    return ""
+    -- <<-- /Creer-Merge: makeMove -->>
 end
 
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.

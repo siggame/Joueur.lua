@@ -23,22 +23,14 @@ function Player:init(...)
 
     --- What type of client this is, e.g. 'Python', 'JavaScript', or some other language. For potential data mining purposes.
     self.clientType = ""
-    --- The color (side) of this player. Either 'White' or 'Black', with the 'White' player having the first move.
+    --- The color (side) of this player. Either 'white' or 'black', with the 'white' player having the first move.
     self.color = ""
-    --- True if this player is currently in check, and must move out of check, false otherwise.
-    self.inCheck = false
     --- If the player lost the game or not.
     self.lost = false
-    --- If the Player has made their move for the turn. true means they can no longer move a Piece this turn.
-    self.madeMove = false
     --- The name of the player.
     self.name = "Anonymous"
     --- This player's opponent in the game.
     self.opponent = nil
-    --- All the uncaptured chess Pieces owned by this player.
-    self.pieces = Table()
-    --- The direction your Pieces must go along the rank axis until they reach the other side. Will be +1 if the Player is 'White', or -1 if the Player is 'Black'.
-    self.rankDirection = 0
     --- The reason why the player lost the game.
     self.reasonLost = ""
     --- The reason why the player won the game.
