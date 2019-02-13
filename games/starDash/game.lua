@@ -66,14 +66,14 @@ function Game:init(...)
 
 
 
-    self.name = "StarDash"
+    self.name = "Stardash"
 
     self._gameObjectClasses = {
-        Body = require("games.starDash.body"),
-        GameObject = require("games.starDash.gameObject"),
-        Job = require("games.starDash.job"),
-        Player = require("games.starDash.player"),
-        Unit = require("games.starDash.unit"),
+        Body = require("games.stardash.body"),
+        GameObject = require("games.stardash.gameObject"),
+        Job = require("games.stardash.job"),
+        Player = require("games.stardash.player"),
+        Unit = require("games.stardash.unit"),
     }
 end
 
