@@ -1,4 +1,4 @@
--- This is where you build your AI for the StarDash game.
+-- This is where you build your AI for the Stardash game.
 
 local class = require("joueur.utilities.class")
 local BaseAI = require("joueur.baseAI")
@@ -7,7 +7,7 @@ local BaseAI = require("joueur.baseAI")
 -- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
---- the AI functions for the StarDash game.
+--- the AI functions for the Stardash game.
 -- @classmod AI
 local AI = class(BaseAI)
 
@@ -22,7 +22,7 @@ local AI = class(BaseAI)
 --- this is the name you send to the server to play as.
 function AI:getName()
     -- <<-- Creer-Merge: get-name -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-    return "StarDash Lua Player" -- REPLACE THIS WITH YOUR TEAM NAME!
+    return "Stardash Lua Player" -- REPLACE THIS WITH YOUR TEAM NAME!
     -- <<-- /Creer-Merge: get-name -->>
 end
 

@@ -5,7 +5,7 @@
 
 
 local class = require("joueur.utilities.class")
-local GameObject = require("games.starDash.gameObject")
+local GameObject = require("games.stardash.gameObject")
 
 -- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 -- you can add additional require(s) here
