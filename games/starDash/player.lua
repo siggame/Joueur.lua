@@ -33,6 +33,8 @@ function Player:init(...)
     self.name = "Anonymous"
     --- This player's opponent in the game.
     self.opponent = nil
+    --- Every Projectile owned by this Player.
+    self.projectiles = Table()
     --- The reason why the player lost the game.
     self.reasonLost = ""
     --- The reason why the player won the game.

@@ -55,6 +55,8 @@ function Game:init(...)
     self.players = Table()
     --- The amount of distance missiles travel through space.
     self.projectileSpeed = 0
+    --- Every projectile in the game.
+    self.projectiles = Table()
     --- The regeneration rate of asteroids.
     self.regenerateRate = 0
     --- A unique identifier for the game instance that is being played.
