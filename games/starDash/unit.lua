@@ -103,14 +103,12 @@ function Unit:open(x, y)
     }))
 end
 
---- tell you if there is a open path to that location.
--- @tparam number x The x position of the destination you wish to check to.
--- @tparam number y The y position of the destination you wish to check to.
--- @treturn bool True if pathable by this unit, false otherwise.
-function Unit:pathable(x, y)
-    return not not (self:_runOnServer("pathable", {
-        x = x,
-        y = y,
+--- Attacks the specified projectile.
+-- @tparam Projectile missile The projectile being shot down.
+-- @treturn bool True if successfully attacked, false otherwise.
+function Unit:shootDown(missile)
+    return not not (self:_runOnServer("shootDown", {
+        missile = missile,
     }))
 end
 

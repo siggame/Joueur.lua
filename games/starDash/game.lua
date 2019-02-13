@@ -41,6 +41,8 @@ function Game:init(...)
     self.maxTurns = 100
     --- The smallest amount of material, barring rarity, that can be in a asteroid.
     self.minAsteroid = 0
+    --- The rate at which miners grab minerals from asteroids.
+    self.miningSpeed = 0
     --- The rarity modifier of the most common ore. This controls how much spawns.
     self.oreRarity1 = 0
     --- The rarity modifier of the second rarest ore. This controls how much spawns.
@@ -51,6 +53,8 @@ function Game:init(...)
     self.planetRechargeRate = 0
     --- List of all the players in the game.
     self.players = Table()
+    --- The amount of distance missiles travel through space.
+    self.projectileSpeed = 0
     --- The regeneration rate of asteroids.
     self.regenerateRate = 0
     --- A unique identifier for the game instance that is being played.
@@ -73,6 +77,7 @@ function Game:init(...)
         GameObject = require("games.stardash.gameObject"),
         Job = require("games.stardash.job"),
         Player = require("games.stardash.player"),
+        Projectile = require("games.stardash.projectile"),
         Unit = require("games.stardash.unit"),
     }
 end
