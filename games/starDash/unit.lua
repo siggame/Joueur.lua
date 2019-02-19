@@ -39,6 +39,8 @@ function Unit:init(...)
     self.mythicite = 0
     --- The Player that owns and can control this Unit.
     self.owner = nil
+    --- The martyr ship that is currently shielding this ship if any.
+    self.protector = nil
     --- The radius of the circle this unit occupies.
     self.radius = 0
     --- The amount of Rarium carried by this unit. (0 to job carry capacity - other carried items).

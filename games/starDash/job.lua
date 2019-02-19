@@ -29,6 +29,8 @@ function Job:init(...)
     self.energy = 0
     --- The distance this job can move per turn.
     self.moves = 0
+    --- The distance at which this job can effect things.
+    self.range = 0
     --- The reserve the martyr use to protect allies.
     self.shield = 0
     --- The Job title. 'corvette', 'missleboat', 'martyr', 'transport', or 'miner'. (in this order from 0-4).
