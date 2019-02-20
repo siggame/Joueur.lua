@@ -23,6 +23,10 @@ function Unit:init(...)
 
     --- Whether or not this Unit has performed its action this turn.
     self.acted = false
+    --- The x value this unit is dashing to.
+    self.dashX = 0
+    --- The y value this unit is dashing to.
+    self.dashY = 0
     --- The remaining health of a unit.
     self.energy = 0
     --- The amount of Generium ore carried by this unit. (0 to job carry capacity - other carried items).
@@ -94,7 +98,7 @@ function Unit:move(x, y)
     }))
 end
 
---- tells you if your ship can be at that location.
+--- tells you if your ship can dash to that location.
 -- @tparam number x The x position of the location you wish to check.
 -- @tparam number y The y position of the location you wish to check.
 -- @treturn bool True if pathable by this unit, false otherwise.

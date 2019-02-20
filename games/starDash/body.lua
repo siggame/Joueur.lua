@@ -27,6 +27,8 @@ function Body:init(...)
     self.bodyType = ""
     --- The type of material the celestial body has.
     self.materialType = ""
+    --- The Player that owns and can control this Unit.
+    self.owner = nil
     --- The radius of the circle that this body takes up.
     self.radius = 0
     --- The x value this celestial body is on.

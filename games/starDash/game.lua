@@ -29,6 +29,8 @@ function Game:init(...)
     self.currentPlayer = nil
     --- The current turn number, starting at 0 for the first player's turn.
     self.currentTurn = 0
+    --- Radius of the no dash zone around the sun.
+    self.dashBlock = 0
     --- The distance traveled each turn by dashing.
     self.dashDistance = 0
     --- A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
@@ -61,6 +63,8 @@ function Game:init(...)
     self.regenerateRate = 0
     --- A unique identifier for the game instance that is being played.
     self.session = ""
+    --- The standard size of ships.
+    self.shipRadius = 0
     --- The size of the map in the X direction.
     self.sizeX = 0
     --- The size of the map in the Y direction.
