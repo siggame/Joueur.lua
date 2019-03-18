@@ -46,15 +46,17 @@ function Game:init(...)
     --- The rate at which miners grab minerals from asteroids.
     self.miningSpeed = 0
     --- The rarity modifier of the most common ore. This controls how much spawns.
-    self.oreRarity1 = 0
+    self.oreRarityGenarium = 0
     --- The rarity modifier of the second rarest ore. This controls how much spawns.
-    self.oreRarity2 = 0
+    self.oreRarityRarium = 0
     --- The rarity modifier of the rarest ore. This controls how much spawns.
-    self.oreRarity3 = 0
+    self.oreRaritylegendarium = 0
     --- The amount of energy the planets restore each round.
     self.planetRechargeRate = 0
     --- List of all the players in the game.
     self.players = Table()
+    --- The standard size of ships.
+    self.projectileRadius = 0
     --- The amount of distance missiles travel through space.
     self.projectileSpeed = 0
     --- Every projectile in the game.

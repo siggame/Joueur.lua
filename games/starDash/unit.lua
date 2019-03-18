@@ -45,10 +45,10 @@ function Unit:init(...)
     self.owner = nil
     --- The martyr ship that is currently shielding this ship if any.
     self.protector = nil
-    --- The radius of the circle this unit occupies.
-    self.radius = 0
     --- The amount of Rarium carried by this unit. (0 to job carry capacity - other carried items).
     self.rarium = 0
+    --- The sheild that a martyr ship has.
+    self.shield = 0
     --- The x value this unit is on.
     self.x = 0
     --- The y value this unit is on.
@@ -78,6 +78,17 @@ function Unit:attack(enemy)
     }))
 end
 
+--- Causes the unit to dash towards the designated destination.
+-- @tparam number x The x value of the destination's coordinates.
+-- @tparam number y The y value of the destination's coordinates.
+-- @treturn bool True if it moved, false otherwise.
+function Unit:dash(x, y)
+    return not not (self:_runOnServer("dash", {
+        x = x,
+        y = y,
+    }))
+end
+
 --- allows a miner to mine a asteroid
 -- @tparam Body body The object to be mined.
 -- @treturn bool True if successfully acted, false otherwise.
@@ -98,7 +109,7 @@ function Unit:move(x, y)
     }))
 end
 
---- tells you if your ship can dash to that location.
+--- tells you if your ship can be at that location.
 -- @tparam number x The x position of the location you wish to check.
 -- @tparam number y The y position of the location you wish to check.
 -- @treturn bool True if pathable by this unit, false otherwise.

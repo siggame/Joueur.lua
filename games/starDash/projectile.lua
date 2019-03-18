@@ -25,8 +25,6 @@ function Projectile:init(...)
     self.fuel = 0
     --- The Player that owns and can control this Unit.
     self.owner = nil
-    --- The radius of the circle this projectile occupies.
-    self.radius = 0
     --- The unit that is being attacked by this projectile.
     self.target = nil
     --- The x value this projectile is on.
