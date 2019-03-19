@@ -21,7 +21,7 @@ function Body:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The amount of material the object has.
+    --- The amount of material the object has, or energy if it is a planet.
     self.amount = 0
     --- The type of celestial body it is.
     self.bodyType = ""

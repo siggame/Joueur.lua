@@ -35,8 +35,12 @@ function Game:init(...)
     self.dashDistance = 0
     --- A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
     self.gameObjects = Table()
+    --- The value of every unit of genarium.
+    self.genariumValue = 0
     --- A array-like table of all jobs. first item is corvette, second is missleboat, third is martyr, fourth is transport, and fifth is miner.
     self.jobs = Table()
+    --- The value of every unit of legendarium.
+    self.legendariumValue = 0
     --- The highest amount of material, barring rarity, that can be in a asteroid.
     self.maxAsteroid = 0
     --- The maximum number of turns before the game will automatically end.
@@ -45,12 +49,16 @@ function Game:init(...)
     self.minAsteroid = 0
     --- The rate at which miners grab minerals from asteroids.
     self.miningSpeed = 0
+    --- The amount of mythicite that spawns at the start of the game.
+    self.mythiciteAmount = 0
     --- The rarity modifier of the most common ore. This controls how much spawns.
     self.oreRarityGenarium = 0
+    --- The rarity modifier of the rarest ore. This controls how much spawns.
+    self.oreRarityLegendarium = 0
     --- The rarity modifier of the second rarest ore. This controls how much spawns.
     self.oreRarityRarium = 0
-    --- The rarity modifier of the rarest ore. This controls how much spawns.
-    self.oreRaritylegendarium = 0
+    --- The amount of energy a planet can hold at once.
+    self.planetEnergyCap = 0
     --- The amount of energy the planets restore each round.
     self.planetRechargeRate = 0
     --- List of all the players in the game.
@@ -61,6 +69,8 @@ function Game:init(...)
     self.projectileSpeed = 0
     --- Every projectile in the game.
     self.projectiles = Table()
+    --- The value of every unit of rarium.
+    self.rariumValue = 0
     --- The regeneration rate of asteroids.
     self.regenerateRate = 0
     --- A unique identifier for the game instance that is being played.
