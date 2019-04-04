@@ -27,7 +27,7 @@ function Body:init(...)
     self.bodyType = ""
     --- The type of material the celestial body has.
     self.materialType = ""
-    --- The Player that owns and can control this Unit.
+    --- The Player that owns and can control this Body.
     self.owner = nil
     --- The radius of the circle that this body takes up.
     self.radius = 0
@@ -49,6 +49,24 @@ function Body:init(...)
     -- @see GameObject.logs
 
 
+end
+
+--- The x value of this body a number of turns from now. (0-how many you want).
+-- @tparam number num The number of turns in the future you wish to check.
+-- @treturn number The x position of the body the input number of turns in the future.
+function Body:nextX(num)
+    return tonumber(self:_runOnServer("nextX", {
+        num = num,
+    }))
+end
+
+--- The x value of this body a number of turns from now. (0-how many you want).
+-- @tparam number num The number of turns in the future you wish to check.
+-- @treturn number The x position of the body the input number of turns in the future.
+function Body:nextY(num)
+    return tonumber(self:_runOnServer("nextY", {
+        num = num,
+    }))
 end
 
 --- Spawn a unit on some value of this celestial body.

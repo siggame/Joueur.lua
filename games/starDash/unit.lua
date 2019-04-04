@@ -113,8 +113,8 @@ end
 -- @tparam number x The x position of the location you wish to check.
 -- @tparam number y The y position of the location you wish to check.
 -- @treturn bool True if pathable by this unit, false otherwise.
-function Unit:open(x, y)
-    return not not (self:_runOnServer("open", {
+function Unit:safe(x, y)
+    return not not (self:_runOnServer("safe", {
         x = x,
         y = y,
     }))
