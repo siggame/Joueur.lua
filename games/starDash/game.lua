@@ -23,7 +23,7 @@ function Game:init(...)
     -- @field[string] self.name
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- All the celestial bodies in the game.
+    --- All the celestial bodies in the game. The first two are planets and the third is the sun. The fourth is the VP asteroid. Everything else is normal asteroids.
     self.bodies = Table()
     --- The player whose turn it is currently. That player can send commands. Other players cannot.
     self.currentPlayer = nil
@@ -31,6 +31,8 @@ function Game:init(...)
     self.currentTurn = 0
     --- Radius of the no dash zone around the sun.
     self.dashBlock = 0
+    --- The cost of dashing.
+    self.dashCost = 0
     --- The distance traveled each turn by dashing.
     self.dashDistance = 0
     --- A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
@@ -41,16 +43,18 @@ function Game:init(...)
     self.jobs = Table()
     --- The value of every unit of legendarium.
     self.legendariumValue = 0
-    --- The highest amount of material, barring rarity, that can be in a asteroid.
+    --- The highest amount of material, that can be in a asteroid.
     self.maxAsteroid = 0
     --- The maximum number of turns before the game will automatically end.
     self.maxTurns = 100
-    --- The smallest amount of material, barring rarity, that can be in a asteroid.
+    --- The smallest amount of material, that can be in a asteroid.
     self.minAsteroid = 0
     --- The rate at which miners grab minerals from asteroids.
     self.miningSpeed = 0
     --- The amount of mythicite that spawns at the start of the game.
     self.mythiciteAmount = 0
+    --- The number of orbit updates you cannot mine the mithicite asteroid.
+    self.orbitsProtected = 0
     --- The rarity modifier of the most common ore. This controls how much spawns.
     self.oreRarityGenarium = 0
     --- The rarity modifier of the rarest ore. This controls how much spawns.
@@ -83,6 +87,8 @@ function Game:init(...)
     self.sizeY = 0
     --- The amount of time (in nano-seconds) added after each player performs a turn.
     self.timeAddedPerTurn = 0
+    --- The number of turns it takes for a asteroid to orbit the sun. (Asteroids move after each players turn).
+    self.turnsToOrbit = 0
     --- Every Unit in the game.
     self.units = Table()
 

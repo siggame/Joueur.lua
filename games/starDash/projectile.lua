@@ -23,7 +23,7 @@ function Projectile:init(...)
 
     --- The amount of remaining distance the projectile can move.
     self.fuel = 0
-    --- The Player that owns and can control this Unit.
+    --- The Player that owns and can control this Projectile.
     self.owner = nil
     --- The unit that is being attacked by this projectile.
     self.target = nil
