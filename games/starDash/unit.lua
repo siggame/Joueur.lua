@@ -29,7 +29,7 @@ function Unit:init(...)
     self.dashY = 0
     --- The remaining health of a unit.
     self.energy = 0
-    --- The amount of Generium ore carried by this unit. (0 to job carry capacity - other carried items).
+    --- The amount of Genarium ore carried by this unit. (0 to job carry capacity - other carried items).
     self.genarium = 0
     --- Tracks wheither or not the ship is dashing.
     self.isDashing = false
@@ -89,6 +89,17 @@ function Unit:dash(x, y)
     }))
 end
 
+--- tells you if your ship dash to that location.
+-- @tparam number x The x position of the location you wish to arrive.
+-- @tparam number y The y position of the location you wish to arrive.
+-- @treturn bool True if pathable by this unit, false otherwise.
+function Unit:dashable(x, y)
+    return not not (self:_runOnServer("dashable", {
+        x = x,
+        y = y,
+    }))
+end
+
 --- allows a miner to mine a asteroid
 -- @tparam Body body The object to be mined.
 -- @treturn bool True if successfully acted, false otherwise.
@@ -109,9 +120,9 @@ function Unit:move(x, y)
     }))
 end
 
---- tells you if your ship can be at that location.
--- @tparam number x The x position of the location you wish to check.
--- @tparam number y The y position of the location you wish to check.
+--- tells you if your ship can move to that location.
+-- @tparam number x The x position of the location you wish to arrive.
+-- @tparam number y The y position of the location you wish to arrive.
 -- @treturn bool True if pathable by this unit, false otherwise.
 function Unit:safe(x, y)
     return not not (self:_runOnServer("safe", {
