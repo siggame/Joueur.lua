@@ -29,8 +29,6 @@ function Game:init(...)
     self.currentPlayer = nil
     --- The current turn number, starting at 0 for the first player's turn.
     self.currentTurn = 0
-    --- Radius of the no dash zone around the sun.
-    self.dashBlock = 0
     --- The cost of dashing.
     self.dashCost = 0
     --- The distance traveled each turn by dashing.
@@ -39,7 +37,7 @@ function Game:init(...)
     self.gameObjects = Table()
     --- The value of every unit of genarium.
     self.genariumValue = 0
-    --- A array-like table of all jobs. first item is corvette, second is missleboat, third is martyr, fourth is transport, and fifth is miner.
+    --- A array-like table of all jobs. first item is corvette, second is missileboat, third is martyr, fourth is transport, and fifth is miner.
     self.jobs = Table()
     --- The value of every unit of legendarium.
     self.legendariumValue = 0

@@ -33,7 +33,7 @@ function Job:init(...)
     self.range = 0
     --- The reserve the martyr use to protect allies.
     self.shield = 0
-    --- The Job title. 'corvette', 'missleboat', 'martyr', 'transport', or 'miner'. (in this order from 0-4).
+    --- The Job title. 'corvette', 'missileboat', 'martyr', 'transport', or 'miner'. (in this order from 0-4).
     self.title = ""
     --- How much money it costs to spawn a unit.
     self.unitCost = 0
