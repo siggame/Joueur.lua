@@ -27,7 +27,7 @@ function Unit:init(...)
     self.dashX = 0
     --- The y value this unit is dashing to.
     self.dashY = 0
-    --- The remaining health of a unit.
+    --- The remaining health of the unit.
     self.energy = 0
     --- The amount of Genarium ore carried by this unit. (0 to job carry capacity - other carried items).
     self.genarium = 0
