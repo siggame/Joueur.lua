@@ -21,6 +21,8 @@ function Projectile:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
+    --- The remaining health of the projectile.
+    self.energy = 0
     --- The amount of remaining distance the projectile can move.
     self.fuel = 0
     --- The Player that owns and can control this Projectile.
