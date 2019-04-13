@@ -123,8 +123,8 @@ end
 --- Attacks the specified projectile.
 -- @tparam Projectile missile The projectile being shot down.
 -- @treturn bool True if successfully attacked, false otherwise.
-function Unit:shootDown(missile)
-    return not not (self:_runOnServer("shootDown", {
+function Unit:shootdown(missile)
+    return not not (self:_runOnServer("shootdown", {
         missile = missile,
     }))
 end
@@ -132,7 +132,7 @@ end
 --- Grab materials from a friendly unit. Doesn't use a action.
 -- @tparam Unit unit The unit you are grabbing the resources from.
 -- @tparam number amount The amount of materials to you with to grab. Amounts <= 0 will pick up all the materials that the unit can.
--- @tparam string material The material the unit will pick up. 'resource1', 'resource2', or 'resource3'.
+-- @tparam string material The material the unit will pick up. 'genarium', 'rarium', 'legendarium', or 'mythicite'.
 -- @treturn bool True if successfully taken, false otherwise.
 function Unit:transfer(unit, amount, material)
     return not not (self:_runOnServer("transfer", {
