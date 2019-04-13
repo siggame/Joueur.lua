@@ -23,9 +23,9 @@ function Body:init(...)
 
     --- The amount of material the object has, or energy if it is a planet.
     self.amount = 0
-    --- The type of celestial body it is.
+    --- The type of celestial body it is. Either 'planet', 'asteroid', or 'sun'.
     self.bodyType = ""
-    --- The type of material the celestial body has.
+    --- The type of material the celestial body has. Either 'none', 'genarium', 'rarium', 'legendarium', or 'mythicite'.
     self.materialType = ""
     --- The Player that owns and can control this Body.
     self.owner = nil

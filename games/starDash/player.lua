@@ -33,7 +33,7 @@ function Player:init(...)
     self.name = "Anonymous"
     --- This player's opponent in the game.
     self.opponent = nil
-    --- Every Projectile owned by this Player.
+    --- Every Projectile owned by this Player. The earlier in the array-like table the older they are.
     self.projectiles = Table()
     --- The reason why the player lost the game.
     self.reasonLost = ""
@@ -41,7 +41,7 @@ function Player:init(...)
     self.reasonWon = ""
     --- The amount of time (in ns) remaining for this AI to send commands.
     self.timeRemaining = 0
-    --- Every Unit owned by this Player.
+    --- Every Unit owned by this Player. The earlier in the array-like table the older they are.
     self.units = Table()
     --- The number of victory points the player has.
     self.victoryPoints = 0
