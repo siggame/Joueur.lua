@@ -89,6 +89,17 @@ function Unit:dash(x, y)
     }))
 end
 
+--- tells you if your ship can dash to that location from where it is without clipping the sun.
+-- @tparam number x The x position of the location you wish to arrive.
+-- @tparam number y The y position of the location you wish to arrive.
+-- @treturn bool True if pathable by this unit, false otherwise.
+function Unit:isDashable(x, y)
+    return not not (self:_runOnServer("isDashable", {
+        x = x,
+        y = y,
+    }))
+end
+
 --- allows a miner to mine a asteroid
 -- @tparam Body body The object to be mined.
 -- @treturn bool True if successfully acted, false otherwise.
@@ -109,7 +120,7 @@ function Unit:move(x, y)
     }))
 end
 
---- tells you if your ship can move to that location from were it is without clipping the sun.
+--- tells you if your ship can move to that location from were it is landing in the sun.
 -- @tparam number x The x position of the location you wish to arrive.
 -- @tparam number y The y position of the location you wish to arrive.
 -- @treturn bool True if pathable by this unit, false otherwise.
