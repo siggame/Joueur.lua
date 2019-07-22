@@ -6,6 +6,8 @@ require("joueur.utilities.string") -- extends the base string metatable
 local argparse = require("joueur.utilities.argparse")
 local run = require("joueur.run")
 
+io.stdout:setvbuf 'no' -- Make stdout unbuffered so we get immediate feedback when running inside a non-terminal like docker
+
 local parser = argparse():description("Runs the Cadre Lua client to connect to a game server and play games with its AI.")
 parser:argument("game"):description("the name of the game you want to play on the server")
 parser:option("-s", "--server"):description("the hostname of the server you want to connect to e.g. localhost:3000"):default("localhost")
