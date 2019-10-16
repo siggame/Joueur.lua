@@ -35,6 +35,12 @@ function Tile:init(...)
     self.isTower = false
     --- Whether or not the tile can be moved on by workers.
     self.isWall = false
+    --- The amount of Ghouls on this tile at the moment.
+    self.numOfGhouls = 0
+    --- The amount of Hell Hounds on this tile at the moment.
+    self.numOfHounds = 0
+    --- The amount of animated zombies on this tile at the moment.
+    self.numOfZombies = 0
     --- The Tile to the 'East' of this one (x+1, y). nil if out of bounds of the map.
     self.tileEast = nil
     --- The Tile to the 'North' of this one (x, y-1). nil if out of bounds of the map.
@@ -45,7 +51,7 @@ function Tile:init(...)
     self.tileWest = nil
     --- The Tower on this Tile if present, otherwise nil.
     self.tower = nil
-    --- The type of Tile this is ('normal', 'path', 'river', or 'spawn').
+    --- The type of Tile this is ('normal', 'path', 'river', 'mine', 'castle', 'pathSpawn', or 'workerSpawn').
     self.type = ""
     --- The Unit on this Tile if present, otherwise nil.
     self.unit = nil
@@ -67,6 +73,15 @@ function Tile:init(...)
     -- @see GameObject.logs
 
 
+end
+
+--- Resurrect the corpses on this tile into zombies.
+-- @tparam number number Number of zombies on the tile that are being resurrected.
+-- @treturn bool True if Unit was created successfully, false otherwise.
+function Tile:res(number)
+    return not not (self:_runOnServer("res", {
+        number = number,
+    }))
 end
 
 --- (inherited) Adds a message to this GameObject's logs. Intended for your own debugging purposes, as strings stored here are saved in the gamelog.

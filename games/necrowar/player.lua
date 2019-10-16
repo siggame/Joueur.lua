@@ -25,9 +25,9 @@ function Player:init(...)
     self.clientType = ""
     --- The amount of gold this Player has.
     self.gold = 0
-    --- The amount of health remaining for this player's main unit.
+    --- The amount of health remaining for this player's Castle.
     self.health = 0
-    --- The tile that the home base is located on.
+    --- The tiles that the home base is located on.
     self.homeBase = Table()
     --- If the player lost the game or not.
     self.lost = false
@@ -65,6 +65,24 @@ function Player:init(...)
     -- @see GameObject.logs
 
 
+end
+
+--- Spawn a fighting Unit on this player's path spawn tile.
+-- @tparam string type What type of Unit to create (ghoul, hound, abomination, wraith, or horseman).
+-- @treturn bool True if Unit was created successfully, false otherwise.
+function Player:spawnUnit(type)
+    return not not (self:_runOnServer("spawnUnit", {
+        type = type,
+    }))
+end
+
+--- Spawn a worker Unit on this player's worker spawn tile.
+-- @tparam string type What type of Unit to create (worker, zombie, ghoul).
+-- @treturn bool True if Unit was created successfully, false otherwise.
+function Player:spawnWorker(type)
+    return not not (self:_runOnServer("spawnWorker", {
+        type = type,
+    }))
 end
 
 --- (inherited) Adds a message to this GameObject's logs. Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
