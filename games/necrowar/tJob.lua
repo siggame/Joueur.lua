@@ -45,6 +45,8 @@ function tJob:init(...)
     self.range = 0
     --- The type title. 'arrow', 'aoe', 'balarray-like tablea', or 'cleansing'.
     self.title = ""
+    --- How many turns this tower type needs to take between attacks.
+    self.turnsBetweenAttacks = 0
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
     -- @field[string] self.gameObjectName

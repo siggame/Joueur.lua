@@ -33,8 +33,6 @@ function Game:init(...)
     self.goldIncomePerUnit = 0
     --- The amount of gold income per turn per unit in the island mine.
     self.islandIncomePerUnit = 0
-    --- The maximum number of workers that can occupy the mine on the island at a given time.
-    self.islandUnitCap = 0
     --- The Amount of gold income per turn per unit fishing on the river side.
     self.manaIncomePerUnit = 0
     --- The number of Tiles in the map along the y (vertical) axis.

@@ -23,8 +23,6 @@ function uJob:init(...)
 
     --- The amount of damage this type does per attack.
     self.damage = 0
-    --- Amount of damage this type does against towers on a given turn.
-    self.damageVsTowers = 0
     --- How much does this type cost in gold.
     self.goldCost = 0
     --- The amount of starting health this type has.
