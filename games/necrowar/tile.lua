@@ -53,7 +53,7 @@ function Tile:init(...)
     self.tower = nil
     --- The type of Tile this is ('normal', 'path', 'river', 'mine', 'castle', 'pathSpawn', or 'workerSpawn').
     self.type = ""
-    --- The Unit on this Tile if present, otherwise nil.
+    --- The array-like table of Units on this Tile if present, otherwise nil.
     self.unit = nil
     --- The x (horizontal) position of this Tile.
     self.x = 0

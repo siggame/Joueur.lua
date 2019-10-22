@@ -41,8 +41,6 @@ function Game:init(...)
     self.mapWidth = 0
     --- The maximum number of turns before the game will automatically end.
     self.maxTurns = 100
-    --- The maximum number of workers that can occupy a mine at a given time.
-    self.mineUnitCap = 0
     --- List of all the players in the game.
     self.players = Table()
     --- The amount of turns it takes between the river changing phases.

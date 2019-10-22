@@ -23,18 +23,6 @@ function tJob:init(...)
 
     --- Whether this tower type hits all of the units on a tile (true) or one at a time (false).
     self.allUnits = false
-    --- The amount of damage this type does per attack against abominations.
-    self.damageVsAbomination = 0
-    --- The amount of damage this type does per attack against ghouls.
-    self.damageVsGhoul = 0
-    --- The amount of damage this type does per attack against horseman.
-    self.damageVsHorseman = 0
-    --- The amount of damage this type does per attack against hounds.
-    self.damageVsHound = 0
-    --- The amount of damage this type does per attack against wraiths.
-    self.damageVsWraith = 0
-    --- The amount of damage this type does per attack against zombies.
-    self.damageVsZombie = 0
     --- How much does this type cost in gold.
     self.goldCost = 0
     --- The amount of starting health this type has.
