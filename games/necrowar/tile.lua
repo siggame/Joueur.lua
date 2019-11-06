@@ -23,8 +23,12 @@ function Tile:init(...)
 
     --- The amount of corpses on this tile.
     self.corpses = 0
+    --- Whether or not the tile is where a player's castle rests.
+    self.isCastle = false
     --- Whether or not the tile is considered to be a gold mine or not.
     self.isGoldMine = false
+    --- Whether or not the tile can be moved on by workers.
+    self.isGrass = false
     --- Whether or not the tile is considered to be the island gold mine or not.
     self.isIslandGoldMine = false
     --- Whether or not the tile is considered a path or not.
@@ -33,8 +37,10 @@ function Tile:init(...)
     self.isRiver = false
     --- Whether or not the tile is considered a tower or not.
     self.isTower = false
-    --- Whether or not the tile can be moved on by workers.
-    self.isWall = false
+    --- Whether or not this tile is this player's Unit spawn.
+    self.isUnitSpawn = false
+    --- Whether or not this tile is this player's Worker spawn.
+    self.isWorkerSpawn = false
     --- The amount of Ghouls on this tile at the moment.
     self.numOfGhouls = 0
     --- The amount of Hell Hounds on this tile at the moment.
@@ -51,7 +57,7 @@ function Tile:init(...)
     self.tileWest = nil
     --- The Tower on this Tile if present, otherwise nil.
     self.tower = nil
-    --- The type of Tile this is ('normal', 'path', 'river', 'mine', 'castle', 'pathSpawn', or 'workerSpawn').
+    --- The type of Tile this is ('grass', 'path', 'river', 'mine', 'castle', 'pathSpawn', or 'workerSpawn').
     self.type = ""
     --- The array-like table of Units on this Tile if present, otherwise nil.
     self.unit = nil

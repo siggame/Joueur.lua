@@ -23,6 +23,8 @@ function tJob:init(...)
 
     --- Whether this tower type hits all of the units on a tile (true) or one at a time (false).
     self.allUnits = false
+    --- How much damage this tower type does in a single turn of attack.
+    self.damage = 0
     --- How much does this type cost in gold.
     self.goldCost = 0
     --- The amount of starting health this type has.
