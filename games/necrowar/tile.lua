@@ -43,6 +43,12 @@ function Tile:init(...)
     self.isWall = false
     --- Whether or not the tile is the worker spawn.
     self.isWorkerSpawn = false
+    --- The amount of Ghouls on this tile.
+    self.numGhouls = 0
+    --- The amount of Hounds on this tile.
+    self.numHounds = 0
+    --- The amount of Zombies on this tile.
+    self.numZombies = 0
     --- The Tile to the 'East' of this one (x+1, y). nil if out of bounds of the map.
     self.tileEast = nil
     --- The Tile to the 'North' of this one (x, y-1). nil if out of bounds of the map.
@@ -78,11 +84,11 @@ function Tile:init(...)
 end
 
 --- Resurrect the corpses on this tile into Zombies.
--- @tparam number number Number of zombies to resurrect.
+-- @tparam number num Number of zombies to resurrect.
 -- @treturn bool True if successful res, false otherwise.
-function Tile:res(number)
+function Tile:res(num)
     return not not (self:_runOnServer("res", {
-        number = number,
+        num = num,
     }))
 end
 
