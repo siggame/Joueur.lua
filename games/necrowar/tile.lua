@@ -23,30 +23,26 @@ function Tile:init(...)
 
     --- The amount of corpses on this tile.
     self.corpses = 0
-    --- Whether or not the tile is where a player's castle rests.
+    --- Whether or not the tile is a castle tile.
     self.isCastle = false
     --- Whether or not the tile is considered to be a gold mine or not.
     self.isGoldMine = false
-    --- Whether or not the tile can be moved on by workers.
+    --- Whether or not the tile is considered grass or not (Workers can walk on grass).
     self.isGrass = false
     --- Whether or not the tile is considered to be the island gold mine or not.
     self.isIslandGoldMine = false
-    --- Whether or not the tile is considered a path or not.
+    --- Whether or not the tile is considered a path or not (Units can walk on paths).
     self.isPath = false
     --- Whether or not the tile is considered a river or not.
     self.isRiver = false
     --- Whether or not the tile is considered a tower or not.
     self.isTower = false
-    --- Whether or not this tile is this player's Unit spawn.
+    --- Whether or not the tile is the unit spawn.
     self.isUnitSpawn = false
-    --- Whether or not this tile is this player's Worker spawn.
+    --- Whether or not the tile can be moved on by workers.
+    self.isWall = false
+    --- Whether or not the tile is the worker spawn.
     self.isWorkerSpawn = false
-    --- The amount of Ghouls on this tile at the moment.
-    self.numOfGhouls = 0
-    --- The amount of Hell Hounds on this tile at the moment.
-    self.numOfHounds = 0
-    --- The amount of animated zombies on this tile at the moment.
-    self.numOfZombies = 0
     --- The Tile to the 'East' of this one (x+1, y). nil if out of bounds of the map.
     self.tileEast = nil
     --- The Tile to the 'North' of this one (x, y-1). nil if out of bounds of the map.
@@ -57,9 +53,9 @@ function Tile:init(...)
     self.tileWest = nil
     --- The Tower on this Tile if present, otherwise nil.
     self.tower = nil
-    --- The type of Tile this is ('grass', 'path', 'river', 'mine', 'castle', 'pathSpawn', or 'workerSpawn').
+    --- The type of Tile this is ('normal', 'path', 'river', or 'spawn').
     self.type = ""
-    --- The array-like table of Units on this Tile if present, otherwise nil.
+    --- The Unit on this Tile if present, otherwise nil.
     self.unit = nil
     --- The x (horizontal) position of this Tile.
     self.x = 0
@@ -81,12 +77,28 @@ function Tile:init(...)
 
 end
 
---- Resurrect the corpses on this tile into zombies.
--- @tparam number number Number of zombies on the tile that are being resurrected.
--- @treturn bool True if Unit was created successfully, false otherwise.
+--- Resurrect the corpses on this tile into Zombies.
+-- @tparam number number Number of zombies to resurrect.
+-- @treturn bool True if successful res, false otherwise.
 function Tile:res(number)
     return not not (self:_runOnServer("res", {
         number = number,
+    }))
+end
+
+--- Spawns a fighting unit on the correct tile.
+-- @tparam string title The title of the desired unit type.
+-- @treturn bool True if successfully spawned, false otherwise.
+function Tile:spawnUnit(title)
+    return not not (self:_runOnServer("spawnUnit", {
+        title = title,
+    }))
+end
+
+--- Spawns a worker on the correct tile.
+-- @treturn bool True if successfully spawned, false otherwise.
+function Tile:spawnWorker()
+    return not not (self:_runOnServer("spawnWorker", {
     }))
 end
 

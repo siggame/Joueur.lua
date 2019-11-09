@@ -23,7 +23,7 @@ function tJob:init(...)
 
     --- Whether this tower type hits all of the units on a tile (true) or one at a time (false).
     self.allUnits = false
-    --- How much damage this tower type does in a single turn of attack.
+    --- The amount of damage this type does per attack.
     self.damage = 0
     --- How much does this type cost in gold.
     self.goldCost = 0
@@ -35,7 +35,7 @@ function tJob:init(...)
     self.range = 0
     --- The type title. 'arrow', 'aoe', 'balarray-like tablea', or 'cleansing'.
     self.title = ""
-    --- How many turns this tower type needs to take between attacks.
+    --- How many turns have to take place between this type's attacks.
     self.turnsBetweenAttacks = 0
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.

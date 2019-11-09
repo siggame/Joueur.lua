@@ -21,14 +21,10 @@ function Unit:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- Whether or not this Unit has attacked this turn or not.
-    self.attacked = false
-    --- Whether or not this Unit has built a tower (workers only) this turn or not.
-    self.built = false
+    --- Whether or not this Unit has performed its action this turn (attack or build).
+    self.acted = false
     --- The remaining health of a unit.
     self.health = 0
-    --- Whether or not this Unit has moved yet this turn.
-    self.moved = false
     --- The number of moves this unit has left this turn.
     self.moves = 0
     --- The Player that owns and can control this Unit.
@@ -82,7 +78,7 @@ function Unit:fish(tile)
     }))
 end
 
---- Enters an empty mine tile and is put to work gathering resources.
+--- Enters a mine and is put to work gathering resources.
 -- @tparam Tile tile The tile the mine is located on.
 -- @treturn bool True if successfully entered mine and began mining, false otherwise.
 function Unit:mine(tile)
