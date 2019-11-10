@@ -1,4 +1,4 @@
--- Tower: A tower in the game. Used to combat enemy waves.
+-- TowerJob: Information about a tower's job/type.
 -- DO NOT MODIFY THIS FILE
 -- Never try to directly create an instance of this class, or modify its member variables.
 -- Instead, you should only be reading its variables and calling its functions.
@@ -11,26 +11,32 @@ local GameObject = require("games.necrowar.gameObject")
 -- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
---- A tower in the game. Used to combat enemy waves.
--- @classmod Tower
-local Tower = class(GameObject)
+--- Information about a tower's job/type.
+-- @classmod TowerJob
+local TowerJob = class(GameObject)
 
--- initializes a Tower with basic logic as provided by the Creer code generator
-function Tower:init(...)
+-- initializes a TowerJob with basic logic as provided by the Creer code generator
+function TowerJob:init(...)
     GameObject.init(self, ...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- Whether this tower has attacked this turn or not.
-    self.attacked = false
-    --- How much remaining health this tower has.
+    --- Whether this tower type hits all of the units on a tile (true) or one at a time (false).
+    self.allUnits = false
+    --- The amount of damage this type does per attack.
+    self.damage = 0
+    --- How much does this type cost in gold.
+    self.goldCost = 0
+    --- The amount of starting health this type has.
     self.health = 0
-    --- What type of tower this is (it's job).
-    self.job = nil
-    --- The player that built / owns this tower.
-    self.owner = nil
-    --- The Tile this Tower is on.
-    self.tile = nil
+    --- How much does this type cost in mana.
+    self.manaCost = 0
+    --- The number of tiles this type can attack from.
+    self.range = 0
+    --- The type title. 'arrow', 'aoe', 'balarray-like tablea', or 'cleansing'.
+    self.title = ""
+    --- How many turns have to take place between this type's attacks.
+    self.turnsBetweenAttacks = 0
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
     -- @field[string] self.gameObjectName
@@ -47,17 +53,8 @@ function Tower:init(...)
 
 end
 
---- Attacks an enemy unit on an tile within it's range.
--- @tparam Tile tile The Tile to attack.
--- @treturn bool True if successfully attacked, false otherwise.
-function Tower:attack(tile)
-    return not not (self:_runOnServer("attack", {
-        tile = tile,
-    }))
-end
-
 --- (inherited) Adds a message to this GameObject's logs. Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
--- @function Tower:log
+-- @function TowerJob:log
 -- @see GameObject:log
 -- @tparam string message A string to add to this GameObject's log. Intended for debugging.
 
@@ -67,4 +64,4 @@ end
 -- if you want to add any client side logic this is where you can add them
 -- <<-- /Creer-Merge: functions -->>
 
-return Tower
+return TowerJob

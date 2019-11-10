@@ -25,14 +25,14 @@ function Unit:init(...)
     self.acted = false
     --- The remaining health of a unit.
     self.health = 0
+    --- The type of unit this is.
+    self.job = nil
     --- The number of moves this unit has left this turn.
     self.moves = 0
     --- The Player that owns and can control this Unit.
     self.owner = nil
     --- The Tile this Unit is on.
     self.tile = nil
-    --- The type of unit this is.
-    self.uJob = nil
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
     -- @field[string] self.gameObjectName
