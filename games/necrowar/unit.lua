@@ -59,13 +59,11 @@ function Unit:attack(tile)
 end
 
 --- Unit, if it is a worker, builds a tower on the tile it is on, only workers can do this.
--- @tparam Tile tile The tile the unit is on/builds on.
--- @tparam tJob tJob The type of tower that is being built. 'arrow', 'aoe', 'balarray-like tablea', or 'cleansing'.
+-- @tparam string title The tower type to build, as a string.
 -- @treturn bool True if successfully built, false otherwise.
-function Unit:build(tile, tJob)
+function Unit:build(title)
     return not not (self:_runOnServer("build", {
-        tile = tile,
-        tJob = tJob,
+        title = title,
     }))
 end
 
