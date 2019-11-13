@@ -49,6 +49,8 @@ function Tile:init(...)
     self.numHounds = 0
     --- The amount of Zombies on this tile.
     self.numZombies = 0
+    --- Which player owns this tile, only applies to grass tiles for workers, NULL otherwise.
+    self.owner = nil
     --- The Tile to the 'East' of this one (x+1, y). nil if out of bounds of the map.
     self.tileEast = nil
     --- The Tile to the 'North' of this one (x, y-1). nil if out of bounds of the map.
@@ -59,8 +61,6 @@ function Tile:init(...)
     self.tileWest = nil
     --- The Tower on this Tile if present, otherwise nil.
     self.tower = nil
-    --- The type of Tile this is ('normal', 'path', 'river', or 'spawn').
-    self.type = ""
     --- The Unit on this Tile if present, otherwise nil.
     self.unit = nil
     --- The x (horizontal) position of this Tile.

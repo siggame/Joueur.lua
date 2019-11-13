@@ -33,7 +33,7 @@ function TowerJob:init(...)
     self.manaCost = 0
     --- The number of tiles this type can attack from.
     self.range = 0
-    --- The type title. 'arrow', 'aoe', 'balarray-like tablea', or 'cleansing'.
+    --- The type title. 'arrow', 'aoe', 'balarray-like tablea', 'cleansing', or 'castle'.
     self.title = ""
     --- How many turns have to take place between this type's attacks.
     self.turnsBetweenAttacks = 0
