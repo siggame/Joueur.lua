@@ -75,6 +75,8 @@ function Game:init(...)
     self.shipRange = 0
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     self.tiles = Table()
+    --- The amount of time (in nano-seconds) added after each player performs a turn.
+    self.timeAddedPerTurn = 0
     --- Every Unit in the game. Merchant units have targetPort set to a port.
     self.units = Table()
 
@@ -82,6 +84,7 @@ function Game:init(...)
 
     self.name = "Pirates"
 
+    self._gameVersion = "d51fca49d06cb7164f9dbf9c3515ab0f9b5a17113a5946bddcc75aaba125967f"
     self._gameObjectClasses = {
         GameObject = require("games.pirates.gameObject"),
         Player = require("games.pirates.player"),

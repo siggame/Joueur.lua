@@ -1,36 +1,52 @@
--- Nest: A location (node) connected to other Nests via Webs (edges) in the game that Spiders can converge on, regardless of owner.
+-- Player: A player in this game. Every AI controls one player.
 -- DO NOT MODIFY THIS FILE
 -- Never try to directly create an instance of this class, or modify its member variables.
 -- Instead, you should only be reading its variables and calling its functions.
 
 
 local class = require("joueur.utilities.class")
-local GameObject = require("games.spiders.gameObject")
+local GameObject = require("games.stardash.gameObject")
 
 -- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 -- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
---- A location (node) connected to other Nests via Webs (edges) in the game that Spiders can converge on, regardless of owner.
--- @classmod Nest
-local Nest = class(GameObject)
+--- A player in this game. Every AI controls one player.
+-- @classmod Player
+local Player = class(GameObject)
 
--- initializes a Nest with basic logic as provided by the Creer code generator
-function Nest:init(...)
+-- initializes a Player with basic logic as provided by the Creer code generator
+function Player:init(...)
     GameObject.init(self, ...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The Player that 'controls' this Nest as they have the most Spiders on this nest.
-    self.controllingPlayer = nil
-    --- All the Spiders currently located on this Nest.
-    self.spiders = Table()
-    --- Webs that connect to this Nest.
-    self.webs = Table()
-    --- The X coordinate of the Nest. Used for distance calculations.
-    self.x = 0
-    --- The Y coordinate of the Nest. Used for distance calculations.
-    self.y = 0
+    --- What type of client this is, e.g. 'Python', 'JavaScript', or some other language. For potential data mining purposes.
+    self.clientType = ""
+    --- The home base of the player.
+    self.homeBase = nil
+    --- If the player lost the game or not.
+    self.lost = false
+    --- The amount of money this Player has.
+    self.money = 0
+    --- The name of the player.
+    self.name = "Anonymous"
+    --- This player's opponent in the game.
+    self.opponent = nil
+    --- Every Projectile owned by this Player. The earlier in the array-like table the older they are.
+    self.projectiles = Table()
+    --- The reason why the player lost the game.
+    self.reasonLost = ""
+    --- The reason why the player won the game.
+    self.reasonWon = ""
+    --- The amount of time (in ns) remaining for this AI to send commands.
+    self.timeRemaining = 0
+    --- Every Unit owned by this Player. The earlier in the array-like table the older they are.
+    self.units = Table()
+    --- The number of victory points the player has.
+    self.victoryPoints = 0
+    --- If the player won the game or not.
+    self.won = false
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
     -- @field[string] self.gameObjectName
@@ -48,7 +64,7 @@ function Nest:init(...)
 end
 
 --- (inherited) Adds a message to this GameObject's logs. Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
--- @function Nest:log
+-- @function Player:log
 -- @see GameObject:log
 -- @tparam string message A string to add to this GameObject's log. Intended for debugging.
 
@@ -57,4 +73,4 @@ end
 -- if you want to add any client side logic this is where you can add them
 -- <<-- /Creer-Merge: functions -->>
 
-return Nest
+return Player

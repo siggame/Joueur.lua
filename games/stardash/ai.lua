@@ -1,4 +1,4 @@
--- This is where you build your AI for the Chess game.
+-- This is where you build your AI for the Stardash game.
 
 local class = require("joueur.utilities.class")
 local BaseAI = require("joueur.baseAI")
@@ -7,7 +7,7 @@ local BaseAI = require("joueur.baseAI")
 -- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
---- the AI functions for the Chess game.
+--- the AI functions for the Stardash game.
 -- @classmod AI
 local AI = class(BaseAI)
 
@@ -22,7 +22,7 @@ local AI = class(BaseAI)
 --- this is the name you send to the server to play as.
 function AI:getName()
     -- <<-- Creer-Merge: get-name -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-    return "Chess Lua Player" -- REPLACE THIS WITH YOUR TEAM NAME!
+    return "Stardash Lua Player" -- REPLACE THIS WITH YOUR TEAM NAME!
     -- <<-- /Creer-Merge: get-name -->>
 end
 
@@ -52,13 +52,13 @@ end
 
 -- Game Logic Functions: functions you must fill out to send data to the game server to actually play the game! --
 
---- This is called every time it is this AI.player's turn to make a move.
--- @treturn string A string in Standard Algebraic Notation (SAN) for the move you want to make. If the move is invalid or not properly formatted you will lose the game.
-function AI:makeMove()
-    -- <<-- Creer-Merge: makeMove -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-    -- Put your game logic here for makeMove
-    return ""
-    -- <<-- /Creer-Merge: makeMove -->>
+--- This is called every time it is this AI.player's turn.
+-- @treturn bool Represents if you want to end your turn. True means end your turn, False means to keep your turn going and re-call this function.
+function AI:runTurn()
+    -- <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
+    -- Put your game logic here for runTurn
+    return true
+    -- <<-- /Creer-Merge: runTurn -->>
 end
 
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.

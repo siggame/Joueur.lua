@@ -53,11 +53,14 @@ function Game:init(...)
     self.players = Table()
     --- A unique identifier for the game instance that is being played.
     self.session = ""
+    --- The amount of time (in nano-seconds) added after each player performs a turn.
+    self.timeAddedPerTurn = 0
 
 
 
     self.name = "Anarchy"
 
+    self._gameVersion = "2bc66f9a5d7babd553079e149c7466feb6f553935b608ff722872e195fbadab8"
     self._gameObjectClasses = {
         Building = require("games.anarchy.building"),
         FireDepartment = require("games.anarchy.fireDepartment"),

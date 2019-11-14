@@ -41,7 +41,7 @@ function Tile:init(...)
     self.tileSouth = nil
     --- The Tile to the 'West' of this one (x-1, y). nil if out of bounds of the map.
     self.tileWest = nil
-    --- What type of Tile this is, either 'Water' or 'Land'.
+    --- What type of Tile this is, either 'water' or 'land'.
     self.type = ""
     --- The x (horizontal) position of this Tile.
     self.x = 0

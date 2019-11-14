@@ -57,11 +57,14 @@ function Game:init(...)
     self.spawnerTypes = Table()
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     self.tiles = Table()
+    --- The amount of time (in nano-seconds) added after each player performs a turn.
+    self.timeAddedPerTurn = 0
 
 
 
     self.name = "Stumped"
 
+    self._gameVersion = "7de307cae4a9a163a9b3600cb20c4b376b9f9cc42f1b990852878fea0127eed3"
     self._gameObjectClasses = {
         Beaver = require("games.stumped.beaver"),
         GameObject = require("games.stumped.gameObject"),

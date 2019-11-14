@@ -61,6 +61,8 @@ function Game:init(...)
     self.siestaLength = 0
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     self.tiles = Table()
+    --- The amount of time (in nano-seconds) added after each player performs a turn.
+    self.timeAddedPerTurn = 0
     --- How many turns a Cowboy will be drunk for if a bottle breaks on it.
     self.turnsDrunk = 0
 
@@ -68,6 +70,7 @@ function Game:init(...)
 
     self.name = "Saloon"
 
+    self._gameVersion = "fbaeac2bae9020bdd5a8816cb9ae38215c277e4bf7874a2f70c3995cd8eee8d3"
     self._gameObjectClasses = {
         Bottle = require("games.saloon.bottle"),
         Cowboy = require("games.saloon.cowboy"),

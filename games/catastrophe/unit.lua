@@ -110,7 +110,7 @@ end
 
 --- Drops some of the given resource on or adjacent to the Unit's Tile. Does not count as an action.
 -- @tparam Tile tile The Tile to drop materials/food on.
--- @tparam string resource The type of resource to drop ('material' or 'food').
+-- @tparam string resource The type of resource to drop ('materials' or 'food').
 -- @tparam[opt=0] number amount The amount of the resource to drop. Amounts <= 0 will drop as much as possible.
 -- @treturn bool True if successfully dropped the resource, false otherwise.
 function Unit:drop(tile, resource, amount)
@@ -145,7 +145,7 @@ end
 
 --- Picks up some materials or food on or adjacent to the Unit's Tile. Does not count as an action.
 -- @tparam Tile tile The Tile to pickup materials/food from.
--- @tparam string resource The type of resource to pickup ('material' or 'food').
+-- @tparam string resource The type of resource to pickup ('materials' or 'food').
 -- @tparam[opt=0] number amount The amount of the resource to pickup. Amounts <= 0 will pickup as much as possible.
 -- @treturn bool True if successfully picked up a resource, false otherwise.
 function Unit:pickup(tile, resource, amount)

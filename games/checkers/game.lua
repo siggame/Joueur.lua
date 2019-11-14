@@ -45,11 +45,14 @@ function Game:init(...)
     self.players = Table()
     --- A unique identifier for the game instance that is being played.
     self.session = ""
+    --- The amount of time (in nano-seconds) added after each player performs a turn.
+    self.timeAddedPerTurn = 0
 
 
 
     self.name = "Checkers"
 
+    self._gameVersion = "49f1e5586cc4c62b6f74081e803d8edf9f54e8315f221c62c638f963cea8ab31"
     self._gameObjectClasses = {
         Checker = require("games.checkers.checker"),
         GameObject = require("games.checkers.gameObject"),
