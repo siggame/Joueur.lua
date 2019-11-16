@@ -30,6 +30,38 @@ end
 function AI:start()
     -- <<-- Creer-Merge: start -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     -- replace with your start logic
+
+    -- If you are reading this, congratulations on knowing lua. I do not. Beware.
+    -- Set up varibales to track all relevant information
+    self.spawnUnitTile = nil
+    self.spawnWorkerTile = nil
+    self.goldMines = {}
+    self.miners = {}
+    self.builders = {}
+    self.units = {}
+    self.grassByPath = {}
+    self.enemyCastle = self.player.opponent.towers[0]
+    self.myCastle = self.player.towers[0]
+
+    -- Fill our variables with tile data
+    for tile in self.player.side do
+        if tile.isUnitSpawn then
+            self.spawnUnitTile = tile
+        elseif tile.isWorkerSpawn then
+            self.spawnWorkerTile = tile
+        elseif tile.isGoldMine then
+            self.goldMines.append(tile)
+        elseif tile.isGrass then
+            for neighbor in tile.getNeighbors() do
+                if neighbor.isPath then
+                    self.grassByPath.append(tile)
+                end
+            end
+        end
+    end
+
+    -- Now we should have our spawn tiles, mines, and tower building locations!
+
     -- <<-- /Creer-Merge: start -->>
 end
 
@@ -45,7 +77,7 @@ end
 -- @tparam string reason why you won or lost
 function AI:ended(won, reason)
     -- <<-- Creer-Merge: ended -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-    -- replace with your ended
+    -- replace with your ended logic
     -- <<-- /Creer-Merge: ended -->>
 end
 
@@ -57,6 +89,105 @@ end
 function AI:runTurn()
     -- <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     -- Put your game logic here for runTurn
+
+    -- Remove any dead units from our personal tracking lists
+    local temp = {}
+    for elem in self.miners do
+        if elem.health <= 0 then
+            temp[#temp] = elem
+        end
+    end
+    self.miners = {table.unpack(temp)}
+
+
+    temp = {}
+    for elem in self.builders do
+        if elem.health <= 0 then
+            temp[#temp] = elem
+        end
+    end
+    self.builders = {table.unpack(temp)}
+
+
+    temp = {}
+    for elem in self.units do
+        if elem.health <= 0 then
+            temp[#temp] = elem
+        end
+    end
+    self.units = {table.unpack(temp)}
+
+    -- Spawn all three of our chosen unit types if necessary
+    if self.miners == {} then
+        if self.spawnWorkerTile.spawnWorker() then
+            self.miners.append(self.player.units[#self.player.units])
+        end
+    end
+
+    if self.builders == {} then
+        if self.spawnWorkerTile.spawnWorker() then
+            self.builders.append(self.player.units[#self.player.units])
+        end
+    end
+
+    if self.units == {} then
+        if self.spawnUnitTile.spawnUnit("ghoul"):
+            self.units.append(self.player.units[#self.player.units])
+        end
+    end
+
+    -- Activate all the different units in our lists
+    for miner in self.miners do
+        if miner.tile.isGoldMine then
+            miner.mine(miner.tile)
+        else
+            path = self.findPathWorker(miner.tile, self.goldMines[0])
+            for tile in path do
+                if miner.moves <= 0 then
+                    break
+                end
+                miner.move(tile)
+            end
+        end
+    end
+
+    for builder in self.builders do
+        path = self.findPathWorker(builder.tile, self.grassByPath[0])
+        for tile in path do
+            if builder.moves <= 0 then
+                break
+            end
+            builder.move(tile)
+        end
+        if path == {} and builder.moves > 0 then
+            builder.build("arrow")
+        end
+    end
+
+    for unit in self.units do
+        path = self.findPath(unit.tile, self.enemyCastle.tile.tileSouth)
+        for tile in path do
+            if unit.moves <= 0 then
+                break
+            end
+            unit.move(tile)
+        end
+        if path == {} and unit.moves > 0 then
+            unit.attack(self.enemyCastle.tile)
+        end
+    end
+
+    -- Make towers attack anything adjacent to them
+    -- Note that they are not using their full range
+    for tower in self.player.towers do
+        adjacent = tower.tile.getNeighbors()
+        for tile in adjacent do
+            if tile.unit and tile.unit.owner == self.player.opponent then
+                tower.attack(tile)
+            end
+        end
+    end
+
     return true
     -- <<-- /Creer-Merge: runTurn -->>
 end
@@ -117,6 +248,56 @@ end
 
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 -- if you need additional functions for your AI you can add them here
+function AI:findPathWorker(start, goal)
+    if start == goal then
+        -- no need to make a path to here...
+        return Table()
+    end
+
+    -- queue of the tiles that will have their neighbors searched for 'goal'
+    local fringe = Table()
+
+    -- How we got to each tile that went into the fringe.
+    local cameFrom = Table()
+
+    -- Enqueue start as the first tile to have its neighbors searched.
+    fringe:insert(start);
+
+    -- keep exploring neighbors of neighbors... until there are no more.
+    while #fringe > 0 do
+        -- the tile we are currently exploring.
+        local inspect = fringe:popFront();
+
+        -- cycle through the tile's neighbors.
+        for i, neighbor in ipairs(inspect:getNeighbors()) do
+            -- if we found the goal, we have the path!
+            if neighbor == goal then
+                -- Follow the path backward to the start from the goal and return it.
+                local path = Table(goal)
+
+                -- Starting at the tile we are currently at, insert them retracing our steps till we get to the starting tile
+                while inspect ~= start do
+                    path:pushFront(inspect)
+                    inspect = cameFrom[inspect.id]
+                end
+
+                return path;
+            end
+            -- else we did not find the goal, so enqueue this tile's neighbors to be inspected
+
+            -- if the tile exists, has not been explored or added to the fringe yet, and it is pathable
+            if neighbor and not cameFrom[neighbor.id] and neighbor:isPathableWorker() then
+                -- add it to the tiles to be explored and add where it came from for path reconstruction.
+                fringe:insert(neighbor)
+                cameFrom[neighbor.id] = inspect
+            end
+        end
+    end
+
+    -- if we got here, no path was found
+    return Table()
+end
+
 -- <<-- /Creer-Merge: functions -->>
 
 return AI
