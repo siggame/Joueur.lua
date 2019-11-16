@@ -60,15 +60,15 @@ function AI:start()
 
     -- Fill our variables with tile data
     for tile in self.player.side do
-        if tile.is_unit_spawn then
+        if tile.isUnitSpawn then
             self.spawnUnitTile = tile
-        elseif tile.is_worker_spawn then
+        elseif tile.isWorkerSpawn then
             self.spawnWorkerTile = tile
-        elseif tile.is_gold_mine then
+        elseif tile.isGoldMine then
             self.goldMines.append(tile)
-        elseif tile.is_grass then
-            for neighbor in tile.get_neighbors() do
-                if neighbor.is_path then
+        elseif tile.isGrass then
+            for neighbor in tile.getNeighbors() do
+                if neighbor.isPath then
                     self.grassByPath.append(tile)
                 end
             end
@@ -152,29 +152,29 @@ function AI:runTurn()
 
     -- Spawn all three of our chosen unit types if necessary
     if self.miners == {} then
-        if self.spawnWorkerTile.spawn_worker() then
+        if self.spawnWorkerTile.spawnWorker() then
             self.miners.append(self.player.units[#self.player.units])
         end
     end
 
     if self.builders == {} then
-        if self.spawnWorkerTile.spawn_worker() then
+        if self.spawnWorkerTile.spawnWorker() then
             self.builders.append(self.player.units[#self.player.units])
         end
     end
 
     if self.units == {} then
-        if self.spawnUnitTile.spawn_unit("ghoul"):
+        if self.spawnUnitTile.spawnUnit("ghoul"):
             self.units.append(self.player.units[#self.player.units])
         end
     end
 
     -- Activate all the different units in our lists
     for miner in self.miners do
-        if miner.tile.is_gold_mine then
+        if miner.tile.isGoldMine then
             miner.mine(miner.tile)
         else
-            path = self.find_path_worker(miner.tile, self.goldMines[0])
+            path = self.findPathWorker(miner.tile, self.goldMines[0])
             for tile in path do
                 if miner.moves <= 0 then
                     break
@@ -185,7 +185,7 @@ function AI:runTurn()
     end
 
     for builder in self.builders do
-        path = self.find_path_worker(builder.tile, self.grassByPath[0])
+        path = self.findPathWorker(builder.tile, self.grassByPath[0])
         for tile in path do
             if builder.moves <= 0 then
                 break
@@ -198,7 +198,7 @@ function AI:runTurn()
     end
 
     for unit in self.units do
-        path = self.find_path(unit.tile, self.enemyCastle.tile.tile_south)
+        path = self.findPath(unit.tile, self.enemyCastle.tile.tileSouth)
         for tile in path do
             if unit.moves <= 0 then
                 break
@@ -213,7 +213,7 @@ function AI:runTurn()
     -- Make towers attack anything adjacent to them
     -- Note that they are not using their full range
     for tower in self.player.towers do
-        adjacent = tower.tile.get_neighbors()
+        adjacent = tower.tile.getNeighbors()
         for tile in adjacent do
             if tile.unit and tile.unit.owner == self.player.opponent then
                 tower.attack(tile)
