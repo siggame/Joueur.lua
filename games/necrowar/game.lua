@@ -23,10 +23,6 @@ function Game:init(...)
     -- @field[string] self.name
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- A array-like table of every tower type / job.
-    self.TowerJobs = Table()
-    --- A array-like table of every unit type / job.
-    self.UnitJobs = Table()
     --- The player whose turn it is currently. That player can send commands. Other players cannot.
     self.currentPlayer = nil
     --- The current turn number, starting at 0 for the first player's turn.
@@ -55,8 +51,12 @@ function Game:init(...)
     self.tiles = Table()
     --- The amount of time (in nano-seconds) added after each player performs a turn.
     self.timeAddedPerTurn = 0
+    --- A array-like table of every tower type / job.
+    self.towerJobs = Table()
     --- Every Tower in the game.
     self.towers = Table()
+    --- A array-like table of every unit type / job.
+    self.unitJobs = Table()
     --- Every Unit in the game.
     self.units = Table()
 
@@ -64,6 +64,7 @@ function Game:init(...)
 
     self.name = "Necrowar"
 
+    self._gameVersion = "935f0e64ba290cdce31688a40bd90d1eb5375f36aeebd67482238fc0da25ef86"
     self._gameObjectClasses = {
         GameObject = require("games.necrowar.gameObject"),
         Player = require("games.necrowar.player"),
