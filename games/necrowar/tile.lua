@@ -151,6 +151,12 @@ end
 
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 -- if you want to add any client side logic this is where you can add them
+
+function Tile:isPathableWorker()
+    -- Change this if you wish to
+    return not (self.is_river or self.is_unit_spawn or self.is_wall or self.unit != None);
+
+
 -- <<-- /Creer-Merge: functions -->>
 
 return Tile

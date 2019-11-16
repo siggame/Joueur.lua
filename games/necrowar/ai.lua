@@ -30,6 +30,48 @@ end
 function AI:start()
     -- <<-- Creer-Merge: start -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     -- replace with your start logic
+
+    -- Print our starting stats
+    print(string.format("GOLD: %d", self.player.gold))
+    print(string.format("MANA: %d", self.player.mana))
+    io.write("UNITS: ")
+    for unit in self.player.units do
+        io.write(unit.job.title)
+        io.write(",")
+    end
+    print("\nTOWERS: ")
+    for tower in self.player.towers do
+        io.write(tower.job.title)
+        io.write(",")
+    end
+    print(string.format("\nCASTLE HEALTH: %d", self.player.towers[0].health))
+
+    -- Set up varibales to track all relevant information
+    self.spawnUnitTile = nil
+    self.spawnWorkerTile = nil
+    self.goldMines = {}
+    self.miners = {}
+    self.builders = {}
+    self.units = {}
+    self.grassByPath = {}
+    self.enemyCastle = self.player.opponent.towers[0];
+    self.myCastle = self.player.towers[0];
+
+    -- Fill our variables with tile data
+    for tile in self.player.side:
+        if tile.is_unit_spawn:
+            self.spawnUnitTile = tile;
+        elseif tile.is_worker_spawn:
+            self.spawnWorkerTile = tile;
+        elseif tile.is_gold_mine:
+            self.goldMines.append(tile);
+        elseif tile.is_grass:
+            for neighbor in tile.get_neighbors():
+                if neighbor.is_path:
+                    self.grassByPath.append(tile)
+
+    -- Now we should have our spawn tiles, mines, and tower building locations!
+
     -- <<-- /Creer-Merge: start -->>
 end
 
@@ -57,6 +99,45 @@ end
 function AI:runTurn()
     -- <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     -- Put your game logic here for runTurn
+
+    -- If you are using this shell ai, congratulations on knowing lua. I do not.
+    spawnWorkerTiles = {}
+    spawnUnitTiles = {}
+    for i, tile in ipairs(self.player.side) do
+        if tile:owner == self.player then
+            if tile:isWorkerSpawn then
+                spawnWorkerTiles[#spawnWorkerTiles+1] = tile;
+            elseif tile:isUnitSpawn then
+                spawnUnitTiles[#spawnUnitTiles+1] = tile;
+            end
+        end
+    end
+
+    gold = self.player.gold;
+    mana = self.player.mana;
+    numWorkers = 0;
+    numUnits = 0;
+
+    for unit in self.player.units do
+        if unit.job.title == "worker" then
+            numWorkers = numWorkers + 1;
+        else then
+            numUnits = numUnits + 1;
+        end
+    end
+
+    if (numWorkers < 5) then
+        spawnWorkerTiles[1]:spawn_worker();
+    end
+
+    if (numUnits < 3) then
+        spawnUnitTiles[1]:spawn_unit("ghoul");
+    end
+
+
+
+
+
     return true
     -- <<-- /Creer-Merge: runTurn -->>
 end
