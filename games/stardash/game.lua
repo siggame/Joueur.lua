@@ -94,6 +94,7 @@ function Game:init(...)
 
     self.name = "Stardash"
 
+    self._gameVersion = "0fa378e83ac567ebdf3e9805d3f130023f936e2740acda173d238b37f2b5d541"
     self._gameObjectClasses = {
         Body = require("games.stardash.body"),
         GameObject = require("games.stardash.gameObject"),

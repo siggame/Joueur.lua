@@ -57,7 +57,10 @@ function BaseAI:_doOrder(order, args)
     local callback = self[order] -- this function should be generated via Creer in the inherited AI function
 
     if callback then
-        return callback(self, args and unpack(args) or nil)
+        if args then
+            return callback(self, table.unpack(args))
+        end
+        return callback(self)
     else
         print("ERROR: AI has not function '" .. order .. "'' to respond with")
         os.exit()

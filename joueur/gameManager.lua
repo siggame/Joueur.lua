@@ -4,6 +4,8 @@ local class = require("joueur.utilities.class")
 -- @class GameManager: manages the games state and does delta merges. Competitors do not modify
 local GameManager = class(deltaMergeable)
 
+GameManager.gameVersion = ''
+
 function GameManager:init(game)
     self.game = game
 end

@@ -57,6 +57,7 @@ function ${obj_key}:init(...)
 
     self.name = "${game_name}"
 
+    self._gameVersion = "${game_version}"
     self._gameObjectClasses = {
 % for game_obj_key in game_obj_names:
         ${game_obj_key} = require("games.${lowercase_first(game_name)}.${lowercase_first(game_obj_key)}"),

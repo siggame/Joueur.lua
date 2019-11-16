@@ -37,6 +37,8 @@ function Game:init(...)
     self.initialWebStrength = 0
     --- The maximum number of turns before the game will automatically end.
     self.maxTurns = 100
+    --- The maximum strength a web can be strengthened to.
+    self.maxWebStrength = 0
     --- The speed at which Spiderlings move on Webs.
     self.movementSpeed = 0
     --- Every Nest in the game.
@@ -47,6 +49,8 @@ function Game:init(...)
     self.session = ""
     --- The speed at which Spitters work to spit new Webs.
     self.spitSpeed = 0
+    --- The amount of time (in nano-seconds) added after each player performs a turn.
+    self.timeAddedPerTurn = 0
     --- How much web strength is added or removed from Webs when they are weaved.
     self.weavePower = 0
     --- The speed at which Weavers work to do strengthens and weakens on Webs.
@@ -58,6 +62,7 @@ function Game:init(...)
 
     self.name = "Spiders"
 
+    self._gameVersion = "a8df6038306b6855bb35959d7698f8dcbf98f48e7e148de59fef940ccb241bdf"
     self._gameObjectClasses = {
         BroodMother = require("games.spiders.broodMother"),
         Cutter = require("games.spiders.cutter"),

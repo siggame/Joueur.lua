@@ -31,6 +31,8 @@ function Player:init(...)
     self.maxSpiderlings = 0
     --- The name of the player.
     self.name = "Anonymous"
+    --- The number of nests this player controls.
+    self.numberOfNestsControlled = 0
     --- This player's opponent in the game.
     self.opponent = nil
     --- The reason why the player lost the game.

@@ -21,6 +21,8 @@ function Nest:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
+    --- The Player that 'controls' this Nest as they have the most Spiders on this nest.
+    self.controllingPlayer = nil
     --- All the Spiders currently located on this Nest.
     self.spiders = Table()
     --- Webs that connect to this Nest.

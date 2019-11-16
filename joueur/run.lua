@@ -63,6 +63,21 @@ return function(args)
 
     local lobbyData = client:waitForEvent("lobbied")
 
+    if lobbyData.gameVersion ~= game._gameVersion then
+        print(string.format(
+            [[%sWARNING: Game versions do not match.
+-> Your local game version is:     %s
+-> Game Server's game version is:  %s
+
+Version mismatch means that unexpected crashes may happen due to differing game structures!
+]],
+            color.text("yellow"),
+            game._gameVersion:sub(0, 8),
+            lobbyData.gameVersion:sub(0, 8),
+            color.reset()
+        ))
+    end
+
     print(color.text("cyan") .. "In lobby for game '" .. lobbyData.gameName .. "' in session '" .. lobbyData.gameSession .. "'." .. color.reset())
 
     gameManager:setConstants(lobbyData.constants)

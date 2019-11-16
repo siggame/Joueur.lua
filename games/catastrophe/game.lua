@@ -55,12 +55,16 @@ function Game:init(...)
     self.session = ""
     --- The number of materials in a shelter.
     self.shelterMaterials = 0
+    --- The amount of food Players start with.
+    self.startingFood = 0
     --- The multiplier for the amount of energy regenerated when resting while starving.
     self.starvingEnergyMult = 0
     --- Every Structure in the game.
     self.structures = Table()
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     self.tiles = Table()
+    --- The amount of time (in nano-seconds) added after each player performs a turn.
+    self.timeAddedPerTurn = 0
     --- After a food tile is harvested, the number of turns before it can be harvested again.
     self.turnsBetweenHarvests = 0
     --- The number of turns between fresh humans being spawned on the road.
@@ -76,6 +80,7 @@ function Game:init(...)
 
     self.name = "Catastrophe"
 
+    self._gameVersion = "ede84ab86376b00287c09558f05e8f2a61b92109d93aad9ebd3379ff4215fb53"
     self._gameObjectClasses = {
         GameObject = require("games.catastrophe.gameObject"),
         Job = require("games.catastrophe.job"),

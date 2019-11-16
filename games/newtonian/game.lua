@@ -23,8 +23,6 @@ function Game:init(...)
     -- @field[string] self.name
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The percent of max HP regained when a unit end their turn on a tile owned by their player.
-    self.RegenerateRate = 0
     --- The player whose turn it is currently. That player can send commands. Other players cannot.
     self.currentPlayer = nil
     --- The current turn number, starting at 0 for the first player's turn.
@@ -53,6 +51,8 @@ function Game:init(...)
     self.players = Table()
     --- The amount of victory points added when a refined ore is consumed by the generator.
     self.refinedValue = 0
+    --- The percent of max HP regained when a unit end their turn on a tile owned by their player.
+    self.regenerateRate = 0
     --- A unique identifier for the game instance that is being played.
     self.session = ""
     --- The amount of turns it takes a unit to spawn.
@@ -74,6 +74,7 @@ function Game:init(...)
 
     self.name = "Newtonian"
 
+    self._gameVersion = "7c19f909ee5faa0ac3faf4e989032b5a37ba94aeb5d6ae7654a15a2bb1401bbe"
     self._gameObjectClasses = {
         GameObject = require("games.newtonian.gameObject"),
         Job = require("games.newtonian.job"),
