@@ -136,7 +136,7 @@ function Tile:isPathable()
     -- <<-- Creer-Merge: is_pathable_builtin -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 
     -- DEVELOPER ADD LOGIC HERE
-    if self.is_path and self.unit == nil and not self.is_tower then
+    if self.isPath and self.unit == nil and not self.isTower then
         return true
     else
         return false
@@ -160,7 +160,7 @@ end
 
 function Tile:isPathableWorker()
     -- Change this if you wish to
-    return ~(self.is_river or self.is_unit_spawn or self.is_wall or self.unit != None)
+    return ~(self.isRiver or self.isUnitSpawn or self.isWall or self.unit != None)
 end
 
 
