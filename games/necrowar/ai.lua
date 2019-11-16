@@ -31,6 +31,7 @@ function AI:start()
     -- <<-- Creer-Merge: start -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     -- replace with your start logic
 
+    -- If you are reading this, congratulations on knowing lua. I do not. Beware.
     -- Print our starting stats
     print(string.format("GOLD: %d", self.player.gold))
     print(string.format("MANA: %d", self.player.mana))
@@ -54,21 +55,25 @@ function AI:start()
     self.builders = {}
     self.units = {}
     self.grassByPath = {}
-    self.enemyCastle = self.player.opponent.towers[0];
-    self.myCastle = self.player.towers[0];
+    self.enemyCastle = self.player.opponent.towers[0]
+    self.myCastle = self.player.towers[0]
 
     -- Fill our variables with tile data
-    for tile in self.player.side:
-        if tile.is_unit_spawn:
-            self.spawnUnitTile = tile;
-        elseif tile.is_worker_spawn:
-            self.spawnWorkerTile = tile;
-        elseif tile.is_gold_mine:
-            self.goldMines.append(tile);
-        elseif tile.is_grass:
-            for neighbor in tile.get_neighbors():
-                if neighbor.is_path:
+    for tile in self.player.side do
+        if tile.is_unit_spawn then
+            self.spawnUnitTile = tile
+        elseif tile.is_worker_spawn then
+            self.spawnWorkerTile = tile
+        elseif tile.is_gold_mine then
+            self.goldMines.append(tile)
+        elseif tile.is_grass then
+            for neighbor in tile.get_neighbors() do
+                if neighbor.is_path then
                     self.grassByPath.append(tile)
+                end
+            end
+        end
+    end
 
     -- Now we should have our spawn tiles, mines, and tower building locations!
 
@@ -100,43 +105,103 @@ function AI:runTurn()
     -- <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     -- Put your game logic here for runTurn
 
-    -- If you are using this shell ai, congratulations on knowing lua. I do not.
-    spawnWorkerTiles = {}
-    spawnUnitTiles = {}
-    for i, tile in ipairs(self.player.side) do
-        if tile:owner == self.player then
-            if tile:isWorkerSpawn then
-                spawnWorkerTiles[#spawnWorkerTiles+1] = tile;
-            elseif tile:isUnitSpawn then
-                spawnUnitTiles[#spawnUnitTiles+1] = tile;
+    -- Remove any dead units from our personal tracking lists
+    local temp = {}
+    for elem in self.miners do
+        if elem.health <= 0 then
+            temp[#temp] = elem
+        end
+    end
+    self.miners = {table.unpack(temp)}
+
+
+    temp = {}
+    for elem in self.builders do
+        if elem.health <= 0 then
+            temp[#temp] = elem
+        end
+    end
+    self.builders = {table.unpack(temp)}
+
+
+    temp = {}
+    for elem in self.units do
+        if elem.health <= 0 then
+            temp[#temp] = elem
+        end
+    end
+    self.units = {table.unpack(temp)}
+
+    -- Spawn all three of our chosen unit types if necessary
+    if self.miners == {} then
+        if self.spawnWorkerTile.spawn_worker() then
+            self.miners.append(self.player.units[#self.player.units])
+        end
+    end
+
+    if self.builders == {} then
+        if self.spawnWorkerTile.spawn_worker() then
+            self.builders.append(self.player.units[#self.player.units])
+        end
+    end
+
+    if self.units == {} then
+        if self.spawnUnitTile.spawn_unit("ghoul"):
+            self.units.append(self.player.units[#self.player.units])
+        end
+    end
+
+    -- Activate all the different units in our lists
+    for miner in self.miners do
+        if miner.tile.is_gold_mine then
+            miner.mine(miner.tile)
+        else
+            path = self.find_path_worker(miner.tile, self.goldMines[0])
+            for tile in path do
+                if miner.moves <= 0 then
+                    break
+                end
+                miner.move(tile)
             end
         end
     end
 
-    gold = self.player.gold;
-    mana = self.player.mana;
-    numWorkers = 0;
-    numUnits = 0;
-
-    for unit in self.player.units do
-        if unit.job.title == "worker" then
-            numWorkers = numWorkers + 1;
-        else then
-            numUnits = numUnits + 1;
+    for builder in self.builders do
+        path = self.find_path_worker(builder.tile, self.grassByPath[0])
+        for tile in path do
+            if builder.moves <= 0 then
+                break
+            end
+            builder.move(tile)
+        end
+        if path == {} and builder.moves > 0 then
+            builder.build("arrow")
         end
     end
 
-    if (numWorkers < 5) then
-        spawnWorkerTiles[1]:spawn_worker();
+    for unit in self.units do
+        path = self.find_path(unit.tile, self.enemyCastle.tile.tile_south)
+        for tile in path do
+            if unit.moves <= 0 then
+                break
+            end
+            unit.move(tile)
+        end
+        if path == {} and unit.moves > 0 then
+            unit.attack(self.enemyCastle.tile)
+        end
     end
 
-    if (numUnits < 3) then
-        spawnUnitTiles[1]:spawn_unit("ghoul");
+    -- Make towers attack anything adjacent to them
+    -- Note that they are not using their full range
+    for tower in self.player.towers do
+        adjacent = tower.tile.get_neighbors()
+        for tile in adjacent do
+            if tile.unit and tile.unit.owner == self.player.opponent then
+                tower.attack(tile)
+            end
+        end
     end
-
-
-
-
 
     return true
     -- <<-- /Creer-Merge: runTurn -->>
@@ -198,6 +263,56 @@ end
 
 -- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 -- if you need additional functions for your AI you can add them here
+function AI:findPathWorker(start, goal)
+    if start == goal then
+        -- no need to make a path to here...
+        return Table()
+    end
+
+    -- queue of the tiles that will have their neighbors searched for 'goal'
+    local fringe = Table()
+
+    -- How we got to each tile that went into the fringe.
+    local cameFrom = Table()
+
+    -- Enqueue start as the first tile to have its neighbors searched.
+    fringe:insert(start);
+
+    -- keep exploring neighbors of neighbors... until there are no more.
+    while #fringe > 0 do
+        -- the tile we are currently exploring.
+        local inspect = fringe:popFront();
+
+        -- cycle through the tile's neighbors.
+        for i, neighbor in ipairs(inspect:getNeighbors()) do
+            -- if we found the goal, we have the path!
+            if neighbor == goal then
+                -- Follow the path backward to the start from the goal and return it.
+                local path = Table(goal)
+
+                -- Starting at the tile we are currently at, insert them retracing our steps till we get to the starting tile
+                while inspect ~= start do
+                    path:pushFront(inspect)
+                    inspect = cameFrom[inspect.id]
+                end
+
+                return path;
+            end
+            -- else we did not find the goal, so enqueue this tile's neighbors to be inspected
+
+            -- if the tile exists, has not been explored or added to the fringe yet, and it is pathable
+            if neighbor and not cameFrom[neighbor.id] and neighbor:isPathableWorker() then
+                -- add it to the tiles to be explored and add where it came from for path reconstruction.
+                fringe:insert(neighbor)
+                cameFrom[neighbor.id] = inspect
+            end
+        end
+    end
+
+    -- if we got here, no path was found
+    return Table()
+end
+
 -- <<-- /Creer-Merge: functions -->>
 
 return AI
