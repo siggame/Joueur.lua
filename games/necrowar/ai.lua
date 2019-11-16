@@ -32,21 +32,6 @@ function AI:start()
     -- replace with your start logic
 
     -- If you are reading this, congratulations on knowing lua. I do not. Beware.
-    -- Print our starting stats
-    print(string.format("GOLD: %d", self.player.gold))
-    print(string.format("MANA: %d", self.player.mana))
-    io.write("UNITS: ")
-    for unit in self.player.units do
-        io.write(unit.job.title)
-        io.write(",")
-    end
-    print("\nTOWERS: ")
-    for tower in self.player.towers do
-        io.write(tower.job.title)
-        io.write(",")
-    end
-    print(string.format("\nCASTLE HEALTH: %d", self.player.towers[0].health))
-
     -- Set up varibales to track all relevant information
     self.spawnUnitTile = nil
     self.spawnWorkerTile = nil
@@ -92,25 +77,7 @@ end
 -- @tparam string reason why you won or lost
 function AI:ended(won, reason)
     -- <<-- Creer-Merge: ended -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-    -- replace with your ended
-    -- Print our final stats
-    print(string.format("GOLD: %d", self.player.gold))
-    print(string.format("MANA: %d", self.player.mana))
-    io.write("UNITS: ")
-    for unit in self.player.units do
-        io.write(unit.job.title)
-        io.write(",")
-    end
-    print("\nTOWERS: ")
-    for tower in self.player.towers do
-        io.write(tower.job.title)
-        io.write(",")
-    end
-    if self.player.towers[0].job.title == "castle" then
-        print(string.format("\nCASTLE HEALTH: %d", self.player.towers[0].health))
-    else
-        print("No castle left :(")
-    end
+    -- replace with your ended logic
     -- <<-- /Creer-Merge: ended -->>
 end
 
