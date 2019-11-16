@@ -93,6 +93,24 @@ end
 function AI:ended(won, reason)
     -- <<-- Creer-Merge: ended -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     -- replace with your ended
+    -- Print our final stats
+    print(string.format("GOLD: %d", self.player.gold))
+    print(string.format("MANA: %d", self.player.mana))
+    io.write("UNITS: ")
+    for unit in self.player.units do
+        io.write(unit.job.title)
+        io.write(",")
+    end
+    print("\nTOWERS: ")
+    for tower in self.player.towers do
+        io.write(tower.job.title)
+        io.write(",")
+    end
+    if self.player.towers[0].job.title == "castle" then
+        print(string.format("\nCASTLE HEALTH: %d", self.player.towers[0].health))
+    else
+        print("No castle left :(")
+    end
     -- <<-- /Creer-Merge: ended -->>
 end
 
