@@ -23,6 +23,8 @@ function Tower:init(...)
 
     --- Whether this tower has attacked this turn or not.
     self.attacked = false
+    --- How many turns are left before it can fire again.
+    self.cooldown = 0
     --- How much remaining health this tower has.
     self.health = 0
     --- What type of tower this is (it's job).
