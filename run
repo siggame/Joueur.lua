@@ -1,8 +1,10 @@
 #!/bin/bash
 
 # use `luajit` if available as it's way faster, otherwise default to normal lua
-if hash luajit 2>/dev/null; then
+if [ -x "$(command -v luajit)" ]; then
     luajit ./main.lua "$@"
-else
+elif [ -x "$(command -v lua)" ]; then
     lua ./main.lua "$@"
+else
+    echo "ERROR: luajit or lua not installed!" >&2
 fi
