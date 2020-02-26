@@ -61,13 +61,6 @@ function Player:init(...)
 
 end
 
---- Spawns a Miner Unit on this Player's Base Tile.
--- @treturn bool True if successfully spawned, false otherwise.
-function Player:spawnMiner()
-    return not not (self:_runOnServer("spawnMiner", {
-    }))
-end
-
 --- (inherited) Adds a message to this GameObject's logs. Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
 -- @function Player:log
 -- @see GameObject:log

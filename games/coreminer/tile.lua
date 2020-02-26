@@ -47,6 +47,8 @@ function Tile:init(...)
     self.tileSouth = nil
     --- The Tile to the 'West' of this one (x-1, y). nil if out of bounds of the map.
     self.tileWest = nil
+    --- An array of the Units on this Tile.
+    self.units = Table()
     --- The x (horizontal) position of this Tile.
     self.x = 0
     --- The y (vertical) position of this Tile.
@@ -65,6 +67,13 @@ function Tile:init(...)
     -- @see GameObject.logs
 
 
+end
+
+--- Spawns a Miner Unit on this Tile - Must be on the surface on their side of the map.
+-- @treturn bool True if successfully spawned, false otherwise.
+function Tile:spawnMiner()
+    return not not (self:_runOnServer("spawnMiner", {
+    }))
 end
 
 --- (inherited) Adds a message to this GameObject's logs. Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
