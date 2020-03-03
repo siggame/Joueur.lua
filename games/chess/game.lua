@@ -27,7 +27,7 @@ function Game:init(...)
     self.fen = ""
     --- A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
     self.gameObjects = Table()
-    --- The array-like table of [known] moves that have occurred in the game, in Standard Algebraic Notation (SAN) format. The first element is the first move, with the last being the most recent.
+    --- The array-like table of [known] moves that have occurred in the game, in Universal Chess Inferface (UCI) format. The first element is the first move, with the last element being the most recent.
     self.history = Table()
     --- List of all the players in the game.
     self.players = Table()
