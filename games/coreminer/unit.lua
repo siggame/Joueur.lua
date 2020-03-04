@@ -57,9 +57,9 @@ function Unit:init(...)
 
 end
 
---- Builds a support, shield, ladder, or bomb on Unit's tile, or an adjacent Tile.
+--- Builds a support, shield, or ladder on Unit's tile, or an adjacent Tile.
 -- @tparam Tile tile The Tile to build on.
--- @tparam string type The structure to build (support, ladder, shield, or bomb).
+-- @tparam string type The structure to build (support, ladder, or shield).
 -- @treturn bool True if successfully built, False otherwise.
 function Unit:build(tile, type)
     return not not (self:_runOnServer("build", {
@@ -70,7 +70,7 @@ end
 
 --- Dumps materials from cargo to an adjacent tile.
 -- @tparam Tile tile The tile the materials will be dumped on.
--- @tparam string material The material the Unit will drop. 'dirt' or 'ore'.
+-- @tparam string material The material the Unit will drop. 'dirt', 'ore', or 'bomb'.
 -- @tparam number amount The number of materials to drop. Amounts <= 0 will drop all the materials.
 -- @treturn bool True if successfully dumped materials, false otherwise.
 function Unit:dump(tile, material, amount)
