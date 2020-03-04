@@ -7,9 +7,7 @@
 local class = require("joueur.utilities.class")
 local BaseGame = require("joueur.baseGame")
 
--- <<-- Creer-Merge: requires -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- you can add additional require(s) here
--- <<-- /Creer-Merge: requires -->>
+
 
 --- The traditional 8x8 chess board with pieces.
 -- @classmod Game
@@ -46,8 +44,6 @@ function Game:init(...)
 end
 
 
--- <<-- Creer-Merge: functions -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
--- if you want to add any client side logic this is where you can add them
--- <<-- /Creer-Merge: functions -->>
+
 
 return Game
