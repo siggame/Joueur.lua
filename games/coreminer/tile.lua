@@ -27,7 +27,7 @@ function Tile:init(...)
     self.isBase = false
     --- Whether or not this tile is about to fall.
     self.isFalling = false
-    --- Whether or not a hopper is placed on this Tile.
+    --- Whether or not a hopper is on this Tile.
     self.isHopper = false
     --- Whether or not a ladder is built on this Tile.
     self.isLadder = false
@@ -35,7 +35,7 @@ function Tile:init(...)
     self.isSupport = false
     --- The amount of ore on this Tile.
     self.ore = 0
-    --- The owner of this Tile, or nil if owned by no-one. Only for bases and hoppers.
+    --- The owner of this Tile, or undefined if owned by no-one. Only for bases and hoppers.
     self.owner = nil
     --- The amount of shielding on this Tile.
     self.shielding = 0

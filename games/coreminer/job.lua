@@ -21,22 +21,16 @@ function Job:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The amount of cargo capacity this Unit starts with.
-    self.cargoCapacity = 0
-    --- The amount of starting health this Job has.
-    self.health = 0
-    --- The maximum amount of cargo capacity this Unit can have.
-    self.maxCargoCapacity = 0
-    --- The maximum amount of health this Job can have.
-    self.maxHealth = 0
-    --- The maximum amount of mining power this Unit can have.
-    self.maxMiningPower = 0
-    --- The maximum number of moves this Job can have.
-    self.maxMoves = 0
-    --- The amount of mining power this Unit has per turn.
-    self.miningPower = 0
-    --- The number of moves this Job can make per turn.
-    self.moves = 0
+    --- The amount of cargo capacity this Unit starts with per level.
+    self.cargoCapacity = Table()
+    --- The cost of spawning a Unit with this Job.
+    self.cost = 0
+    --- The amount of starting health this Job has per level.
+    self.health = Table()
+    --- The amount of mining power this Unit has per turn per level.
+    self.miningPower = Table()
+    --- The number of moves this Job can make per turn per level.
+    self.moves = Table()
     --- The Job title. 'miner' or 'bomb'.
     self.title = ""
 

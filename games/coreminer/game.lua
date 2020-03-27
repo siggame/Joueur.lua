@@ -33,6 +33,8 @@ function Game:init(...)
     self.gameObjects = Table()
     --- A array-like table of all jobs.
     self.jobs = Table()
+    --- The amount of building material required to build a ladder.
+    self.ladderCost = 0
     --- The number of Tiles in the map along the y (vertical) axis.
     self.mapHeight = 0
     --- The number of Tiles in the map along the x (horizontal) axis.
@@ -45,6 +47,10 @@ function Game:init(...)
     self.players = Table()
     --- A unique identifier for the game instance that is being played.
     self.session = ""
+    --- The amount of building material required to shield a Tile.
+    self.shieldCost = 0
+    --- The amount of building material required to build a support.
+    self.supportCost = 0
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     self.tiles = Table()
     --- The amount of time (in nano-seconds) added after each player performs a turn.
@@ -58,7 +64,7 @@ function Game:init(...)
 
     self.name = "Coreminer"
 
-    self._gameVersion = "4d15edfc10c5fd1f260c1dd405d853c00f3622e802551d1375a983ee73ec6f0c"
+    self._gameVersion = "8d537ee0d9bd5cd575dca2f2f08f184157cd9dce66a015e5598b3ee0e70e7ef6"
     self._gameObjectClasses = {
         GameObject = require("games.coreminer.gameObject"),
         Job = require("games.coreminer.job"),

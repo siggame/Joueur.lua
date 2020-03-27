@@ -31,6 +31,14 @@ function Unit:init(...)
     self.health = 0
     --- The Job this Unit has.
     self.job = nil
+    --- The maximum amount of cargo this Unit can carry.
+    self.maxCargoCapacity = 0
+    --- The maximum health of this Unit.
+    self.maxHealth = 0
+    --- The maximum mining power of this Unit.
+    self.maxMiningPower = 0
+    --- The maximum moves this Unit can have.
+    self.maxMoves = 0
     --- The remaining mining power this Unit has this turn.
     self.miningPower = 0
     --- The number of moves this Unit has left this turn.

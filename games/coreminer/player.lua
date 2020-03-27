@@ -23,12 +23,16 @@ function Player:init(...)
 
     --- The Tile this Player's base is on.
     self.baseTile = nil
+    --- The bombs stored in the Player's supply.
+    self.bombs = 0
     --- What type of client this is, e.g. 'Python', 'JavaScript', or some other language. For potential data mining purposes.
     self.clientType = ""
     --- The Tiles this Player's hoppers are on.
     self.hopperTiles = Table()
     --- If the player lost the game or not.
     self.lost = false
+    --- The amount of money this Player currently has.
+    self.money = 0
     --- The name of the player.
     self.name = "Anonymous"
     --- This player's opponent in the game.
@@ -37,6 +41,10 @@ function Player:init(...)
     self.reasonLost = ""
     --- The reason why the player won the game.
     self.reasonWon = ""
+    --- The Tiles on this Player's side of the map.
+    self.side = Table()
+    --- The Tiles this Player may spawn Units on.
+    self.spawnTiles = Table()
     --- The amount of time (in ns) remaining for this AI to send commands.
     self.timeRemaining = 0
     --- Every Unit owned by this Player.
