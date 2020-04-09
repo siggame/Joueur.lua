@@ -23,6 +23,10 @@ function Game:init(...)
     -- @field[string] self.name
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
+    --- The price of buying a bomb.
+    self.bombCost = 0
+    --- The price of buying building materials.
+    self.buildingMaterialCost = 0
     --- The player whose turn it is currently. That player can send commands. Other players cannot.
     self.currentPlayer = nil
     --- The current turn number, starting at 0 for the first player's turn.
@@ -64,7 +68,7 @@ function Game:init(...)
 
     self.name = "Coreminer"
 
-    self._gameVersion = "7c7df3c25ba9e82d546825d64e398fc8c07b58e868e7501736a1637ce00e0681"
+    self._gameVersion = "397e64cb9b2f8d76a04e0f32823456fad3d0dd8902b39c6f4d3bc3d636ec2bfd"
     self._gameObjectClasses = {
         GameObject = require("games.coreminer.gameObject"),
         Job = require("games.coreminer.job"),
