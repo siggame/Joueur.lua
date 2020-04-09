@@ -25,6 +25,8 @@ function Game:init(...)
 
     --- The price of buying a bomb.
     self.bombCost = 0
+    --- The amount of cargo space taken up by a bomb.
+    self.bombSize = 0
     --- The price of buying building materials.
     self.buildingMaterialCost = 0
     --- The player whose turn it is currently. That player can send commands. Other players cannot.
@@ -68,7 +70,7 @@ function Game:init(...)
 
     self.name = "Coreminer"
 
-    self._gameVersion = "397e64cb9b2f8d76a04e0f32823456fad3d0dd8902b39c6f4d3bc3d636ec2bfd"
+    self._gameVersion = "6414fff3d6e5957603f07cc0e7e14897d16437e4af5bbc05940fdc81df44c032"
     self._gameObjectClasses = {
         GameObject = require("games.coreminer.gameObject"),
         Job = require("games.coreminer.job"),
