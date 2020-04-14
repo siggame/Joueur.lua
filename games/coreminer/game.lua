@@ -63,6 +63,14 @@ function Game:init(...)
     self.timeAddedPerTurn = 0
     --- Every Unit in the game.
     self.units = Table()
+    --- The cost to upgrade a Unit's cargo capacity.
+    self.upgradeCargoCapacityCost = 0
+    --- The cost to upgrade a Unit's health.
+    self.upgradeHealthCost = 0
+    --- The cost to upgrade a Unit's mining power.
+    self.upgradeMiningPowerCost = 0
+    --- The cost to upgrade a Unit's movement speed.
+    self.upgradeMovesCost = 0
     --- The amount of victory points required to win.
     self.victoryAmount = 0
 
@@ -70,7 +78,7 @@ function Game:init(...)
 
     self.name = "Coreminer"
 
-    self._gameVersion = "6414fff3d6e5957603f07cc0e7e14897d16437e4af5bbc05940fdc81df44c032"
+    self._gameVersion = "46abaae0c6f41ba8536de3714cb964013777223bc6d6753f838182f9673db93e"
     self._gameObjectClasses = {
         GameObject = require("games.coreminer.gameObject"),
         Job = require("games.coreminer.job"),
