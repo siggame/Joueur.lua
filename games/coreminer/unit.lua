@@ -49,6 +49,8 @@ function Unit:init(...)
     self.owner = nil
     --- The Tile this Unit is on.
     self.tile = nil
+    --- The upgrade level of this unit. Starts at 0.
+    self.upgradeLevel = 0
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
     -- @field[string] self.gameObjectName
@@ -76,7 +78,7 @@ function Unit:build(tile, type)
     }))
 end
 
---- Dumps materials from cargo to an adjacent tile.
+--- Dumps materials from cargo to an adjacent tile. If the tile is a base or hopper tile, materials are sold instead of placed.
 -- @tparam Tile tile The tile the materials will be dumped on.
 -- @tparam string material The material the Unit will drop. 'dirt', 'ore', or 'bomb'.
 -- @tparam number amount The number of materials to drop. Amounts <= 0 will drop all the materials.
@@ -109,12 +111,23 @@ function Unit:move(tile)
     }))
 end
 
---- Upgrade an attribute of this Unit. "health", "miningPower", "moves", or "capacity".
--- @tparam string attribute The attribute of the Unit to be upgraded.
+--- Transfers a resource from the one Unit to another.
+-- @tparam Unit unit The Unit to transfer materials to.
+-- @tparam string resource The type of resource to transfer.
+-- @tparam number amount The amount of resource to transfer.
+-- @treturn bool True if successfully transfered, false otherwise.
+function Unit:transfer(unit, resource, amount)
+    return not not (self:_runOnServer("transfer", {
+        unit = unit,
+        resource = resource,
+        amount = amount,
+    }))
+end
+
+--- Upgrade this Unit.
 -- @treturn bool True if successfully upgraded, False otherwise.
-function Unit:upgrade(attribute)
+function Unit:upgrade()
     return not not (self:_runOnServer("upgrade", {
-        attribute = attribute,
     }))
 end
 

@@ -1,4 +1,4 @@
--- Game: Mine resources to obtain more wealth than your opponent.
+-- Game: Mine resources to obtain more value than your opponent.
 -- DO NOT MODIFY THIS FILE
 -- Never try to directly create an instance of this class, or modify its member variables.
 -- Instead, you should only be reading its variables and calling its functions.
@@ -11,7 +11,7 @@ local BaseGame = require("joueur.baseGame")
 -- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
---- Mine resources to obtain more wealth than your opponent.
+--- Mine resources to obtain more value than your opponent.
 -- @classmod Game
 local Game = class(BaseGame)
 
@@ -23,18 +23,18 @@ function Game:init(...)
     -- @field[string] self.name
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The price of buying a bomb.
-    self.bombCost = 0
+    --- The monetary price of a bomb when bought or sold.
+    self.bombPrice = 0
     --- The amount of cargo space taken up by a bomb.
     self.bombSize = 0
-    --- The price of buying building materials.
-    self.buildingMaterialCost = 0
+    --- The monetary price of building materials when bought.
+    self.buildingMaterialPrice = 0
     --- The player whose turn it is currently. That player can send commands. Other players cannot.
     self.currentPlayer = nil
     --- The current turn number, starting at 0 for the first player's turn.
     self.currentTurn = 0
-    --- The amount of turns it takes to gain a free Bomb.
-    self.freeBombInterval = 0
+    --- The monetary price of dirt when bought or sold.
+    self.dirtPrice = 0
     --- A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
     self.gameObjects = Table()
     --- A array-like table of all jobs.
@@ -47,7 +47,9 @@ function Game:init(...)
     self.mapWidth = 0
     --- The maximum number of turns before the game will automatically end.
     self.maxTurns = 100
-    --- The amount of victory points awarded when ore is deposited in the base.
+    --- The amount of money awarded when ore is dumped in the base and sold.
+    self.orePrice = 0
+    --- The amount of victory points awarded when ore is dumped in the base and sold.
     self.oreValue = 0
     --- List of all the players in the game.
     self.players = Table()
@@ -55,6 +57,8 @@ function Game:init(...)
     self.session = ""
     --- The amount of building material required to shield a Tile.
     self.shieldCost = 0
+    --- The monetary price of spawning a Miner.
+    self.spawnPrice = 0
     --- The amount of building material required to build a support.
     self.supportCost = 0
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
@@ -63,14 +67,8 @@ function Game:init(...)
     self.timeAddedPerTurn = 0
     --- Every Unit in the game.
     self.units = Table()
-    --- The cost to upgrade a Unit's cargo capacity.
-    self.upgradeCargoCapacityCost = 0
-    --- The cost to upgrade a Unit's health.
-    self.upgradeHealthCost = 0
-    --- The cost to upgrade a Unit's mining power.
-    self.upgradeMiningPowerCost = 0
-    --- The cost to upgrade a Unit's movement speed.
-    self.upgradeMovesCost = 0
+    --- The cost to upgrade a Unit at each level.
+    self.upgradePrice = Table()
     --- The amount of victory points required to win.
     self.victoryAmount = 0
 
@@ -78,7 +76,7 @@ function Game:init(...)
 
     self.name = "Coreminer"
 
-    self._gameVersion = "46abaae0c6f41ba8536de3714cb964013777223bc6d6753f838182f9673db93e"
+    self._gameVersion = "230d41da5f9e95a58b66fbaa7d6d61f4853e459517e93b553d829607b0286082"
     self._gameObjectClasses = {
         GameObject = require("games.coreminer.gameObject"),
         Job = require("games.coreminer.job"),

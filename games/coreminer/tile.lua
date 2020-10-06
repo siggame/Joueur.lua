@@ -23,7 +23,7 @@ function Tile:init(...)
 
     --- The amount of dirt on this Tile.
     self.dirt = 0
-    --- Whether or not the tile is an indestructible base Tile.
+    --- Whether or not the tile is a base Tile.
     self.isBase = false
     --- Whether or not this tile is about to fall.
     self.isFalling = false
@@ -35,7 +35,7 @@ function Tile:init(...)
     self.isSupport = false
     --- The amount of ore on this Tile.
     self.ore = 0
-    --- The owner of this Tile, or undefined if owned by no-one. Only for bases and hoppers.
+    --- The owner of this Tile, or undefined if owned by no-one.
     self.owner = nil
     --- The amount of shielding on this Tile.
     self.shielding = 0
@@ -67,13 +67,6 @@ function Tile:init(...)
     -- @see GameObject.logs
 
 
-end
-
---- Spawns a Miner Unit on this Tile - Must be on the surface on their side of the map.
--- @treturn bool True if successfully spawned, false otherwise.
-function Tile:spawnMiner()
-    return not not (self:_runOnServer("spawnMiner", {
-    }))
 end
 
 --- (inherited) Adds a message to this GameObject's logs. Intended for your own debugging purposes, as strings stored here are saved in the gamelog.

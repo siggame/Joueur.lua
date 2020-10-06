@@ -23,14 +23,8 @@ function Player:init(...)
 
     --- The Tile this Player's base is on.
     self.baseTile = nil
-    --- The bombs stored in the Player's supply.
-    self.bombs = 0
-    --- The building material stored in the Player's supply.
-    self.buildingMaterials = 0
     --- What type of client this is, e.g. 'Python', 'JavaScript', or some other language. For potential data mining purposes.
     self.clientType = ""
-    --- The dirt stored in the Player's supply.
-    self.dirt = 0
     --- The Tiles this Player's hoppers are on.
     self.hopperTiles = Table()
     --- If the player lost the game or not.
@@ -73,27 +67,10 @@ function Player:init(...)
 
 end
 
---- Purchases a resource and adds it to the Player's supply.
--- @tparam string resource The type of resource to buy.
--- @tparam number amount The amount of resource to buy.
--- @treturn bool True if successfully purchased, false otherwise.
-function Player:buy(resource, amount)
-    return not not (self:_runOnServer("buy", {
-        resource = resource,
-        amount = amount,
-    }))
-end
-
---- Transfers a resource from the Player's supply to a Unit.
--- @tparam Unit unit The Unit to transfer materials to.
--- @tparam string resource The type of resource to transfer.
--- @tparam number amount The amount of resource to transfer.
--- @treturn bool True if successfully transfered, false otherwise.
-function Player:transfer(unit, resource, amount)
-    return not not (self:_runOnServer("transfer", {
-        unit = unit,
-        resource = resource,
-        amount = amount,
+--- Spawns a Miner Unit on this Player's base tile.
+-- @treturn bool True if successfully spawned, false otherwise.
+function Player:spawnMiner()
+    return not not (self:_runOnServer("spawnMiner", {
     }))
 end
 
