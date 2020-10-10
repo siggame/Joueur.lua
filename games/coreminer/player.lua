@@ -41,8 +41,6 @@ function Player:init(...)
     self.reasonWon = ""
     --- The Tiles on this Player's side of the map.
     self.side = Table()
-    --- The Tiles this Player may spawn Units on.
-    self.spawnTiles = Table()
     --- The amount of time (in ns) remaining for this AI to send commands.
     self.timeRemaining = 0
     --- Every Unit owned by this Player.

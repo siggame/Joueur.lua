@@ -78,6 +78,17 @@ function Unit:build(tile, type)
     }))
 end
 
+--- Purchase a resource from the player's base or hopper.
+-- @tparam string resource The type of resource to buy.
+-- @tparam number amount The amount of resource to buy.
+-- @treturn bool True if successfully purchased, false otherwise.
+function Unit:buy(resource, amount)
+    return not not (self:_runOnServer("buy", {
+        resource = resource,
+        amount = amount,
+    }))
+end
+
 --- Dumps materials from cargo to an adjacent tile. If the tile is a base or hopper tile, materials are sold instead of placed.
 -- @tparam Tile tile The tile the materials will be dumped on.
 -- @tparam string material The material the Unit will drop. 'dirt', 'ore', or 'bomb'.
