@@ -23,8 +23,6 @@ function Job:init(...)
 
     --- The amount of cargo capacity this Unit starts with per level.
     self.cargoCapacity = Table()
-    --- The cost of spawning a Unit with this Job.
-    self.cost = 0
     --- The amount of starting health this Job has per level.
     self.health = Table()
     --- The amount of mining power this Unit has per turn per level.
