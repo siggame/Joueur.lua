@@ -21,11 +21,13 @@ function Tile:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
+    --- An array of Bombs on this Tile.
+    self.bombs = Table()
     --- The amount of dirt on this Tile.
     self.dirt = 0
-    --- Whether or not the tile is a base Tile.
+    --- Whether or not the Tile is a base Tile.
     self.isBase = false
-    --- Whether or not this tile is about to fall.
+    --- Whether or not this Tile is about to fall after this turn.
     self.isFalling = false
     --- Whether or not a hopper is on this Tile.
     self.isHopper = false
@@ -33,6 +35,8 @@ function Tile:init(...)
     self.isLadder = false
     --- Whether or not a support is built on this Tile.
     self.isSupport = false
+    --- An array of the Miners on this Tile.
+    self.miners = Table()
     --- The amount of ore on this Tile.
     self.ore = 0
     --- The owner of this Tile, or undefined if owned by no-one.
@@ -47,8 +51,6 @@ function Tile:init(...)
     self.tileSouth = nil
     --- The Tile to the 'West' of this one (x-1, y). nil if out of bounds of the map.
     self.tileWest = nil
-    --- An array of the Units on this Tile.
-    self.units = Table()
     --- The x (horizontal) position of this Tile.
     self.x = 0
     --- The y (vertical) position of this Tile.

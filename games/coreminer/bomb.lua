@@ -1,4 +1,4 @@
--- Player: A player in this game. Every AI controls one player.
+-- Bomb: A Bomb in the game.
 -- DO NOT MODIFY THIS FILE
 -- Never try to directly create an instance of this class, or modify its member variables.
 -- Instead, you should only be reading its variables and calling its functions.
@@ -11,44 +11,18 @@ local GameObject = require("games.coreminer.gameObject")
 -- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
---- A player in this game. Every AI controls one player.
--- @classmod Player
-local Player = class(GameObject)
+--- A Bomb in the game.
+-- @classmod Bomb
+local Bomb = class(GameObject)
 
--- initializes a Player with basic logic as provided by the Creer code generator
-function Player:init(...)
+-- initializes a Bomb with basic logic as provided by the Creer code generator
+function Bomb:init(...)
     GameObject.init(self, ...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The Tile this Player's base is on.
-    self.baseTile = nil
-    --- Every Bomb owned by this Player.
-    self.bombs = Table()
-    --- What type of client this is, e.g. 'Python', 'JavaScript', or some other language. For potential data mining purposes.
-    self.clientType = ""
-    --- The Tiles this Player's hoppers are on.
-    self.hopperTiles = Table()
-    --- If the player lost the game or not.
-    self.lost = false
-    --- Every Miner owned by this Player.
-    self.miners = Table()
-    --- The amount of money this Player currently has.
-    self.money = 0
-    --- The name of the player.
-    self.name = "Anonymous"
-    --- This player's opponent in the game.
-    self.opponent = nil
-    --- The reason why the player lost the game.
-    self.reasonLost = ""
-    --- The reason why the player won the game.
-    self.reasonWon = ""
-    --- The amount of time (in ns) remaining for this AI to send commands.
-    self.timeRemaining = 0
-    --- The amount of value (victory points) this Player has gained.
-    self.value = 0
-    --- If the player won the game or not.
-    self.won = false
+    --- The number of turns before this Bomb explodes. Zero means it will explode after the current turn.
+    self.timer = 0
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
     -- @field[string] self.gameObjectName
@@ -65,15 +39,8 @@ function Player:init(...)
 
 end
 
---- Spawns a Miner on this Player's base Tile.
--- @treturn bool True if successfully spawned, false otherwise.
-function Player:spawnMiner()
-    return not not (self:_runOnServer("spawnMiner", {
-    }))
-end
-
 --- (inherited) Adds a message to this GameObject's logs. Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
--- @function Player:log
+-- @function Bomb:log
 -- @see GameObject:log
 -- @tparam string message A string to add to this GameObject's log. Intended for debugging.
 
@@ -83,4 +50,4 @@ end
 -- if you want to add any client side logic this is where you can add them
 -- <<-- /Creer-Merge: functions -->>
 
-return Player
+return Bomb

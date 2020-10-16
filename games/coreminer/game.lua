@@ -25,8 +25,10 @@ function Game:init(...)
 
     --- The monetary price of a bomb when bought or sold.
     self.bombPrice = 0
-    --- The amount of cargo space taken up by a bomb.
+    --- The amount of cargo space taken up by a Bomb.
     self.bombSize = 0
+    --- Every Bomb in the game.
+    self.bombs = Table()
     --- The monetary price of building materials when bought.
     self.buildingMaterialPrice = 0
     --- The player whose turn it is currently. That player can send commands. Other players cannot.
@@ -35,21 +37,35 @@ function Game:init(...)
     self.currentTurn = 0
     --- The monetary price of dirt when bought or sold.
     self.dirtPrice = 0
+    --- The amount of damage taken per Tile fallen.
+    self.fallDamage = 0
+    --- The amount of extra damage taken for falling while carrying a large amount of cargo.
+    self.fallWeightDamage = 0
     --- A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
     self.gameObjects = Table()
-    --- A array-like table of all jobs.
-    self.jobs = Table()
     --- The amount of building material required to build a ladder.
     self.ladderCost = 0
+    --- The amount of mining power needed to remove a ladder from a Tile.
+    self.ladderHealth = 0
+    --- The amount deemed as a large amount of cargo.
+    self.largeCargoSize = 0
+    --- The amount deemed as a large amount of material.
+    self.largeMaterialSize = 0
     --- The number of Tiles in the map along the y (vertical) axis.
     self.mapHeight = 0
     --- The number of Tiles in the map along the x (horizontal) axis.
     self.mapWidth = 0
+    --- The maximum amount of shielding possible on a Tile.
+    self.maxShielding = 0
     --- The maximum number of turns before the game will automatically end.
     self.maxTurns = 100
+    --- The highest upgrade level allowed on a Miner.
+    self.maxUpgradeLevel = 0
+    --- Every Miner in the game.
+    self.miners = Table()
     --- The amount of money awarded when ore is dumped in the base and sold.
     self.orePrice = 0
-    --- The amount of victory points awarded when ore is dumped in the base and sold.
+    --- The amount of value awarded when ore is dumped in the base and sold.
     self.oreValue = 0
     --- List of all the players in the game.
     self.players = Table()
@@ -57,32 +73,41 @@ function Game:init(...)
     self.session = ""
     --- The amount of building material required to shield a Tile.
     self.shieldCost = 0
+    --- The amount of mining power needed to remove one unit of shielding off a Tile.
+    self.shieldHealth = 0
     --- The monetary price of spawning a Miner.
     self.spawnPrice = 0
+    --- The amount of damage taken when suffocating inside a filled Tile.
+    self.suffocationDamage = 0
+    --- The amount of extra damage taken for suffocating under a large amount of material.
+    self.suffocationWeightDamage = 0
     --- The amount of building material required to build a support.
     self.supportCost = 0
+    --- The amount of mining power needed to remove a support from a Tile.
+    self.supportHealth = 0
     --- All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     self.tiles = Table()
     --- The amount of time (in nano-seconds) added after each player performs a turn.
     self.timeAddedPerTurn = 0
-    --- Every Unit in the game.
-    self.units = Table()
-    --- The cost to upgrade a Unit.
+    --- The cost to upgrade a Miner.
     self.upgradePrice = 0
-    --- The amount of victory points required to win.
+    --- Every Upgrade for a Miner in the game.
+    self.upgrades = Table()
+    --- The amount of victory points (value) required to win.
     self.victoryAmount = 0
 
 
 
     self.name = "Coreminer"
 
-    self._gameVersion = "d9d8a113b95637751dbb349edb0a873d53ebb6df7c375956772b72fba4dff9f3"
+    self._gameVersion = "3418447660e65ea28b97e2a74d8d95ebd694f36bbb0b6f4bd8d43fc97a3ecd9e"
     self._gameObjectClasses = {
+        Bomb = require("games.coreminer.bomb"),
         GameObject = require("games.coreminer.gameObject"),
-        Job = require("games.coreminer.job"),
+        Miner = require("games.coreminer.miner"),
         Player = require("games.coreminer.player"),
         Tile = require("games.coreminer.tile"),
-        Unit = require("games.coreminer.unit"),
+        Upgrade = require("games.coreminer.upgrade"),
     }
 end
 

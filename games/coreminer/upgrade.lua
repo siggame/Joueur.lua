@@ -1,4 +1,4 @@
--- Player: A player in this game. Every AI controls one player.
+-- Upgrade: Information about a Miner's Upgrade module.
 -- DO NOT MODIFY THIS FILE
 -- Never try to directly create an instance of this class, or modify its member variables.
 -- Instead, you should only be reading its variables and calling its functions.
@@ -11,44 +11,26 @@ local GameObject = require("games.coreminer.gameObject")
 -- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
---- A player in this game. Every AI controls one player.
--- @classmod Player
-local Player = class(GameObject)
+--- Information about a Miner's Upgrade module.
+-- @classmod Upgrade
+local Upgrade = class(GameObject)
 
--- initializes a Player with basic logic as provided by the Creer code generator
-function Player:init(...)
+-- initializes a Upgrade with basic logic as provided by the Creer code generator
+function Upgrade:init(...)
     GameObject.init(self, ...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The Tile this Player's base is on.
-    self.baseTile = nil
-    --- Every Bomb owned by this Player.
-    self.bombs = Table()
-    --- What type of client this is, e.g. 'Python', 'JavaScript', or some other language. For potential data mining purposes.
-    self.clientType = ""
-    --- The Tiles this Player's hoppers are on.
-    self.hopperTiles = Table()
-    --- If the player lost the game or not.
-    self.lost = false
-    --- Every Miner owned by this Player.
-    self.miners = Table()
-    --- The amount of money this Player currently has.
-    self.money = 0
-    --- The name of the player.
-    self.name = "Anonymous"
-    --- This player's opponent in the game.
-    self.opponent = nil
-    --- The reason why the player lost the game.
-    self.reasonLost = ""
-    --- The reason why the player won the game.
-    self.reasonWon = ""
-    --- The amount of time (in ns) remaining for this AI to send commands.
-    self.timeRemaining = 0
-    --- The amount of value (victory points) this Player has gained.
-    self.value = 0
-    --- If the player won the game or not.
-    self.won = false
+    --- The amount of cargo capacity this Upgrade has.
+    self.cargoCapacity = 0
+    --- The maximum amount of health this Upgrade has.
+    self.health = 0
+    --- The amount of mining power this Upgrade has per turn.
+    self.miningPower = 0
+    --- The number of moves this Upgrade can make per turn.
+    self.moves = 0
+    --- The Upgrade title.
+    self.title = ""
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
     -- @field[string] self.gameObjectName
@@ -65,15 +47,8 @@ function Player:init(...)
 
 end
 
---- Spawns a Miner on this Player's base Tile.
--- @treturn bool True if successfully spawned, false otherwise.
-function Player:spawnMiner()
-    return not not (self:_runOnServer("spawnMiner", {
-    }))
-end
-
 --- (inherited) Adds a message to this GameObject's logs. Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
--- @function Player:log
+-- @function Upgrade:log
 -- @see GameObject:log
 -- @tparam string message A string to add to this GameObject's log. Intended for debugging.
 
@@ -83,4 +58,4 @@ end
 -- if you want to add any client side logic this is where you can add them
 -- <<-- /Creer-Merge: functions -->>
 
-return Player
+return Upgrade
