@@ -25,6 +25,8 @@ function Miner:init(...)
     self.bombs = 0
     --- The number of building materials carried by this Miner.
     self.buildingMaterials = 0
+    --- The Upgrade this Miner is on.
+    self.currentUpgrade = nil
     --- The amount of dirt carried by this Miner.
     self.dirt = 0
     --- The remaining health of this Miner.
@@ -39,8 +41,6 @@ function Miner:init(...)
     self.owner = nil
     --- The Tile this Miner is on.
     self.tile = nil
-    --- The Upgrade this Miner is on.
-    self.upgrade = nil
     --- The upgrade level of this Miner. Starts at 0.
     self.upgradeLevel = 0
 

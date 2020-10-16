@@ -100,7 +100,7 @@ function Game:init(...)
 
     self.name = "Coreminer"
 
-    self._gameVersion = "3418447660e65ea28b97e2a74d8d95ebd694f36bbb0b6f4bd8d43fc97a3ecd9e"
+    self._gameVersion = "ce6c632876295900d0b2fc6db0f63dfc8a20533396c67b472fa03817cb82edc4"
     self._gameObjectClasses = {
         Bomb = require("games.coreminer.bomb"),
         GameObject = require("games.coreminer.gameObject"),
