@@ -1,4 +1,4 @@
--- Warehouse: A typical abandoned warehouse... that anarchists hang out in and can be bribed to burn down Buildings.
+-- Warehouse: A typical abandoned warehouse that anarchists hang out in and can be bribed to burn down Buildings.
 -- DO NOT MODIFY THIS FILE
 -- Never try to directly create an instance of this class, or modify its member variables.
 -- Instead, you should only be reading its variables and calling its functions.
@@ -11,7 +11,7 @@ local Building = require("games.anarchy.building")
 -- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
---- A typical abandoned warehouse... that anarchists hang out in and can be bribed to burn down Buildings.
+--- A typical abandoned warehouse that anarchists hang out in and can be bribed to burn down Buildings.
 -- @classmod Warehouse
 local Warehouse = class(Building)
 
@@ -85,7 +85,7 @@ function Warehouse:init(...)
 
 end
 
---- Bribes the Warehouse to light a Building on fire. This adds this building's fireAdded to their fire, and then this building's exposure is increased based on the Manhatten distance between the two buildings.
+--- Bribes the Warehouse to light a Building on fire. This adds this building's fireAdded to their fire, and then this building's exposure is increased based on the Manhattan distance between the two buildings.
 -- @tparam Building building The Building you want to light on fire.
 -- @treturn number The exposure added to this Building's exposure. -1 is returned if there was an error.
 function Warehouse:ignite(building)

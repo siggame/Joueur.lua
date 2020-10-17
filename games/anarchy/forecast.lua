@@ -25,7 +25,7 @@ function Forecast:init(...)
     self.controllingPlayer = nil
     --- The direction the wind will blow fires in. Can be 'north', 'east', 'south', or 'west'.
     self.direction = ""
-    --- How much of a Building's fire that can be blown in the direction of this Forecast. Fire is duplicated (copied), not moved (transfered).
+    --- How much of a Building's fire that can be blown in the direction of this Forecast. Fire is duplicated (copied), not moved (transferred).
     self.intensity = 0
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.

@@ -64,7 +64,7 @@ function Cutter:init(...)
     -- @field[Player] self.owner
     -- @see Spider.owner
 
-    --- (inherited) How much work needs to be done for this Spiderling to finish being busy. See docs for the Work forumla.
+    --- (inherited) How much work needs to be done for this Spiderling to finish being busy. See docs for the Work formula.
     -- @field[number] self.workRemaining
     -- @see Spiderling.workRemaining
 
@@ -80,7 +80,7 @@ function Cutter:cut(web)
     }))
 end
 
---- (inherited) Attacks another Spiderling
+--- (inherited) Attacks another Spiderling.
 -- @function Cutter:attack
 -- @see Spiderling:attack
 -- @tparam Spiderling spiderling The Spiderling to attack.
