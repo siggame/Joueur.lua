@@ -97,7 +97,7 @@ end
 -- @treturns bool True if pathable, false otherwise
 function Tile:isPathable()
     -- <<-- Creer-Merge: is_pathable_builtin -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-    return false -- DEVELOPER ADD LOGIC HERE
+    return self.ore + self.dirt <= 0;
     -- <<-- /Creer-Merge: is_pathable_builtin -->>
 end
 
