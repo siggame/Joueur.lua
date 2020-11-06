@@ -57,6 +57,44 @@ end
 function AI:runTurn()
     -- <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     -- Put your game logic here for runTurn
+
+    -- If we have no miners and can afford one, spawn one
+    while #self.player.miners < 1 and self.player.money >= self.game.spawnPrice do
+        self.player:spawnMiner()
+    end
+
+    -- For each miner
+    for miner in self.player.miners do
+        -- Move to tile next to base
+        if miner.tile.isBase then
+            if miner.tile.tileEast then
+                miner:move(miner.tile.tileEast)
+            else
+                miner:move(miner.tile.tileWest)
+            end
+        end
+
+        -- Sell all materials
+        local sellTile = self.game:getTileAt(self.player.baseTile.x, miner.tile.y)
+        if sellTile and sellTile.owner == self.player then
+            miner:dump(sellTile, "dirt", -1)
+            miner:dump(sellTile, "ore", -1)
+        end
+
+        local eastTile = miner.tile.tileEast
+        local westTile = miner.tile.tileWest
+
+        -- Mine east and west tiles
+        miner:mine(eastTile, -1)
+        miner:mine(westTile, -1)
+
+        -- Check to make sure east and west tiles are mined
+        if (eastTile and eastTile.ore + eastTile.dirt == 0) and (westTile and westTile.ore + westTile.dirt == 0) then
+            -- Dig down
+            miner:mine(miner.tile.tileSouth, -1)
+        end
+    end
+    
     return true
     -- <<-- /Creer-Merge: runTurn -->>
 end
