@@ -59,12 +59,16 @@ function AI:runTurn()
     -- Put your game logic here for runTurn
 
     -- If we have no miners and can afford one, spawn one
-    while #self.player.miners < 1 and self.player.money >= self.game.spawnPrice do
+    if #self.player.miners < 1 and self.player.money >= self.game.spawnPrice then
         self.player:spawnMiner()
     end
 
     -- For each miner
     for miner in self.player.miners do
+        if miner != nil and miner.tile != nil then
+            continue
+        end
+
         -- Move to tile next to base
         if miner.tile.isBase then
             if miner.tile.tileEast then
@@ -85,13 +89,28 @@ function AI:runTurn()
         local westTile = miner.tile.tileWest
 
         -- Mine east and west tiles
-        miner:mine(eastTile, -1)
-        miner:mine(westTile, -1)
+        if eastTile.x == self.player.baseTile.x then
+            if eastTile != nil then
+                miner:mine(eastTile, -1)
+            end
+            if eastTile != nil then
+                miner:mine(westTile, -1)
+            end
+        else
+            if eastTile != nil then
+                miner:mine(eastTile, -1)
+            end
+            if eastTile != nil then
+                miner:mine(westTile, -1)
+            end
+        end
 
         -- Check to make sure east and west tiles are mined
         if (eastTile and eastTile.ore + eastTile.dirt == 0) and (westTile and westTile.ore + westTile.dirt == 0) then
             -- Dig down
-            miner:mine(miner.tile.tileSouth, -1)
+            if miner.tile.tileSouth != nil {
+                miner:mine(miner.tile.tileSouth, -1)
+            }
         end
     end
     
