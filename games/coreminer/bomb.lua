@@ -21,9 +21,9 @@ function Bomb:init(...)
 
     -- The following values should get overridden when delta states are merged, but we set them here as a reference for you to see what variables this class has.
 
-    --- The Tile this Miner is on.
+    --- The Tile this Bomb is on.
     self.tile = nil
-    --- The number of turns before this Bomb explodes. Zero means it will explode after the current turn.
+    --- The number of turns before this Bomb explodes. One means it will explode after the current turn.
     self.timer = 0
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
