@@ -58,7 +58,7 @@ function BaseAI:_doOrder(order, args)
 
     if callback then
         if args then
-            return callback(self, table.unpack(args))
+            return callback(self, unpack(args))
         end
         return callback(self)
     else

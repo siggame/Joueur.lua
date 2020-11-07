@@ -57,7 +57,7 @@ function Job:init(...)
 
 end
 
---- Recruits a Beaver of this Job to a lodge
+--- Recruits a Beaver of this Job to a lodge.
 -- @tparam Tile tile The Tile that is a lodge owned by you that you wish to spawn the Beaver of this Job on.
 -- @treturn Beaver The recruited Beaver if successful, nil otherwise.
 function Job:recruit(tile)

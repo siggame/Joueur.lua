@@ -64,7 +64,7 @@ end
 
 --- Spawns a new Spiderling on the same Nest as this BroodMother, consuming an egg.
 -- @tparam string spiderlingType The string name of the Spiderling class you want to Spawn. Must be 'Spitter', 'Weaver', or 'Cutter'.
--- @treturn Spiderling The newly spwaned Spiderling if successful. nil otherwise.
+-- @treturn Spiderling The newly spawned Spiderling if successful. nil otherwise.
 function BroodMother:spawn(spiderlingType)
     return (self:_runOnServer("spawn", {
         spiderlingType = spiderlingType,

@@ -29,7 +29,7 @@ function Spiderling:init(...)
     self.movingToNest = nil
     --- The number of Spiderlings busy with the same work this Spiderling is doing, speeding up the task.
     self.numberOfCoworkers = 0
-    --- How much work needs to be done for this Spiderling to finish being busy. See docs for the Work forumla.
+    --- How much work needs to be done for this Spiderling to finish being busy. See docs for the Work formula.
     self.workRemaining = 0
 
     --- (inherited) String representing the top level Class that this game object is an instance of. Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
@@ -59,7 +59,7 @@ function Spiderling:init(...)
 
 end
 
---- Attacks another Spiderling
+--- Attacks another Spiderling.
 -- @tparam Spiderling spiderling The Spiderling to attack.
 -- @treturn bool True if the attack was successful, false otherwise.
 function Spiderling:attack(spiderling)

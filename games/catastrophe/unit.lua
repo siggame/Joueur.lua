@@ -70,7 +70,7 @@ function Unit:attack(tile)
     }))
 end
 
---- Changes this Unit's Job. Must be at max energy (100.0) to change Jobs.
+--- Changes this Unit's Job. Must be at max energy (100) to change Jobs.
 -- @tparam string job The name of the Job to change to.
 -- @treturn bool True if successfully changed Jobs, false otherwise.
 function Unit:changeJob(job)
@@ -99,7 +99,7 @@ function Unit:convert(tile)
     }))
 end
 
---- Removes materials from an adjacent Tile's Structure. You cannot deconstruct friendly structures (see Unit.attack).
+--- Removes materials from an adjacent Tile's Structure. You cannot deconstruct friendly structures (see `Unit.attack`).
 -- @tparam Tile tile The Tile to deconstruct. It must have a Structure on it.
 -- @treturn bool True if successfully deconstructed, false otherwise.
 function Unit:deconstruct(tile)

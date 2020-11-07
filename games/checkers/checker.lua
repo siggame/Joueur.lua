@@ -55,7 +55,7 @@ end
 --- Moves the checker from its current location to the given (x, y).
 -- @tparam number x The x coordinate to move to.
 -- @tparam number y The y coordinate to move to.
--- @treturn Checker Returns the same checker that moved if the move was successful. nil otherwise.
+-- @treturn Checker Returns the same checker that moved if the move was successful. Otherwise nil.
 function Checker:move(x, y)
     return (self:_runOnServer("move", {
         x = x,

@@ -39,7 +39,7 @@ function Cowboy:init(...)
     self.owner = nil
     --- The Tile that this Cowboy is located on.
     self.tile = nil
-    --- How many times this unit has been drunk before taking their siesta and reseting this to 0.
+    --- How many times this unit has been drunk before taking their siesta and resetting this to 0.
     self.tolerance = 0
     --- How many turns this unit has remaining before it is no longer busy and can `act()` or `play()` again.
     self.turnsBusy = 0

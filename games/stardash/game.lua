@@ -1,4 +1,4 @@
--- Game: Collect of the most of the rarest mineral orbiting aroung the sun and outcompete your competetor.
+-- Game: Collect of the most of the rarest mineral orbiting around the sun and out-compete your competitor.
 -- DO NOT MODIFY THIS FILE
 -- Never try to directly create an instance of this class, or modify its member variables.
 -- Instead, you should only be reading its variables and calling its functions.
@@ -11,7 +11,7 @@ local BaseGame = require("joueur.baseGame")
 -- you can add additional require(s) here
 -- <<-- /Creer-Merge: requires -->>
 
---- Collect of the most of the rarest mineral orbiting aroung the sun and outcompete your competetor.
+--- Collect of the most of the rarest mineral orbiting around the sun and out-compete your competitor.
 -- @classmod Game
 local Game = class(BaseGame)
 
@@ -37,7 +37,7 @@ function Game:init(...)
     self.gameObjects = Table()
     --- The value of every unit of genarium.
     self.genariumValue = 0
-    --- A array-like table of all jobs. first item is corvette, second is missileboat, third is martyr, fourth is transport, and fifth is miner.
+    --- A array-like table of all jobs. The first element is corvette, second is missileboat, third is martyr, fourth is transport, and fifth is miner.
     self.jobs = Table()
     --- The value of every unit of legendarium.
     self.legendariumValue = 0

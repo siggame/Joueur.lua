@@ -31,7 +31,7 @@ function Game:init(...)
     self.gameObjects = Table()
     --- The maximum number of interns a player can have.
     self.internCap = 0
-    --- A array-like table of all jobs. first item is intern, second is physicists, and third is manager.
+    --- A array-like table of all jobs. The first element is intern, second is physicists, and third is manager.
     self.jobs = Table()
     --- Every Machine in the game.
     self.machines = Table()

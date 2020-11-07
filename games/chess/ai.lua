@@ -53,7 +53,7 @@ end
 -- Game Logic Functions: functions you must fill out to send data to the game server to actually play the game! --
 
 --- This is called every time it is this AI.player's turn to make a move.
--- @treturn string A string in Standard Algebraic Notation (SAN) for the move you want to make. If the move is invalid or not properly formatted you will lose the game.
+-- @treturn string A string in Universal Chess Interface (UCI) or Standard Algebraic Notation (SAN) formatting for the move you want to make. If the move is invalid or not properly formatted you will lose the game.
 function AI:makeMove()
     -- <<-- Creer-Merge: makeMove -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     -- Put your game logic here for makeMove
