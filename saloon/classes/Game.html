@@ -1,0 +1,520 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Saloon — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Saloon Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><a href="../classes/Bottle.html">Bottle</a></li>
+  <li><a href="../classes/Cowboy.html">Cowboy</a></li>
+  <li><a href="../classes/Furnishing.html">Furnishing</a></li>
+  <li><strong>Game</strong></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Tile.html">Tile</a></li>
+  <li><a href="../classes/YoungGun.html">YoungGun</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Game</code></h1>
+<p>Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Cowboys.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.name">self.name</a></td>
+	<td class="summary">The name of this game, "{game_name}".</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.bartenderCooldown">self.bartenderCooldown</a></td>
+	<td class="summary">How many turns a Bartender will be busy for after throwing a Bottle.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.bottles">self.bottles</a></td>
+	<td class="summary">All the beer Bottles currently flying across the saloon in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.brawlerDamage">self.brawlerDamage</a></td>
+	<td class="summary">How much damage is applied to neighboring things bit by the Sharpshooter between turns.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.cowboys">self.cowboys</a></td>
+	<td class="summary">Every Cowboy in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentPlayer">self.currentPlayer</a></td>
+	<td class="summary">The player whose turn it is currently.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentTurn">self.currentTurn</a></td>
+	<td class="summary">The current turn number, starting at 0 for the first player's turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.furnishings">self.furnishings</a></td>
+	<td class="summary">Every furnishing in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjects">self.gameObjects</a></td>
+	<td class="summary">A mapping of every game object's ID to the actual game object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.jobs">self.jobs</a></td>
+	<td class="summary">All the jobs that Cowboys can be called in with.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.mapHeight">self.mapHeight</a></td>
+	<td class="summary">The number of Tiles in the map along the y (vertical) axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.mapWidth">self.mapWidth</a></td>
+	<td class="summary">The number of Tiles in the map along the x (horizontal) axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxCowboysPerJob">self.maxCowboysPerJob</a></td>
+	<td class="summary">The maximum number of Cowboys a Player can bring into the saloon of each specific job.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxTurns">self.maxTurns</a></td>
+	<td class="summary">The maximum number of turns before the game will automatically end.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.players">self.players</a></td>
+	<td class="summary">List of all the players in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.rowdinessToSiesta">self.rowdinessToSiesta</a></td>
+	<td class="summary">When a player's rowdiness reaches or exceeds this number their Cowboys take a collective siesta.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.session">self.session</a></td>
+	<td class="summary">A unique identifier for the game instance that is being played.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.sharpshooterDamage">self.sharpshooterDamage</a></td>
+	<td class="summary">How much damage is applied to things hit by Sharpshooters when they act.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.siestaLength">self.siestaLength</a></td>
+	<td class="summary">How long siestas are for a player's team.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tiles">self.tiles</a></td>
+	<td class="summary">All the tiles in the map, stored in Row-major order.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.timeAddedPerTurn">self.timeAddedPerTurn</a></td>
+	<td class="summary">The amount of time (in nano-seconds) added after each player performs a turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.turnsDrunk">self.turnsDrunk</a></td>
+	<td class="summary">How many turns a Cowboy will be drunk for if a bottle breaks on it.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Game:getTileAt">Game:getTileAt (x, y)</a></td>
+	<td class="summary">Gets the Tile at a specified (x, y) position</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.name"></a>
+    <strong>self.name</strong>
+    </dt>
+    <dd>
+    The name of this game, "{game_name}".
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.bartenderCooldown"></a>
+    <strong>self.bartenderCooldown</strong>
+    </dt>
+    <dd>
+    How many turns a Bartender will be busy for after throwing a Bottle.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.bottles"></a>
+    <strong>self.bottles</strong>
+    </dt>
+    <dd>
+    All the beer Bottles currently flying across the saloon in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.brawlerDamage"></a>
+    <strong>self.brawlerDamage</strong>
+    </dt>
+    <dd>
+    How much damage is applied to neighboring things bit by the Sharpshooter between turns.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.cowboys"></a>
+    <strong>self.cowboys</strong>
+    </dt>
+    <dd>
+    Every Cowboy in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentPlayer"></a>
+    <strong>self.currentPlayer</strong>
+    </dt>
+    <dd>
+    The player whose turn it is currently.  That player can send commands. Other players cannot.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentTurn"></a>
+    <strong>self.currentTurn</strong>
+    </dt>
+    <dd>
+    The current turn number, starting at 0 for the first player's turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.furnishings"></a>
+    <strong>self.furnishings</strong>
+    </dt>
+    <dd>
+    Every furnishing in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjects"></a>
+    <strong>self.gameObjects</strong>
+    </dt>
+    <dd>
+    A mapping of every game object's ID to the actual game object.  Primarily used by the server and client to easily refer to the game objects via ID.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.jobs"></a>
+    <strong>self.jobs</strong>
+    </dt>
+    <dd>
+    All the jobs that Cowboys can be called in with.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.mapHeight"></a>
+    <strong>self.mapHeight</strong>
+    </dt>
+    <dd>
+    The number of Tiles in the map along the y (vertical) axis.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.mapWidth"></a>
+    <strong>self.mapWidth</strong>
+    </dt>
+    <dd>
+    The number of Tiles in the map along the x (horizontal) axis.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxCowboysPerJob"></a>
+    <strong>self.maxCowboysPerJob</strong>
+    </dt>
+    <dd>
+    The maximum number of Cowboys a Player can bring into the saloon of each specific job.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxTurns"></a>
+    <strong>self.maxTurns</strong>
+    </dt>
+    <dd>
+    The maximum number of turns before the game will automatically end.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.players"></a>
+    <strong>self.players</strong>
+    </dt>
+    <dd>
+    List of all the players in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.rowdinessToSiesta"></a>
+    <strong>self.rowdinessToSiesta</strong>
+    </dt>
+    <dd>
+    When a player's rowdiness reaches or exceeds this number their Cowboys take a collective siesta.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.session"></a>
+    <strong>self.session</strong>
+    </dt>
+    <dd>
+    A unique identifier for the game instance that is being played.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.sharpshooterDamage"></a>
+    <strong>self.sharpshooterDamage</strong>
+    </dt>
+    <dd>
+    How much damage is applied to things hit by Sharpshooters when they act.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.siestaLength"></a>
+    <strong>self.siestaLength</strong>
+    </dt>
+    <dd>
+    How long siestas are for a player's team.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tiles"></a>
+    <strong>self.tiles</strong>
+    </dt>
+    <dd>
+    All the tiles in the map, stored in Row-major order.  Use `x + y * mapWidth` to access the correct index.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.timeAddedPerTurn"></a>
+    <strong>self.timeAddedPerTurn</strong>
+    </dt>
+    <dd>
+    The amount of time (in nano-seconds) added after each player performs a turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.turnsDrunk"></a>
+    <strong>self.turnsDrunk</strong>
+    </dt>
+    <dd>
+    How many turns a Cowboy will be drunk for if a bottle breaks on it.
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Game:getTileAt"></a>
+    <strong>Game:getTileAt (x, y)</strong>
+    </dt>
+    <dd>
+    Gets the Tile at a specified (x, y) position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         integer between 0 and the mapWidth
+        </li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         integer between 0 and the mapHeight
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+
+    <title>Lua Joueur Client</title>
+    <link rel="stylesheet" href="ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1 style="margin-left: 0.25em;">Lua Joueur Client</h1>
+
+
+
+
+<h2>Games</h2>
+<ul class="nowrap">
+  <li><a href="anarchy/">Anarchy</a></li>  
+<li><a href="catastrophe/">Catastrophe</a></li>  
+<li><a href="checkers/">Checkers</a></li>  
+<li><a href="chess/">Chess</a></li>  
+<li><a href="coreminer/">Coreminer</a></li>  
+<li><a href="necrowar/">Necrowar</a></li>  
+<li><a href="newtonian/">Newtonian</a></li>  
+<li><a href="pirates/">Pirates</a></li>  
+<li><a href="saloon/">Saloon</a></li>  
+<li><a href="spiders/">Spiders</a></li>  
+<li><a href="stardash/">Stardash</a></li>  
+<li><a href="stumped/">Stumped</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+<p><h1>Lua Joueur Client</h1>
+<p>This is the client for the <a href="https://github.com/siggame/Cadre">Cadre</a> AI framework. It can play multiple different games, though you will probably only be interested in one at a time.</p>
+<p>In general, try to stay out of the <code>joueur/</code> folder, it does most of the heavy lifting to play on our game servers. Your AI, and the game objects it manipulates are all in <code>games/game_name/</code>, with your very own AI living in <code>games/game_name/ai.lua</code> for you to make smarter.</p>
+<h2>How to Run</h2>
+<p>This client <strong>does not</strong> work on the Campus rc##xcs213 Linux machines, but it can work on your own Windows/Linux/Mac machines. You just need to install lua 5.1 and luajit, both which are easy to install.</p>
+<h3>Linux</h3>
+<p>Make sure you have the package <code>lua5.1</code>, <code>lua-socket</code>, and <code>luajit</code> installed, then:</p>
+<p><code>./testRun myOwnGameSession</code></p>
+<h3>Windows</h3>
+<p>Just download <a href="http://luadist.org/">LuaDist</a>. That package has everything you need to run the Lua client, and actually has LuaJIT to run Lua. Place it the contents anywhere, then make sure to add the path to the bin/ folder in LuaDist to your Path. Then you can:</p>
+<p><code>lua main.lua GAME_NAME -s game.siggame.io -r myOwnGameSession</code></p>
+<h3>Vagrant</h3>
+<p>Install <a href="https://www.vagrantup.com/downloads.html">Vagrant</a> and <a href="https://www.virtualbox.org/wiki/Downloads">Virtualbox</a> in order to use the Vagrant configuration we provide which satisfies all build dependencies inside of a virtual machine. This will allow for development with your favorite IDE or editor on your host machine while being able to run the client inside the virtual machine. Vagrant will automatically sync the changes you make into the virtual machine that it creates. In order to use vagrant <strong>after installing the aforementioned requirements</strong> simply run from the root of this client:</p>
+<p><code>bash
+vagrant up</code></p>
+<p>and after the build has completed you can ssh into the virtual environment by running:</p>
+<p><code>bash
+vagrant ssh</code></p>
+<p>From there you will be in a Linux environment that has all the dependencies you'll need to build and run this client.</p>
+<p>When the competition is over, or the virtual environment becomes corrupted in some way, simply execute <code>vagrant destroy</code> to delete the virtual machine and its contents.</p>
+<p>For a more in depth guide on using vagrant, take a look at <a href="https://www.vagrantup.com/docs/getting-started/up.html">their guide</a></p>
+<h4>Windows</h4>
+<p>Using Vagrant with Windows can be a bit of a pain. Here are some tips:</p>
+<ul>
+<li>Use an OpenSSH compatible ssh client. We recommend <a href="https://git-scm.com/downloads">Git Bash</a> to serve double duty as your git client and ssh client</li>
+<li>Launch the terminal of your choice (like Git Bash) as an Administrator to ensure the symbolic links can be created when spinning up your Vagrant virtual machine</li>
+</ul>
+<h2>Make</h2>
+<p>There is a <code>Makefile</code> provided, but it is empty as Lua is an interpreted language. If you want to add <code>make</code> steps feel free to, but you may want to check with an Arena dev to make sure the Arena has the packages you need to use in <code>make</code>.</p>
+<h2>Other Notes</h2>
+<p>Newer versions of Lua will probably work, but they are untested. Please tell the arena team if you wish to use an updated version and compete.</p>
+<p>It is possible that on your Missouri S&amp;T S-Drive this client will not run properly. This is not a fault with the client, but rather the school's S-Drive implementation changing some file permissions during run time. We cannot control this. Instead, we recommend cloning your repo outside the S-Drive and use an SCP program like <a href="https://winscp.net/eng/download.php">WinSCP</a> to edit the files in Windows using whatever IDE you want if you want to code in Windows, but compile in Linux.</p>
+<p>The only file you should ever modify to create your AI is the <code>ai.lua</code> file. All the other files are needed for the game to work. In addition, you should never be creating your own instances of the Game's classes, nor should you ever try to modify their variables. Instead, treat the Game and its members as a read only structure that represents the game state on the game server. You interact with it by calling the game functions.</p></p>
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>Game docs generated by <a href="http://github.com/stevedonovan/LDoc">LDoc</a></i>
+<i style="float:right;">&copy; 2020 MST ACM SIG-GAME</i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

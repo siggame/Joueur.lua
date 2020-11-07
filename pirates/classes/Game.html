@@ -1,0 +1,644 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Pirates — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Pirates Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><strong>Game</strong></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Port.html">Port</a></li>
+  <li><a href="../classes/Tile.html">Tile</a></li>
+  <li><a href="../classes/Unit.html">Unit</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Game</code></h1>
+<p>Steal from merchants and become the most infamous pirate.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.name">self.name</a></td>
+	<td class="summary">The name of this game, "{game_name}".</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.buryInterestRate">self.buryInterestRate</a></td>
+	<td class="summary">The rate buried gold increases each turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.crewCost">self.crewCost</a></td>
+	<td class="summary">How much gold it costs to construct a single crew.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.crewDamage">self.crewDamage</a></td>
+	<td class="summary">How much damage crew deal to each other.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.crewHealth">self.crewHealth</a></td>
+	<td class="summary">The maximum amount of health a crew member can have.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.crewMoves">self.crewMoves</a></td>
+	<td class="summary">The number of moves Units with only crew are given each turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.crewRange">self.crewRange</a></td>
+	<td class="summary">A crew's attack range.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentPlayer">self.currentPlayer</a></td>
+	<td class="summary">The player whose turn it is currently.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentTurn">self.currentTurn</a></td>
+	<td class="summary">The current turn number, starting at 0 for the first player's turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjects">self.gameObjects</a></td>
+	<td class="summary">A mapping of every game object's ID to the actual game object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.healFactor">self.healFactor</a></td>
+	<td class="summary">How much health a Unit recovers when they rest.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.mapHeight">self.mapHeight</a></td>
+	<td class="summary">The number of Tiles in the map along the y (vertical) axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.mapWidth">self.mapWidth</a></td>
+	<td class="summary">The number of Tiles in the map along the x (horizontal) axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxTurns">self.maxTurns</a></td>
+	<td class="summary">The maximum number of turns before the game will automatically end.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.merchantGoldRate">self.merchantGoldRate</a></td>
+	<td class="summary">How much gold merchant Ports get each turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.merchantInterestRate">self.merchantInterestRate</a></td>
+	<td class="summary">When a merchant ship spawns, the amount of additional gold it has relative to the Port's investment.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.minInterestDistance">self.minInterestDistance</a></td>
+	<td class="summary">The Euclidean distance buried gold must be from the Player's Port to accumulate interest.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.players">self.players</a></td>
+	<td class="summary">List of all the players in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.ports">self.ports</a></td>
+	<td class="summary">Every Port in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.restRange">self.restRange</a></td>
+	<td class="summary">How far a Unit can be from a Port to rest.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.session">self.session</a></td>
+	<td class="summary">A unique identifier for the game instance that is being played.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.shipCost">self.shipCost</a></td>
+	<td class="summary">How much gold it costs to construct a ship.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.shipDamage">self.shipDamage</a></td>
+	<td class="summary">How much damage ships deal to ships and ports.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.shipHealth">self.shipHealth</a></td>
+	<td class="summary">The maximum amount of health a ship can have.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.shipMoves">self.shipMoves</a></td>
+	<td class="summary">The number of moves Units with ships are given each turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.shipRange">self.shipRange</a></td>
+	<td class="summary">A ship's attack range.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tiles">self.tiles</a></td>
+	<td class="summary">All the tiles in the map, stored in Row-major order.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.timeAddedPerTurn">self.timeAddedPerTurn</a></td>
+	<td class="summary">The amount of time (in nano-seconds) added after each player performs a turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.units">self.units</a></td>
+	<td class="summary">Every Unit in the game.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Game:getTileAt">Game:getTileAt (x, y)</a></td>
+	<td class="summary">Gets the Tile at a specified (x, y) position</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.name"></a>
+    <strong>self.name</strong>
+    </dt>
+    <dd>
+    The name of this game, "{game_name}".
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.buryInterestRate"></a>
+    <strong>self.buryInterestRate</strong>
+    </dt>
+    <dd>
+    The rate buried gold increases each turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.crewCost"></a>
+    <strong>self.crewCost</strong>
+    </dt>
+    <dd>
+    How much gold it costs to construct a single crew.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.crewDamage"></a>
+    <strong>self.crewDamage</strong>
+    </dt>
+    <dd>
+    How much damage crew deal to each other.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.crewHealth"></a>
+    <strong>self.crewHealth</strong>
+    </dt>
+    <dd>
+    The maximum amount of health a crew member can have.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.crewMoves"></a>
+    <strong>self.crewMoves</strong>
+    </dt>
+    <dd>
+    The number of moves Units with only crew are given each turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.crewRange"></a>
+    <strong>self.crewRange</strong>
+    </dt>
+    <dd>
+    A crew's attack range.  Range is circular.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentPlayer"></a>
+    <strong>self.currentPlayer</strong>
+    </dt>
+    <dd>
+    The player whose turn it is currently.  That player can send commands. Other players cannot.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentTurn"></a>
+    <strong>self.currentTurn</strong>
+    </dt>
+    <dd>
+    The current turn number, starting at 0 for the first player's turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjects"></a>
+    <strong>self.gameObjects</strong>
+    </dt>
+    <dd>
+    A mapping of every game object's ID to the actual game object.  Primarily used by the server and client to easily refer to the game objects via ID.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.healFactor"></a>
+    <strong>self.healFactor</strong>
+    </dt>
+    <dd>
+    How much health a Unit recovers when they rest.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.mapHeight"></a>
+    <strong>self.mapHeight</strong>
+    </dt>
+    <dd>
+    The number of Tiles in the map along the y (vertical) axis.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.mapWidth"></a>
+    <strong>self.mapWidth</strong>
+    </dt>
+    <dd>
+    The number of Tiles in the map along the x (horizontal) axis.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxTurns"></a>
+    <strong>self.maxTurns</strong>
+    </dt>
+    <dd>
+    The maximum number of turns before the game will automatically end.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.merchantGoldRate"></a>
+    <strong>self.merchantGoldRate</strong>
+    </dt>
+    <dd>
+    How much gold merchant Ports get each turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.merchantInterestRate"></a>
+    <strong>self.merchantInterestRate</strong>
+    </dt>
+    <dd>
+    When a merchant ship spawns, the amount of additional gold it has relative to the Port's investment.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.minInterestDistance"></a>
+    <strong>self.minInterestDistance</strong>
+    </dt>
+    <dd>
+    The Euclidean distance buried gold must be from the Player's Port to accumulate interest.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.players"></a>
+    <strong>self.players</strong>
+    </dt>
+    <dd>
+    List of all the players in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.ports"></a>
+    <strong>self.ports</strong>
+    </dt>
+    <dd>
+    Every Port in the game.  Merchant ports have owner set to nil.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.restRange"></a>
+    <strong>self.restRange</strong>
+    </dt>
+    <dd>
+    How far a Unit can be from a Port to rest.  Range is circular.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.session"></a>
+    <strong>self.session</strong>
+    </dt>
+    <dd>
+    A unique identifier for the game instance that is being played.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.shipCost"></a>
+    <strong>self.shipCost</strong>
+    </dt>
+    <dd>
+    How much gold it costs to construct a ship.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.shipDamage"></a>
+    <strong>self.shipDamage</strong>
+    </dt>
+    <dd>
+    How much damage ships deal to ships and ports.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.shipHealth"></a>
+    <strong>self.shipHealth</strong>
+    </dt>
+    <dd>
+    The maximum amount of health a ship can have.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.shipMoves"></a>
+    <strong>self.shipMoves</strong>
+    </dt>
+    <dd>
+    The number of moves Units with ships are given each turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.shipRange"></a>
+    <strong>self.shipRange</strong>
+    </dt>
+    <dd>
+    A ship's attack range.  Range is circular.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tiles"></a>
+    <strong>self.tiles</strong>
+    </dt>
+    <dd>
+    All the tiles in the map, stored in Row-major order.  Use `x + y * mapWidth` to access the correct index.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.timeAddedPerTurn"></a>
+    <strong>self.timeAddedPerTurn</strong>
+    </dt>
+    <dd>
+    The amount of time (in nano-seconds) added after each player performs a turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.units"></a>
+    <strong>self.units</strong>
+    </dt>
+    <dd>
+    Every Unit in the game.  Merchant units have targetPort set to a port.
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Game:getTileAt"></a>
+    <strong>Game:getTileAt (x, y)</strong>
+    </dt>
+    <dd>
+    Gets the Tile at a specified (x, y) position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         integer between 0 and the mapWidth
+        </li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         integer between 0 and the mapHeight
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

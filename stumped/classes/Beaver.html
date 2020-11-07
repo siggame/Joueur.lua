@@ -1,0 +1,566 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Stumped — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Stumped Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><strong>Beaver</strong></li>
+  <li><a href="../classes/Game.html">Game</a></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Job.html">Job</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Spawner.html">Spawner</a></li>
+  <li><a href="../classes/Tile.html">Tile</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Beaver</code></h1>
+<p>A beaver in the game.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.actions">self.actions</a></td>
+	<td class="summary">The number of actions remaining for the Beaver this turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.branches">self.branches</a></td>
+	<td class="summary">The amount of branches this Beaver is holding.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.food">self.food</a></td>
+	<td class="summary">The amount of food this Beaver is holding.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.health">self.health</a></td>
+	<td class="summary">How much health this Beaver has left.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.job">self.job</a></td>
+	<td class="summary">The Job this Beaver was recruited to do.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.moves">self.moves</a></td>
+	<td class="summary">How many moves this Beaver has left this turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.owner">self.owner</a></td>
+	<td class="summary">The Player that owns and can control this Beaver.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.recruited">self.recruited</a></td>
+	<td class="summary">True if the Beaver has finished being recruited and can do things, False otherwise.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tile">self.tile</a></td>
+	<td class="summary">The Tile this Beaver is on.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.turnsDistracted">self.turnsDistracted</a></td>
+	<td class="summary">Number of turns this Beaver is distracted for (0 means not distracted).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjectName">self.gameObjectName</a></td>
+	<td class="summary">(inherited) String representing the top level Class that this game object is an instance of.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.id">self.id</a></td>
+	<td class="summary">(inherited) A unique id for each instance of a GameObject or a sub class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.logs">self.logs</a></td>
+	<td class="summary">(inherited) Any strings logged will be stored here.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Beaver:attack">Beaver:attack (beaver)</a></td>
+	<td class="summary">Attacks another adjacent beaver.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Beaver:buildLodge">Beaver:buildLodge ()</a></td>
+	<td class="summary">Builds a lodge on the Beavers current Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Beaver:drop">Beaver:drop (tile, resource[, amount=0])</a></td>
+	<td class="summary">Drops some of the given resource on the beaver's Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Beaver:harvest">Beaver:harvest (spawner)</a></td>
+	<td class="summary">Harvests the branches or food from a Spawner on an adjacent Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Beaver:move">Beaver:move (tile)</a></td>
+	<td class="summary">Moves this Beaver from its current Tile to an adjacent Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Beaver:pickup">Beaver:pickup (tile, resource[, amount=0])</a></td>
+	<td class="summary">Picks up some branches or food on the beaver's tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Beaver:log">Beaver:log (message)</a></td>
+	<td class="summary">(inherited) Adds a message to this GameObject's logs.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.actions"></a>
+    <strong>self.actions</strong>
+    </dt>
+    <dd>
+    The number of actions remaining for the Beaver this turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.branches"></a>
+    <strong>self.branches</strong>
+    </dt>
+    <dd>
+    The amount of branches this Beaver is holding.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.food"></a>
+    <strong>self.food</strong>
+    </dt>
+    <dd>
+    The amount of food this Beaver is holding.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.health"></a>
+    <strong>self.health</strong>
+    </dt>
+    <dd>
+    How much health this Beaver has left.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.job"></a>
+    <strong>self.job</strong>
+    </dt>
+    <dd>
+    The Job this Beaver was recruited to do.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.moves"></a>
+    <strong>self.moves</strong>
+    </dt>
+    <dd>
+    How many moves this Beaver has left this turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.owner"></a>
+    <strong>self.owner</strong>
+    </dt>
+    <dd>
+    The Player that owns and can control this Beaver.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.recruited"></a>
+    <strong>self.recruited</strong>
+    </dt>
+    <dd>
+    True if the Beaver has finished being recruited and can do things, False otherwise.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tile"></a>
+    <strong>self.tile</strong>
+    </dt>
+    <dd>
+    The Tile this Beaver is on.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.turnsDistracted"></a>
+    <strong>self.turnsDistracted</strong>
+    </dt>
+    <dd>
+    Number of turns this Beaver is distracted for (0 means not distracted).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjectName"></a>
+    <strong>self.gameObjectName</strong>
+    </dt>
+    <dd>
+    (inherited) String representing the top level Class that this game object is an instance of.  Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.gameObjectName">GameObject.gameObjectName</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.id"></a>
+    <strong>self.id</strong>
+    </dt>
+    <dd>
+    (inherited) A unique id for each instance of a GameObject or a sub class.  Used for client and server communication. Should never change value after being set.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.id">GameObject.id</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.logs"></a>
+    <strong>self.logs</strong>
+    </dt>
+    <dd>
+    (inherited) Any strings logged will be stored here.  Intended for debugging.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.logs">GameObject.logs</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Beaver:attack"></a>
+    <strong>Beaver:attack (beaver)</strong>
+    </dt>
+    <dd>
+    Attacks another adjacent beaver.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">beaver</span>
+            <span class="types"><a class="type" href="../classes/Beaver.html#">Beaver</a></span>
+         The Beaver to attack. Must be on an adjacent Tile.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully attacked, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Beaver:buildLodge"></a>
+    <strong>Beaver:buildLodge ()</strong>
+    </dt>
+    <dd>
+    Builds a lodge on the Beavers current Tile.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully built a lodge, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Beaver:drop"></a>
+    <strong>Beaver:drop (tile, resource[, amount=0])</strong>
+    </dt>
+    <dd>
+    Drops some of the given resource on the beaver's Tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile to drop branches/food on. Must be the same Tile that the Beaver is on, or an adjacent one.
+        </li>
+        <li><span class="parameter">resource</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The type of resource to drop ('branches' or 'food').
+        </li>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         The amount of the resource to drop, numbers <= 0 will drop all the resource type.
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully dropped the resource, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Beaver:harvest"></a>
+    <strong>Beaver:harvest (spawner)</strong>
+    </dt>
+    <dd>
+    Harvests the branches or food from a Spawner on an adjacent Tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">spawner</span>
+            <span class="types"><a class="type" href="../classes/Spawner.html#">Spawner</a></span>
+         The Spawner you want to harvest. Must be on an adjacent Tile.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully harvested, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Beaver:move"></a>
+    <strong>Beaver:move (tile)</strong>
+    </dt>
+    <dd>
+    Moves this Beaver from its current Tile to an adjacent Tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile this Beaver should move to.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if the move worked, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Beaver:pickup"></a>
+    <strong>Beaver:pickup (tile, resource[, amount=0])</strong>
+    </dt>
+    <dd>
+    Picks up some branches or food on the beaver's tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile to pickup branches/food from. Must be the same Tile that the Beaver is on, or an adjacent one.
+        </li>
+        <li><span class="parameter">resource</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The type of resource to pickup ('branches' or 'food').
+        </li>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         The amount of the resource to drop, numbers <= 0 will pickup all of the resource type.
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully picked up a resource, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Beaver:log"></a>
+    <strong>Beaver:log (message)</strong>
+    </dt>
+    <dd>
+    (inherited) Adds a message to this GameObject's logs.  Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A string to add to this GameObject's log. Intended for debugging.
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#GameObject:log">GameObject:log</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

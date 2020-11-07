@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Stardash — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Stardash Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><strong>Body</strong></li>
+  <li><a href="../classes/Game.html">Game</a></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Job.html">Job</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Projectile.html">Projectile</a></li>
+  <li><a href="../classes/Unit.html">Unit</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Body</code></h1>
+<p>A celestial body located within the game.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.amount">self.amount</a></td>
+	<td class="summary">The amount of material the object has, or energy if it is a planet.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.bodyType">self.bodyType</a></td>
+	<td class="summary">The type of celestial body it is.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.materialType">self.materialType</a></td>
+	<td class="summary">The type of material the celestial body has.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.owner">self.owner</a></td>
+	<td class="summary">The Player that owns and can control this Body.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.radius">self.radius</a></td>
+	<td class="summary">The radius of the circle that this body takes up.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.x">self.x</a></td>
+	<td class="summary">The x value this celestial body is on.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.y">self.y</a></td>
+	<td class="summary">The y value this celestial body is on.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjectName">self.gameObjectName</a></td>
+	<td class="summary">(inherited) String representing the top level Class that this game object is an instance of.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.id">self.id</a></td>
+	<td class="summary">(inherited) A unique id for each instance of a GameObject or a sub class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.logs">self.logs</a></td>
+	<td class="summary">(inherited) Any strings logged will be stored here.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Body:nextX">Body:nextX (num)</a></td>
+	<td class="summary">The x value of this body a number of turns from now.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Body:nextY">Body:nextY (num)</a></td>
+	<td class="summary">The x value of this body a number of turns from now.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Body:spawn">Body:spawn (x, y, title)</a></td>
+	<td class="summary">Spawn a unit on some value of this celestial body.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Body:log">Body:log (message)</a></td>
+	<td class="summary">(inherited) Adds a message to this GameObject's logs.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.amount"></a>
+    <strong>self.amount</strong>
+    </dt>
+    <dd>
+    The amount of material the object has, or energy if it is a planet.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.bodyType"></a>
+    <strong>self.bodyType</strong>
+    </dt>
+    <dd>
+    The type of celestial body it is.  Either 'planet', 'asteroid', or 'sun'.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.materialType"></a>
+    <strong>self.materialType</strong>
+    </dt>
+    <dd>
+    The type of material the celestial body has.  Either 'none', 'genarium', 'rarium', 'legendarium', or 'mythicite'.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.owner"></a>
+    <strong>self.owner</strong>
+    </dt>
+    <dd>
+    The Player that owns and can control this Body.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.radius"></a>
+    <strong>self.radius</strong>
+    </dt>
+    <dd>
+    The radius of the circle that this body takes up.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.x"></a>
+    <strong>self.x</strong>
+    </dt>
+    <dd>
+    The x value this celestial body is on.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.y"></a>
+    <strong>self.y</strong>
+    </dt>
+    <dd>
+    The y value this celestial body is on.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjectName"></a>
+    <strong>self.gameObjectName</strong>
+    </dt>
+    <dd>
+    (inherited) String representing the top level Class that this game object is an instance of.  Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.gameObjectName">GameObject.gameObjectName</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.id"></a>
+    <strong>self.id</strong>
+    </dt>
+    <dd>
+    (inherited) A unique id for each instance of a GameObject or a sub class.  Used for client and server communication. Should never change value after being set.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.id">GameObject.id</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.logs"></a>
+    <strong>self.logs</strong>
+    </dt>
+    <dd>
+    (inherited) Any strings logged will be stored here.  Intended for debugging.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.logs">GameObject.logs</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Body:nextX"></a>
+    <strong>Body:nextX (num)</strong>
+    </dt>
+    <dd>
+    The x value of this body a number of turns from now.  (0-how many you want).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">num</span>
+            <span class="types"><span class="type">number</span></span>
+         The number of turns in the future you wish to check.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The x position of the body the input number of turns in the future.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Body:nextY"></a>
+    <strong>Body:nextY (num)</strong>
+    </dt>
+    <dd>
+    The x value of this body a number of turns from now.  (0-how many you want).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">num</span>
+            <span class="types"><span class="type">number</span></span>
+         The number of turns in the future you wish to check.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The x position of the body the input number of turns in the future.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Body:spawn"></a>
+    <strong>Body:spawn (x, y, title)</strong>
+    </dt>
+    <dd>
+    Spawn a unit on some value of this celestial body.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         The x value of the spawned unit.
+        </li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         The y value of the spawned unit.
+        </li>
+        <li><span class="parameter">title</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The job title of the unit being spawned.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully taken, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Body:log"></a>
+    <strong>Body:log (message)</strong>
+    </dt>
+    <dd>
+    (inherited) Adds a message to this GameObject's logs.  Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A string to add to this GameObject's log. Intended for debugging.
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#GameObject:log">GameObject:log</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

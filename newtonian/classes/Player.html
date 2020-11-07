@@ -1,0 +1,477 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Newtonian — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Newtonian Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><a href="../classes/Game.html">Game</a></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Job.html">Job</a></li>
+  <li><a href="../classes/Machine.html">Machine</a></li>
+  <li><strong>Player</strong></li>
+  <li><a href="../classes/Tile.html">Tile</a></li>
+  <li><a href="../classes/Unit.html">Unit</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Player</code></h1>
+<p>A player in this game.</p>
+<p> Every AI controls one player.</p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.clientType">self.clientType</a></td>
+	<td class="summary">What type of client this is, e.g.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.generatorTiles">self.generatorTiles</a></td>
+	<td class="summary">Every generator Tile owned by this Player.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.heat">self.heat</a></td>
+	<td class="summary">The amount of heat this Player has.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.internSpawn">self.internSpawn</a></td>
+	<td class="summary">The time left till a intern spawns.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.lost">self.lost</a></td>
+	<td class="summary">If the player lost the game or not.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.managerSpawn">self.managerSpawn</a></td>
+	<td class="summary">The time left till a manager spawns.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.name">self.name</a></td>
+	<td class="summary">The name of the player.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.opponent">self.opponent</a></td>
+	<td class="summary">This player's opponent in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.physicistSpawn">self.physicistSpawn</a></td>
+	<td class="summary">The time left till a physicist spawns.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.pressure">self.pressure</a></td>
+	<td class="summary">The amount of pressure this Player has.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.reasonLost">self.reasonLost</a></td>
+	<td class="summary">The reason why the player lost the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.reasonWon">self.reasonWon</a></td>
+	<td class="summary">The reason why the player won the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.spawnTiles">self.spawnTiles</a></td>
+	<td class="summary">All the tiles this Player's units can spawn on.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.timeRemaining">self.timeRemaining</a></td>
+	<td class="summary">The amount of time (in ns) remaining for this AI to send commands.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.units">self.units</a></td>
+	<td class="summary">Every Unit owned by this Player.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.won">self.won</a></td>
+	<td class="summary">If the player won the game or not.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjectName">self.gameObjectName</a></td>
+	<td class="summary">(inherited) String representing the top level Class that this game object is an instance of.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.id">self.id</a></td>
+	<td class="summary">(inherited) A unique id for each instance of a GameObject or a sub class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.logs">self.logs</a></td>
+	<td class="summary">(inherited) Any strings logged will be stored here.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Player:log">Player:log (message)</a></td>
+	<td class="summary">(inherited) Adds a message to this GameObject's logs.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.clientType"></a>
+    <strong>self.clientType</strong>
+    </dt>
+    <dd>
+    What type of client this is, e.g.  'Python', 'JavaScript', or some other language. For potential data mining purposes.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.generatorTiles"></a>
+    <strong>self.generatorTiles</strong>
+    </dt>
+    <dd>
+    Every generator Tile owned by this Player.  (array-like tableed from the outer edges inward, from top to bottom).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.heat"></a>
+    <strong>self.heat</strong>
+    </dt>
+    <dd>
+    The amount of heat this Player has.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.internSpawn"></a>
+    <strong>self.internSpawn</strong>
+    </dt>
+    <dd>
+    The time left till a intern spawns.  (0 to spawnTime).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.lost"></a>
+    <strong>self.lost</strong>
+    </dt>
+    <dd>
+    If the player lost the game or not.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.managerSpawn"></a>
+    <strong>self.managerSpawn</strong>
+    </dt>
+    <dd>
+    The time left till a manager spawns.  (0 to spawnTime).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.name"></a>
+    <strong>self.name</strong>
+    </dt>
+    <dd>
+    The name of the player.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.opponent"></a>
+    <strong>self.opponent</strong>
+    </dt>
+    <dd>
+    This player's opponent in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.physicistSpawn"></a>
+    <strong>self.physicistSpawn</strong>
+    </dt>
+    <dd>
+    The time left till a physicist spawns.  (0 to spawnTime).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.pressure"></a>
+    <strong>self.pressure</strong>
+    </dt>
+    <dd>
+    The amount of pressure this Player has.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.reasonLost"></a>
+    <strong>self.reasonLost</strong>
+    </dt>
+    <dd>
+    The reason why the player lost the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.reasonWon"></a>
+    <strong>self.reasonWon</strong>
+    </dt>
+    <dd>
+    The reason why the player won the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.spawnTiles"></a>
+    <strong>self.spawnTiles</strong>
+    </dt>
+    <dd>
+    All the tiles this Player's units can spawn on.  (array-like tableed from the outer edges inward, from top to bottom).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.timeRemaining"></a>
+    <strong>self.timeRemaining</strong>
+    </dt>
+    <dd>
+    The amount of time (in ns) remaining for this AI to send commands.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.units"></a>
+    <strong>self.units</strong>
+    </dt>
+    <dd>
+    Every Unit owned by this Player.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.won"></a>
+    <strong>self.won</strong>
+    </dt>
+    <dd>
+    If the player won the game or not.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjectName"></a>
+    <strong>self.gameObjectName</strong>
+    </dt>
+    <dd>
+    (inherited) String representing the top level Class that this game object is an instance of.  Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.gameObjectName">GameObject.gameObjectName</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.id"></a>
+    <strong>self.id</strong>
+    </dt>
+    <dd>
+    (inherited) A unique id for each instance of a GameObject or a sub class.  Used for client and server communication. Should never change value after being set.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.id">GameObject.id</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.logs"></a>
+    <strong>self.logs</strong>
+    </dt>
+    <dd>
+    (inherited) Any strings logged will be stored here.  Intended for debugging.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.logs">GameObject.logs</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Player:log"></a>
+    <strong>Player:log (message)</strong>
+    </dt>
+    <dd>
+    (inherited) Adds a message to this GameObject's logs.  Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A string to add to this GameObject's log. Intended for debugging.
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#GameObject:log">GameObject:log</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

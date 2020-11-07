@@ -1,0 +1,468 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Necrowar — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Necrowar Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><strong>Game</strong></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/tJob.html">tJob</a></li>
+  <li><a href="../classes/Tile.html">Tile</a></li>
+  <li><a href="../classes/Tower.html">Tower</a></li>
+  <li><a href="../classes/TowerJob.html">TowerJob</a></li>
+  <li><a href="../classes/uJob.html">uJob</a></li>
+  <li><a href="../classes/Unit.html">Unit</a></li>
+  <li><a href="../classes/UnitJob.html">UnitJob</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Game</code></h1>
+<p>Send hordes of the undead at your opponent while defending yourself against theirs to win.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.name">self.name</a></td>
+	<td class="summary">The name of this game, "{game_name}".</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentPlayer">self.currentPlayer</a></td>
+	<td class="summary">The player whose turn it is currently.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentTurn">self.currentTurn</a></td>
+	<td class="summary">The current turn number, starting at 0 for the first player's turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjects">self.gameObjects</a></td>
+	<td class="summary">A mapping of every game object's ID to the actual game object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.goldIncomePerUnit">self.goldIncomePerUnit</a></td>
+	<td class="summary">The amount of gold income per turn per unit in a mine.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.islandIncomePerUnit">self.islandIncomePerUnit</a></td>
+	<td class="summary">The amount of gold income per turn per unit in the island mine.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.manaIncomePerUnit">self.manaIncomePerUnit</a></td>
+	<td class="summary">The Amount of gold income per turn per unit fishing on the river side.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.mapHeight">self.mapHeight</a></td>
+	<td class="summary">The number of Tiles in the map along the y (vertical) axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.mapWidth">self.mapWidth</a></td>
+	<td class="summary">The number of Tiles in the map along the x (horizontal) axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxTurns">self.maxTurns</a></td>
+	<td class="summary">The maximum number of turns before the game will automatically end.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.players">self.players</a></td>
+	<td class="summary">List of all the players in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.riverPhase">self.riverPhase</a></td>
+	<td class="summary">The amount of turns it takes between the river changing phases.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.session">self.session</a></td>
+	<td class="summary">A unique identifier for the game instance that is being played.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tiles">self.tiles</a></td>
+	<td class="summary">All the tiles in the map, stored in Row-major order.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.timeAddedPerTurn">self.timeAddedPerTurn</a></td>
+	<td class="summary">The amount of time (in nano-seconds) added after each player performs a turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.towerJobs">self.towerJobs</a></td>
+	<td class="summary">A array-like table of every tower type / job.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.towers">self.towers</a></td>
+	<td class="summary">Every Tower in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.unitJobs">self.unitJobs</a></td>
+	<td class="summary">A array-like table of every unit type / job.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.units">self.units</a></td>
+	<td class="summary">Every Unit in the game.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Game:getTileAt">Game:getTileAt (x, y)</a></td>
+	<td class="summary">Gets the Tile at a specified (x, y) position</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.name"></a>
+    <strong>self.name</strong>
+    </dt>
+    <dd>
+    The name of this game, "{game_name}".
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentPlayer"></a>
+    <strong>self.currentPlayer</strong>
+    </dt>
+    <dd>
+    The player whose turn it is currently.  That player can send commands. Other players cannot.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentTurn"></a>
+    <strong>self.currentTurn</strong>
+    </dt>
+    <dd>
+    The current turn number, starting at 0 for the first player's turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjects"></a>
+    <strong>self.gameObjects</strong>
+    </dt>
+    <dd>
+    A mapping of every game object's ID to the actual game object.  Primarily used by the server and client to easily refer to the game objects via ID.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.goldIncomePerUnit"></a>
+    <strong>self.goldIncomePerUnit</strong>
+    </dt>
+    <dd>
+    The amount of gold income per turn per unit in a mine.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.islandIncomePerUnit"></a>
+    <strong>self.islandIncomePerUnit</strong>
+    </dt>
+    <dd>
+    The amount of gold income per turn per unit in the island mine.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.manaIncomePerUnit"></a>
+    <strong>self.manaIncomePerUnit</strong>
+    </dt>
+    <dd>
+    The Amount of gold income per turn per unit fishing on the river side.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.mapHeight"></a>
+    <strong>self.mapHeight</strong>
+    </dt>
+    <dd>
+    The number of Tiles in the map along the y (vertical) axis.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.mapWidth"></a>
+    <strong>self.mapWidth</strong>
+    </dt>
+    <dd>
+    The number of Tiles in the map along the x (horizontal) axis.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxTurns"></a>
+    <strong>self.maxTurns</strong>
+    </dt>
+    <dd>
+    The maximum number of turns before the game will automatically end.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.players"></a>
+    <strong>self.players</strong>
+    </dt>
+    <dd>
+    List of all the players in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.riverPhase"></a>
+    <strong>self.riverPhase</strong>
+    </dt>
+    <dd>
+    The amount of turns it takes between the river changing phases.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.session"></a>
+    <strong>self.session</strong>
+    </dt>
+    <dd>
+    A unique identifier for the game instance that is being played.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tiles"></a>
+    <strong>self.tiles</strong>
+    </dt>
+    <dd>
+    All the tiles in the map, stored in Row-major order.  Use `x + y * mapWidth` to access the correct index.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.timeAddedPerTurn"></a>
+    <strong>self.timeAddedPerTurn</strong>
+    </dt>
+    <dd>
+    The amount of time (in nano-seconds) added after each player performs a turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.towerJobs"></a>
+    <strong>self.towerJobs</strong>
+    </dt>
+    <dd>
+    A array-like table of every tower type / job.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.towers"></a>
+    <strong>self.towers</strong>
+    </dt>
+    <dd>
+    Every Tower in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.unitJobs"></a>
+    <strong>self.unitJobs</strong>
+    </dt>
+    <dd>
+    A array-like table of every unit type / job.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.units"></a>
+    <strong>self.units</strong>
+    </dt>
+    <dd>
+    Every Unit in the game.
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Game:getTileAt"></a>
+    <strong>Game:getTileAt (x, y)</strong>
+    </dt>
+    <dd>
+    Gets the Tile at a specified (x, y) position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         integer between 0 and the mapWidth
+        </li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         integer between 0 and the mapHeight
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

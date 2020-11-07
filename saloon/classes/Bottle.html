@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Saloon — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Saloon Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><strong>Bottle</strong></li>
+  <li><a href="../classes/Cowboy.html">Cowboy</a></li>
+  <li><a href="../classes/Furnishing.html">Furnishing</a></li>
+  <li><a href="../classes/Game.html">Game</a></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Tile.html">Tile</a></li>
+  <li><a href="../classes/YoungGun.html">YoungGun</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Bottle</code></h1>
+<p>A bottle thrown by a bartender at a Tile.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.direction">self.direction</a></td>
+	<td class="summary">The Direction this Bottle is flying and will move to between turns, can be 'North', 'East', 'South', or 'West'.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.drunkDirection">self.drunkDirection</a></td>
+	<td class="summary">The direction any Cowboys hit by this will move, can be 'North', 'East', 'South', or 'West'.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.isDestroyed">self.isDestroyed</a></td>
+	<td class="summary">True if this Bottle has impacted and has been destroyed (removed from the Game).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tile">self.tile</a></td>
+	<td class="summary">The Tile this bottle is currently flying over.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjectName">self.gameObjectName</a></td>
+	<td class="summary">(inherited) String representing the top level Class that this game object is an instance of.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.id">self.id</a></td>
+	<td class="summary">(inherited) A unique id for each instance of a GameObject or a sub class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.logs">self.logs</a></td>
+	<td class="summary">(inherited) Any strings logged will be stored here.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Bottle:log">Bottle:log (message)</a></td>
+	<td class="summary">(inherited) Adds a message to this GameObject's logs.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.direction"></a>
+    <strong>self.direction</strong>
+    </dt>
+    <dd>
+    The Direction this Bottle is flying and will move to between turns, can be 'North', 'East', 'South', or 'West'.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.drunkDirection"></a>
+    <strong>self.drunkDirection</strong>
+    </dt>
+    <dd>
+    The direction any Cowboys hit by this will move, can be 'North', 'East', 'South', or 'West'.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.isDestroyed"></a>
+    <strong>self.isDestroyed</strong>
+    </dt>
+    <dd>
+    True if this Bottle has impacted and has been destroyed (removed from the Game).  False if still in the game flying through the saloon.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tile"></a>
+    <strong>self.tile</strong>
+    </dt>
+    <dd>
+    The Tile this bottle is currently flying over.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjectName"></a>
+    <strong>self.gameObjectName</strong>
+    </dt>
+    <dd>
+    (inherited) String representing the top level Class that this game object is an instance of.  Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.gameObjectName">GameObject.gameObjectName</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.id"></a>
+    <strong>self.id</strong>
+    </dt>
+    <dd>
+    (inherited) A unique id for each instance of a GameObject or a sub class.  Used for client and server communication. Should never change value after being set.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.id">GameObject.id</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.logs"></a>
+    <strong>self.logs</strong>
+    </dt>
+    <dd>
+    (inherited) Any strings logged will be stored here.  Intended for debugging.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.logs">GameObject.logs</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Bottle:log"></a>
+    <strong>Bottle:log (message)</strong>
+    </dt>
+    <dd>
+    (inherited) Adds a message to this GameObject's logs.  Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A string to add to this GameObject's log. Intended for debugging.
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#GameObject:log">GameObject:log</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

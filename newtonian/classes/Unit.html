@@ -1,0 +1,576 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Newtonian — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Newtonian Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><a href="../classes/Game.html">Game</a></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Job.html">Job</a></li>
+  <li><a href="../classes/Machine.html">Machine</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Tile.html">Tile</a></li>
+  <li><strong>Unit</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Unit</code></h1>
+<p>A unit in the game.</p>
+<p> May be a manager, intern, or physicist.</p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.acted">self.acted</a></td>
+	<td class="summary">Whether or not this Unit has performed its action this turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.blueium">self.blueium</a></td>
+	<td class="summary">The amount of blueium carried by this unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.blueiumOre">self.blueiumOre</a></td>
+	<td class="summary">The amount of blueium ore carried by this unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.health">self.health</a></td>
+	<td class="summary">The remaining health of a unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.job">self.job</a></td>
+	<td class="summary">The Job this Unit has.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.moves">self.moves</a></td>
+	<td class="summary">The number of moves this unit has left this turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.owner">self.owner</a></td>
+	<td class="summary">The Player that owns and can control this Unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.redium">self.redium</a></td>
+	<td class="summary">The amount of redium carried by this unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.rediumOre">self.rediumOre</a></td>
+	<td class="summary">The amount of redium ore carried by this unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.stunImmune">self.stunImmune</a></td>
+	<td class="summary">Duration of stun immunity.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.stunTime">self.stunTime</a></td>
+	<td class="summary">Duration the unit is stunned.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tile">self.tile</a></td>
+	<td class="summary">The Tile this Unit is on.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjectName">self.gameObjectName</a></td>
+	<td class="summary">(inherited) String representing the top level Class that this game object is an instance of.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.id">self.id</a></td>
+	<td class="summary">(inherited) A unique id for each instance of a GameObject or a sub class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.logs">self.logs</a></td>
+	<td class="summary">(inherited) Any strings logged will be stored here.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Unit:act">Unit:act (tile)</a></td>
+	<td class="summary">Makes the unit do something to a machine or unit adjacent to its tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:attack">Unit:attack (tile)</a></td>
+	<td class="summary">Attacks a unit on an adjacent tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:drop">Unit:drop (tile, amount, material)</a></td>
+	<td class="summary">Drops materials at the units feet or adjacent tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:move">Unit:move (tile)</a></td>
+	<td class="summary">Moves this Unit from its current Tile to an adjacent Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:pickup">Unit:pickup (tile, amount, material)</a></td>
+	<td class="summary">Picks up material at the units feet or adjacent tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:log">Unit:log (message)</a></td>
+	<td class="summary">(inherited) Adds a message to this GameObject's logs.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.acted"></a>
+    <strong>self.acted</strong>
+    </dt>
+    <dd>
+    Whether or not this Unit has performed its action this turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.blueium"></a>
+    <strong>self.blueium</strong>
+    </dt>
+    <dd>
+    The amount of blueium carried by this unit.  (0 to job carry capacity - other carried items).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.blueiumOre"></a>
+    <strong>self.blueiumOre</strong>
+    </dt>
+    <dd>
+    The amount of blueium ore carried by this unit.  (0 to job carry capacity - other carried items).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.health"></a>
+    <strong>self.health</strong>
+    </dt>
+    <dd>
+    The remaining health of a unit.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.job"></a>
+    <strong>self.job</strong>
+    </dt>
+    <dd>
+    The Job this Unit has.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.moves"></a>
+    <strong>self.moves</strong>
+    </dt>
+    <dd>
+    The number of moves this unit has left this turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.owner"></a>
+    <strong>self.owner</strong>
+    </dt>
+    <dd>
+    The Player that owns and can control this Unit.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.redium"></a>
+    <strong>self.redium</strong>
+    </dt>
+    <dd>
+    The amount of redium carried by this unit.  (0 to job carry capacity - other carried items).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.rediumOre"></a>
+    <strong>self.rediumOre</strong>
+    </dt>
+    <dd>
+    The amount of redium ore carried by this unit.  (0 to job carry capacity - other carried items).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.stunImmune"></a>
+    <strong>self.stunImmune</strong>
+    </dt>
+    <dd>
+    Duration of stun immunity.  (0 to timeImmune).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.stunTime"></a>
+    <strong>self.stunTime</strong>
+    </dt>
+    <dd>
+    Duration the unit is stunned.  (0 to the game constant stunTime).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tile"></a>
+    <strong>self.tile</strong>
+    </dt>
+    <dd>
+    The Tile this Unit is on.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjectName"></a>
+    <strong>self.gameObjectName</strong>
+    </dt>
+    <dd>
+    (inherited) String representing the top level Class that this game object is an instance of.  Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.gameObjectName">GameObject.gameObjectName</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.id"></a>
+    <strong>self.id</strong>
+    </dt>
+    <dd>
+    (inherited) A unique id for each instance of a GameObject or a sub class.  Used for client and server communication. Should never change value after being set.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.id">GameObject.id</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.logs"></a>
+    <strong>self.logs</strong>
+    </dt>
+    <dd>
+    (inherited) Any strings logged will be stored here.  Intended for debugging.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.logs">GameObject.logs</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Unit:act"></a>
+    <strong>Unit:act (tile)</strong>
+    </dt>
+    <dd>
+    Makes the unit do something to a machine or unit adjacent to its tile.  Interns sabotage, physicists work. Interns stun physicist, physicist stuns manager, manager stuns intern.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The tile the unit acts on.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully acted, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:attack"></a>
+    <strong>Unit:attack (tile)</strong>
+    </dt>
+    <dd>
+    Attacks a unit on an adjacent tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile to attack.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully attacked, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:drop"></a>
+    <strong>Unit:drop (tile, amount, material)</strong>
+    </dt>
+    <dd>
+    Drops materials at the units feet or adjacent tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The tile the materials will be dropped on.
+        </li>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         The number of materials to dropped. Amounts <= 0 will drop all the materials.
+        </li>
+        <li><span class="parameter">material</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The material the unit will drop. 'redium', 'blueium', 'redium ore', or 'blueium ore'.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully deposited, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:move"></a>
+    <strong>Unit:move (tile)</strong>
+    </dt>
+    <dd>
+    Moves this Unit from its current Tile to an adjacent Tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile this Unit should move to.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if it moved, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:pickup"></a>
+    <strong>Unit:pickup (tile, amount, material)</strong>
+    </dt>
+    <dd>
+    Picks up material at the units feet or adjacent tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The tile the materials will be picked up from.
+        </li>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         The amount of materials to pick up. Amounts <= 0 will pick up all the materials that the unit can.
+        </li>
+        <li><span class="parameter">material</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The material the unit will pick up. 'redium', 'blueium', 'redium ore', or 'blueium ore'.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully deposited, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:log"></a>
+    <strong>Unit:log (message)</strong>
+    </dt>
+    <dd>
+    (inherited) Adds a message to this GameObject's logs.  Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A string to add to this GameObject's log. Intended for debugging.
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#GameObject:log">GameObject:log</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

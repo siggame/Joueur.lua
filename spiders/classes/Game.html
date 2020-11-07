@@ -1,0 +1,414 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Spiders — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Spiders Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><a href="../classes/BroodMother.html">BroodMother</a></li>
+  <li><a href="../classes/Cutter.html">Cutter</a></li>
+  <li><strong>Game</strong></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Nest.html">Nest</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Spider.html">Spider</a></li>
+  <li><a href="../classes/Spiderling.html">Spiderling</a></li>
+  <li><a href="../classes/Spitter.html">Spitter</a></li>
+  <li><a href="../classes/Weaver.html">Weaver</a></li>
+  <li><a href="../classes/Web.html">Web</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Game</code></h1>
+<p>There's an infestation of enemy spiders challenging your queen BroodMother spider! Protect her and attack the other BroodMother in this turn based, node based, game.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.name">self.name</a></td>
+	<td class="summary">The name of this game, "{game_name}".</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentPlayer">self.currentPlayer</a></td>
+	<td class="summary">The player whose turn it is currently.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentTurn">self.currentTurn</a></td>
+	<td class="summary">The current turn number, starting at 0 for the first player's turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.cutSpeed">self.cutSpeed</a></td>
+	<td class="summary">The speed at which Cutters work to do cut Webs.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.eggsScalar">self.eggsScalar</a></td>
+	<td class="summary">Constant used to calculate how many eggs BroodMothers get on their owner's turns.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjects">self.gameObjects</a></td>
+	<td class="summary">A mapping of every game object's ID to the actual game object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.initialWebStrength">self.initialWebStrength</a></td>
+	<td class="summary">The starting strength for Webs.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxTurns">self.maxTurns</a></td>
+	<td class="summary">The maximum number of turns before the game will automatically end.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxWebStrength">self.maxWebStrength</a></td>
+	<td class="summary">The maximum strength a web can be strengthened to.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.movementSpeed">self.movementSpeed</a></td>
+	<td class="summary">The speed at which Spiderlings move on Webs.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.nests">self.nests</a></td>
+	<td class="summary">Every Nest in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.players">self.players</a></td>
+	<td class="summary">List of all the players in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.session">self.session</a></td>
+	<td class="summary">A unique identifier for the game instance that is being played.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.spitSpeed">self.spitSpeed</a></td>
+	<td class="summary">The speed at which Spitters work to spit new Webs.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.timeAddedPerTurn">self.timeAddedPerTurn</a></td>
+	<td class="summary">The amount of time (in nano-seconds) added after each player performs a turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.weavePower">self.weavePower</a></td>
+	<td class="summary">How much web strength is added or removed from Webs when they are weaved.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.weaveSpeed">self.weaveSpeed</a></td>
+	<td class="summary">The speed at which Weavers work to do strengthens and weakens on Webs.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.webs">self.webs</a></td>
+	<td class="summary">Every Web in the game.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.name"></a>
+    <strong>self.name</strong>
+    </dt>
+    <dd>
+    The name of this game, "{game_name}".
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentPlayer"></a>
+    <strong>self.currentPlayer</strong>
+    </dt>
+    <dd>
+    The player whose turn it is currently.  That player can send commands. Other players cannot.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentTurn"></a>
+    <strong>self.currentTurn</strong>
+    </dt>
+    <dd>
+    The current turn number, starting at 0 for the first player's turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.cutSpeed"></a>
+    <strong>self.cutSpeed</strong>
+    </dt>
+    <dd>
+    The speed at which Cutters work to do cut Webs.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.eggsScalar"></a>
+    <strong>self.eggsScalar</strong>
+    </dt>
+    <dd>
+    Constant used to calculate how many eggs BroodMothers get on their owner's turns.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjects"></a>
+    <strong>self.gameObjects</strong>
+    </dt>
+    <dd>
+    A mapping of every game object's ID to the actual game object.  Primarily used by the server and client to easily refer to the game objects via ID.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.initialWebStrength"></a>
+    <strong>self.initialWebStrength</strong>
+    </dt>
+    <dd>
+    The starting strength for Webs.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxTurns"></a>
+    <strong>self.maxTurns</strong>
+    </dt>
+    <dd>
+    The maximum number of turns before the game will automatically end.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxWebStrength"></a>
+    <strong>self.maxWebStrength</strong>
+    </dt>
+    <dd>
+    The maximum strength a web can be strengthened to.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.movementSpeed"></a>
+    <strong>self.movementSpeed</strong>
+    </dt>
+    <dd>
+    The speed at which Spiderlings move on Webs.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.nests"></a>
+    <strong>self.nests</strong>
+    </dt>
+    <dd>
+    Every Nest in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.players"></a>
+    <strong>self.players</strong>
+    </dt>
+    <dd>
+    List of all the players in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.session"></a>
+    <strong>self.session</strong>
+    </dt>
+    <dd>
+    A unique identifier for the game instance that is being played.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.spitSpeed"></a>
+    <strong>self.spitSpeed</strong>
+    </dt>
+    <dd>
+    The speed at which Spitters work to spit new Webs.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.timeAddedPerTurn"></a>
+    <strong>self.timeAddedPerTurn</strong>
+    </dt>
+    <dd>
+    The amount of time (in nano-seconds) added after each player performs a turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.weavePower"></a>
+    <strong>self.weavePower</strong>
+    </dt>
+    <dd>
+    How much web strength is added or removed from Webs when they are weaved.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.weaveSpeed"></a>
+    <strong>self.weaveSpeed</strong>
+    </dt>
+    <dd>
+    The speed at which Weavers work to do strengthens and weakens on Webs.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.webs"></a>
+    <strong>self.webs</strong>
+    </dt>
+    <dd>
+    Every Web in the game.
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Checkers — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Checkers Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><strong>Checker</strong></li>
+  <li><a href="../classes/Game.html">Game</a></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Checker</code></h1>
+<p>A checker on the game board.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.kinged">self.kinged</a></td>
+	<td class="summary">If the checker has been kinged and can move backwards.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.owner">self.owner</a></td>
+	<td class="summary">The player that controls this Checker.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.x">self.x</a></td>
+	<td class="summary">The x coordinate of the checker.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.y">self.y</a></td>
+	<td class="summary">The y coordinate of the checker.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjectName">self.gameObjectName</a></td>
+	<td class="summary">(inherited) String representing the top level Class that this game object is an instance of.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.id">self.id</a></td>
+	<td class="summary">(inherited) A unique id for each instance of a GameObject or a sub class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.logs">self.logs</a></td>
+	<td class="summary">(inherited) Any strings logged will be stored here.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Checker:isMine">Checker:isMine ()</a></td>
+	<td class="summary">Returns if the checker is owned by your player or not.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Checker:move">Checker:move (x, y)</a></td>
+	<td class="summary">Moves the checker from its current location to the given (x, y).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Checker:log">Checker:log (message)</a></td>
+	<td class="summary">(inherited) Adds a message to this GameObject's logs.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.kinged"></a>
+    <strong>self.kinged</strong>
+    </dt>
+    <dd>
+    If the checker has been kinged and can move backwards.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.owner"></a>
+    <strong>self.owner</strong>
+    </dt>
+    <dd>
+    The player that controls this Checker.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.x"></a>
+    <strong>self.x</strong>
+    </dt>
+    <dd>
+    The x coordinate of the checker.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.y"></a>
+    <strong>self.y</strong>
+    </dt>
+    <dd>
+    The y coordinate of the checker.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjectName"></a>
+    <strong>self.gameObjectName</strong>
+    </dt>
+    <dd>
+    (inherited) String representing the top level Class that this game object is an instance of.  Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.gameObjectName">GameObject.gameObjectName</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.id"></a>
+    <strong>self.id</strong>
+    </dt>
+    <dd>
+    (inherited) A unique id for each instance of a GameObject or a sub class.  Used for client and server communication. Should never change value after being set.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.id">GameObject.id</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.logs"></a>
+    <strong>self.logs</strong>
+    </dt>
+    <dd>
+    (inherited) Any strings logged will be stored here.  Intended for debugging.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.logs">GameObject.logs</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Checker:isMine"></a>
+    <strong>Checker:isMine ()</strong>
+    </dt>
+    <dd>
+    Returns if the checker is owned by your player or not.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if it is yours, false if it is not yours.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Checker:move"></a>
+    <strong>Checker:move (x, y)</strong>
+    </dt>
+    <dd>
+    Moves the checker from its current location to the given (x, y).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         The x coordinate to move to.
+        </li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         The y coordinate to move to.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Checker.html#">Checker</a></span>
+        Returns the same checker that moved if the move was successful. Otherwise nil.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Checker:log"></a>
+    <strong>Checker:log (message)</strong>
+    </dt>
+    <dd>
+    (inherited) Adds a message to this GameObject's logs.  Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A string to add to this GameObject's log. Intended for debugging.
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#GameObject:log">GameObject:log</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

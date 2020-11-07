@@ -1,0 +1,555 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Newtonian — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Newtonian Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><strong>Game</strong></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Job.html">Job</a></li>
+  <li><a href="../classes/Machine.html">Machine</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Tile.html">Tile</a></li>
+  <li><a href="../classes/Unit.html">Unit</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Game</code></h1>
+<p>Combine elements and be the first scientists to create fusion.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.name">self.name</a></td>
+	<td class="summary">The name of this game, "{game_name}".</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentPlayer">self.currentPlayer</a></td>
+	<td class="summary">The player whose turn it is currently.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentTurn">self.currentTurn</a></td>
+	<td class="summary">The current turn number, starting at 0 for the first player's turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjects">self.gameObjects</a></td>
+	<td class="summary">A mapping of every game object's ID to the actual game object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.internCap">self.internCap</a></td>
+	<td class="summary">The maximum number of interns a player can have.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.jobs">self.jobs</a></td>
+	<td class="summary">A array-like table of all jobs.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.machines">self.machines</a></td>
+	<td class="summary">Every Machine in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.managerCap">self.managerCap</a></td>
+	<td class="summary">The maximum number of managers a player can have.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.mapHeight">self.mapHeight</a></td>
+	<td class="summary">The number of Tiles in the map along the y (vertical) axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.mapWidth">self.mapWidth</a></td>
+	<td class="summary">The number of Tiles in the map along the x (horizontal) axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.materialSpawn">self.materialSpawn</a></td>
+	<td class="summary">The number of materials that spawn per spawn cycle.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxTurns">self.maxTurns</a></td>
+	<td class="summary">The maximum number of turns before the game will automatically end.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.physicistCap">self.physicistCap</a></td>
+	<td class="summary">The maximum number of physicists a player can have.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.players">self.players</a></td>
+	<td class="summary">List of all the players in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.refinedValue">self.refinedValue</a></td>
+	<td class="summary">The amount of victory points added when a refined ore is consumed by the generator.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.regenerateRate">self.regenerateRate</a></td>
+	<td class="summary">The percent of max HP regained when a unit end their turn on a tile owned by their player.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.session">self.session</a></td>
+	<td class="summary">A unique identifier for the game instance that is being played.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.spawnTime">self.spawnTime</a></td>
+	<td class="summary">The amount of turns it takes a unit to spawn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.stunTime">self.stunTime</a></td>
+	<td class="summary">The amount of turns a unit cannot do anything when stunned.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tiles">self.tiles</a></td>
+	<td class="summary">All the tiles in the map, stored in Row-major order.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.timeAddedPerTurn">self.timeAddedPerTurn</a></td>
+	<td class="summary">The amount of time (in nano-seconds) added after each player performs a turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.timeImmune">self.timeImmune</a></td>
+	<td class="summary">The number turns a unit is immune to being stunned.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.units">self.units</a></td>
+	<td class="summary">Every Unit in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.victoryAmount">self.victoryAmount</a></td>
+	<td class="summary">The amount of combined heat and pressure that you need to win.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Game:getTileAt">Game:getTileAt (x, y)</a></td>
+	<td class="summary">Gets the Tile at a specified (x, y) position</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.name"></a>
+    <strong>self.name</strong>
+    </dt>
+    <dd>
+    The name of this game, "{game_name}".
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentPlayer"></a>
+    <strong>self.currentPlayer</strong>
+    </dt>
+    <dd>
+    The player whose turn it is currently.  That player can send commands. Other players cannot.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentTurn"></a>
+    <strong>self.currentTurn</strong>
+    </dt>
+    <dd>
+    The current turn number, starting at 0 for the first player's turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjects"></a>
+    <strong>self.gameObjects</strong>
+    </dt>
+    <dd>
+    A mapping of every game object's ID to the actual game object.  Primarily used by the server and client to easily refer to the game objects via ID.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.internCap"></a>
+    <strong>self.internCap</strong>
+    </dt>
+    <dd>
+    The maximum number of interns a player can have.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.jobs"></a>
+    <strong>self.jobs</strong>
+    </dt>
+    <dd>
+    A array-like table of all jobs.  The first element is intern, second is physicists, and third is manager.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.machines"></a>
+    <strong>self.machines</strong>
+    </dt>
+    <dd>
+    Every Machine in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.managerCap"></a>
+    <strong>self.managerCap</strong>
+    </dt>
+    <dd>
+    The maximum number of managers a player can have.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.mapHeight"></a>
+    <strong>self.mapHeight</strong>
+    </dt>
+    <dd>
+    The number of Tiles in the map along the y (vertical) axis.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.mapWidth"></a>
+    <strong>self.mapWidth</strong>
+    </dt>
+    <dd>
+    The number of Tiles in the map along the x (horizontal) axis.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.materialSpawn"></a>
+    <strong>self.materialSpawn</strong>
+    </dt>
+    <dd>
+    The number of materials that spawn per spawn cycle.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxTurns"></a>
+    <strong>self.maxTurns</strong>
+    </dt>
+    <dd>
+    The maximum number of turns before the game will automatically end.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.physicistCap"></a>
+    <strong>self.physicistCap</strong>
+    </dt>
+    <dd>
+    The maximum number of physicists a player can have.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.players"></a>
+    <strong>self.players</strong>
+    </dt>
+    <dd>
+    List of all the players in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.refinedValue"></a>
+    <strong>self.refinedValue</strong>
+    </dt>
+    <dd>
+    The amount of victory points added when a refined ore is consumed by the generator.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.regenerateRate"></a>
+    <strong>self.regenerateRate</strong>
+    </dt>
+    <dd>
+    The percent of max HP regained when a unit end their turn on a tile owned by their player.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.session"></a>
+    <strong>self.session</strong>
+    </dt>
+    <dd>
+    A unique identifier for the game instance that is being played.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.spawnTime"></a>
+    <strong>self.spawnTime</strong>
+    </dt>
+    <dd>
+    The amount of turns it takes a unit to spawn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.stunTime"></a>
+    <strong>self.stunTime</strong>
+    </dt>
+    <dd>
+    The amount of turns a unit cannot do anything when stunned.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tiles"></a>
+    <strong>self.tiles</strong>
+    </dt>
+    <dd>
+    All the tiles in the map, stored in Row-major order.  Use `x + y * mapWidth` to access the correct index.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.timeAddedPerTurn"></a>
+    <strong>self.timeAddedPerTurn</strong>
+    </dt>
+    <dd>
+    The amount of time (in nano-seconds) added after each player performs a turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.timeImmune"></a>
+    <strong>self.timeImmune</strong>
+    </dt>
+    <dd>
+    The number turns a unit is immune to being stunned.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.units"></a>
+    <strong>self.units</strong>
+    </dt>
+    <dd>
+    Every Unit in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.victoryAmount"></a>
+    <strong>self.victoryAmount</strong>
+    </dt>
+    <dd>
+    The amount of combined heat and pressure that you need to win.
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Game:getTileAt"></a>
+    <strong>Game:getTileAt (x, y)</strong>
+    </dt>
+    <dd>
+    Gets the Tile at a specified (x, y) position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         integer between 0 and the mapWidth
+        </li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         integer between 0 and the mapHeight
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

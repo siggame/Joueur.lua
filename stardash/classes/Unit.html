@@ -1,0 +1,714 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Stardash — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Stardash Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><a href="../classes/Body.html">Body</a></li>
+  <li><a href="../classes/Game.html">Game</a></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Job.html">Job</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Projectile.html">Projectile</a></li>
+  <li><strong>Unit</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Unit</code></h1>
+<p>A unit in the game.</p>
+<p> May be a corvette, missleboat, martyr, transport, miner.</p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.acted">self.acted</a></td>
+	<td class="summary">Whether or not this Unit has performed its action this turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.dashX">self.dashX</a></td>
+	<td class="summary">The x value this unit is dashing to.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.dashY">self.dashY</a></td>
+	<td class="summary">The y value this unit is dashing to.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.energy">self.energy</a></td>
+	<td class="summary">The remaining health of the unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.genarium">self.genarium</a></td>
+	<td class="summary">The amount of Genarium ore carried by this unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.isBusy">self.isBusy</a></td>
+	<td class="summary">Tracks whether or not the ship is dashing or Mining.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.job">self.job</a></td>
+	<td class="summary">The Job this Unit has.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.legendarium">self.legendarium</a></td>
+	<td class="summary">The amount of Legendarium ore carried by this unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.moves">self.moves</a></td>
+	<td class="summary">The distance this unit can still move.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.mythicite">self.mythicite</a></td>
+	<td class="summary">The amount of Mythicite carried by this unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.owner">self.owner</a></td>
+	<td class="summary">The Player that owns and can control this Unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.protector">self.protector</a></td>
+	<td class="summary">The martyr ship that is currently shielding this ship if any.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.rarium">self.rarium</a></td>
+	<td class="summary">The amount of Rarium carried by this unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.shield">self.shield</a></td>
+	<td class="summary">The shield that a martyr ship has.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.x">self.x</a></td>
+	<td class="summary">The x value this unit is on.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.y">self.y</a></td>
+	<td class="summary">The y value this unit is on.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjectName">self.gameObjectName</a></td>
+	<td class="summary">(inherited) String representing the top level Class that this game object is an instance of.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.id">self.id</a></td>
+	<td class="summary">(inherited) A unique id for each instance of a GameObject or a sub class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.logs">self.logs</a></td>
+	<td class="summary">(inherited) Any strings logged will be stored here.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Unit:attack">Unit:attack (enemy)</a></td>
+	<td class="summary">Attacks the specified unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:dash">Unit:dash (x, y)</a></td>
+	<td class="summary">Causes the unit to dash towards the designated destination.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:mine">Unit:mine (body)</a></td>
+	<td class="summary">Allows a miner to mine a asteroid.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:move">Unit:move (x, y)</a></td>
+	<td class="summary">Moves this Unit from its current location to the new location specified.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:safe">Unit:safe (x, y)</a></td>
+	<td class="summary">Tells you if your ship can move to that location from were it is without clipping the sun.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:shootdown">Unit:shootdown (missile)</a></td>
+	<td class="summary">Attacks the specified projectile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:transfer">Unit:transfer (unit, amount, material)</a></td>
+	<td class="summary">Grab materials from a friendly unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:log">Unit:log (message)</a></td>
+	<td class="summary">(inherited) Adds a message to this GameObject's logs.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.acted"></a>
+    <strong>self.acted</strong>
+    </dt>
+    <dd>
+    Whether or not this Unit has performed its action this turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.dashX"></a>
+    <strong>self.dashX</strong>
+    </dt>
+    <dd>
+    The x value this unit is dashing to.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.dashY"></a>
+    <strong>self.dashY</strong>
+    </dt>
+    <dd>
+    The y value this unit is dashing to.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.energy"></a>
+    <strong>self.energy</strong>
+    </dt>
+    <dd>
+    The remaining health of the unit.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.genarium"></a>
+    <strong>self.genarium</strong>
+    </dt>
+    <dd>
+    The amount of Genarium ore carried by this unit.  (0 to job carry capacity - other carried items).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.isBusy"></a>
+    <strong>self.isBusy</strong>
+    </dt>
+    <dd>
+    Tracks whether or not the ship is dashing or Mining.  If true, it cannot do anything else.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.job"></a>
+    <strong>self.job</strong>
+    </dt>
+    <dd>
+    The Job this Unit has.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.legendarium"></a>
+    <strong>self.legendarium</strong>
+    </dt>
+    <dd>
+    The amount of Legendarium ore carried by this unit.  (0 to job carry capacity - other carried items).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.moves"></a>
+    <strong>self.moves</strong>
+    </dt>
+    <dd>
+    The distance this unit can still move.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.mythicite"></a>
+    <strong>self.mythicite</strong>
+    </dt>
+    <dd>
+    The amount of Mythicite carried by this unit.  (0 to job carry capacity - other carried items).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.owner"></a>
+    <strong>self.owner</strong>
+    </dt>
+    <dd>
+    The Player that owns and can control this Unit.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.protector"></a>
+    <strong>self.protector</strong>
+    </dt>
+    <dd>
+    The martyr ship that is currently shielding this ship if any.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.rarium"></a>
+    <strong>self.rarium</strong>
+    </dt>
+    <dd>
+    The amount of Rarium carried by this unit.  (0 to job carry capacity - other carried items).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.shield"></a>
+    <strong>self.shield</strong>
+    </dt>
+    <dd>
+    The shield that a martyr ship has.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.x"></a>
+    <strong>self.x</strong>
+    </dt>
+    <dd>
+    The x value this unit is on.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.y"></a>
+    <strong>self.y</strong>
+    </dt>
+    <dd>
+    The y value this unit is on.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjectName"></a>
+    <strong>self.gameObjectName</strong>
+    </dt>
+    <dd>
+    (inherited) String representing the top level Class that this game object is an instance of.  Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.gameObjectName">GameObject.gameObjectName</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.id"></a>
+    <strong>self.id</strong>
+    </dt>
+    <dd>
+    (inherited) A unique id for each instance of a GameObject or a sub class.  Used for client and server communication. Should never change value after being set.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.id">GameObject.id</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.logs"></a>
+    <strong>self.logs</strong>
+    </dt>
+    <dd>
+    (inherited) Any strings logged will be stored here.  Intended for debugging.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.logs">GameObject.logs</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Unit:attack"></a>
+    <strong>Unit:attack (enemy)</strong>
+    </dt>
+    <dd>
+    Attacks the specified unit.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">enemy</span>
+            <span class="types"><a class="type" href="../classes/Unit.html#">Unit</a></span>
+         The Unit being attacked.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully attacked, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:dash"></a>
+    <strong>Unit:dash (x, y)</strong>
+    </dt>
+    <dd>
+    Causes the unit to dash towards the designated destination.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         The x value of the destination's coordinates.
+        </li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         The y value of the destination's coordinates.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if it moved, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:mine"></a>
+    <strong>Unit:mine (body)</strong>
+    </dt>
+    <dd>
+    Allows a miner to mine a asteroid.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">body</span>
+            <span class="types"><a class="type" href="../classes/Body.html#">Body</a></span>
+         The object to be mined.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully acted, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:move"></a>
+    <strong>Unit:move (x, y)</strong>
+    </dt>
+    <dd>
+    Moves this Unit from its current location to the new location specified.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         The x value of the destination's coordinates.
+        </li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         The y value of the destination's coordinates.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if it moved, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:safe"></a>
+    <strong>Unit:safe (x, y)</strong>
+    </dt>
+    <dd>
+    Tells you if your ship can move to that location from were it is without clipping the sun.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         The x position of the location you wish to arrive.
+        </li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         The y position of the location you wish to arrive.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if pathable by this unit, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:shootdown"></a>
+    <strong>Unit:shootdown (missile)</strong>
+    </dt>
+    <dd>
+    Attacks the specified projectile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">missile</span>
+            <span class="types"><a class="type" href="../classes/Projectile.html#">Projectile</a></span>
+         The projectile being shot down.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully attacked, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:transfer"></a>
+    <strong>Unit:transfer (unit, amount, material)</strong>
+    </dt>
+    <dd>
+    Grab materials from a friendly unit.  Doesn't use a action.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">unit</span>
+            <span class="types"><a class="type" href="../classes/Unit.html#">Unit</a></span>
+         The unit you are grabbing the resources from.
+        </li>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         The amount of materials to you with to grab. Amounts <= 0 will pick up all the materials that the unit can.
+        </li>
+        <li><span class="parameter">material</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The material the unit will pick up. 'genarium', 'rarium', 'legendarium', or 'mythicite'.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully taken, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:log"></a>
+    <strong>Unit:log (message)</strong>
+    </dt>
+    <dd>
+    (inherited) Adds a message to this GameObject's logs.  Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A string to add to this GameObject's log. Intended for debugging.
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#GameObject:log">GameObject:log</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

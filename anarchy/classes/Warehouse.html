@@ -1,0 +1,500 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Anarchy — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Anarchy Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><a href="../classes/Building.html">Building</a></li>
+  <li><a href="../classes/FireDepartment.html">FireDepartment</a></li>
+  <li><a href="../classes/Forecast.html">Forecast</a></li>
+  <li><a href="../classes/Game.html">Game</a></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/PoliceDepartment.html">PoliceDepartment</a></li>
+  <li><strong>Warehouse</strong></li>
+  <li><a href="../classes/WeatherStation.html">WeatherStation</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Warehouse</code></h1>
+<p>A typical abandoned warehouse that anarchists hang out in and can be bribed to burn down Buildings.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.exposure">self.exposure</a></td>
+	<td class="summary">How exposed the anarchists in this warehouse are to PoliceDepartments.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.fireAdded">self.fireAdded</a></td>
+	<td class="summary">The amount of fire added to buildings when bribed to ignite a building.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.bribed">self.bribed</a></td>
+	<td class="summary">(inherited) When true this building has already been bribed this turn and cannot be bribed again this turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.buildingEast">self.buildingEast</a></td>
+	<td class="summary">(inherited) The Building directly to the east of this building, or nil if not present.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.buildingNorth">self.buildingNorth</a></td>
+	<td class="summary">(inherited) The Building directly to the north of this building, or nil if not present.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.buildingSouth">self.buildingSouth</a></td>
+	<td class="summary">(inherited) The Building directly to the south of this building, or nil if not present.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.buildingWest">self.buildingWest</a></td>
+	<td class="summary">(inherited) The Building directly to the west of this building, or nil if not present.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.fire">self.fire</a></td>
+	<td class="summary">(inherited) How much fire is currently burning the building, and thus how much damage it will take at the end of its owner's turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjectName">self.gameObjectName</a></td>
+	<td class="summary">(inherited) String representing the top level Class that this game object is an instance of.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.health">self.health</a></td>
+	<td class="summary">(inherited) How much health this building currently has.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.id">self.id</a></td>
+	<td class="summary">(inherited) A unique id for each instance of a GameObject or a sub class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.isHeadquarters">self.isHeadquarters</a></td>
+	<td class="summary">(inherited) True if this is the Headquarters of the owning player, false otherwise.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.logs">self.logs</a></td>
+	<td class="summary">(inherited) Any strings logged will be stored here.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.owner">self.owner</a></td>
+	<td class="summary">(inherited) The player that owns this building.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.x">self.x</a></td>
+	<td class="summary">(inherited) The location of the Building along the x-axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.y">self.y</a></td>
+	<td class="summary">(inherited) The location of the Building along the y-axis.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Warehouse:ignite">Warehouse:ignite (building)</a></td>
+	<td class="summary">Bribes the Warehouse to light a Building on fire.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Warehouse:log">Warehouse:log (message)</a></td>
+	<td class="summary">(inherited) Adds a message to this GameObject's logs.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.exposure"></a>
+    <strong>self.exposure</strong>
+    </dt>
+    <dd>
+    How exposed the anarchists in this warehouse are to PoliceDepartments.  Raises when bribed to ignite buildings, and drops each turn if not bribed.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.fireAdded"></a>
+    <strong>self.fireAdded</strong>
+    </dt>
+    <dd>
+    The amount of fire added to buildings when bribed to ignite a building.  Headquarters add more fire than normal Warehouses.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.bribed"></a>
+    <strong>self.bribed</strong>
+    </dt>
+    <dd>
+    (inherited) When true this building has already been bribed this turn and cannot be bribed again this turn.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Building.html#self.bribed">Building.bribed</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.buildingEast"></a>
+    <strong>self.buildingEast</strong>
+    </dt>
+    <dd>
+    (inherited) The Building directly to the east of this building, or nil if not present.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Building.html#self.buildingEast">Building.buildingEast</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.buildingNorth"></a>
+    <strong>self.buildingNorth</strong>
+    </dt>
+    <dd>
+    (inherited) The Building directly to the north of this building, or nil if not present.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Building.html#self.buildingNorth">Building.buildingNorth</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.buildingSouth"></a>
+    <strong>self.buildingSouth</strong>
+    </dt>
+    <dd>
+    (inherited) The Building directly to the south of this building, or nil if not present.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Building.html#self.buildingSouth">Building.buildingSouth</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.buildingWest"></a>
+    <strong>self.buildingWest</strong>
+    </dt>
+    <dd>
+    (inherited) The Building directly to the west of this building, or nil if not present.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Building.html#self.buildingWest">Building.buildingWest</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.fire"></a>
+    <strong>self.fire</strong>
+    </dt>
+    <dd>
+    (inherited) How much fire is currently burning the building, and thus how much damage it will take at the end of its owner's turn.  0 means no fire.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Building.html#self.fire">Building.fire</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjectName"></a>
+    <strong>self.gameObjectName</strong>
+    </dt>
+    <dd>
+    (inherited) String representing the top level Class that this game object is an instance of.  Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.gameObjectName">GameObject.gameObjectName</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.health"></a>
+    <strong>self.health</strong>
+    </dt>
+    <dd>
+    (inherited) How much health this building currently has.  When this reaches 0 the Building has been burned down.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Building.html#self.health">Building.health</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.id"></a>
+    <strong>self.id</strong>
+    </dt>
+    <dd>
+    (inherited) A unique id for each instance of a GameObject or a sub class.  Used for client and server communication. Should never change value after being set.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.id">GameObject.id</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.isHeadquarters"></a>
+    <strong>self.isHeadquarters</strong>
+    </dt>
+    <dd>
+    (inherited) True if this is the Headquarters of the owning player, false otherwise.  Burning this down wins the game for the other Player.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Building.html#self.isHeadquarters">Building.isHeadquarters</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.logs"></a>
+    <strong>self.logs</strong>
+    </dt>
+    <dd>
+    (inherited) Any strings logged will be stored here.  Intended for debugging.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.logs">GameObject.logs</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.owner"></a>
+    <strong>self.owner</strong>
+    </dt>
+    <dd>
+    (inherited) The player that owns this building.  If it burns down (health reaches 0) that player gets an additional bribe(s).
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Building.html#self.owner">Building.owner</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.x"></a>
+    <strong>self.x</strong>
+    </dt>
+    <dd>
+    (inherited) The location of the Building along the x-axis.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Building.html#self.x">Building.x</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.y"></a>
+    <strong>self.y</strong>
+    </dt>
+    <dd>
+    (inherited) The location of the Building along the y-axis.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Building.html#self.y">Building.y</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Warehouse:ignite"></a>
+    <strong>Warehouse:ignite (building)</strong>
+    </dt>
+    <dd>
+    Bribes the Warehouse to light a Building on fire.  This adds this building's fireAdded to their fire, and then this building's exposure is increased based on the Manhattan distance between the two buildings.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">building</span>
+            <span class="types"><a class="type" href="../classes/Building.html#">Building</a></span>
+         The Building you want to light on fire.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The exposure added to this Building's exposure. -1 is returned if there was an error.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Warehouse:log"></a>
+    <strong>Warehouse:log (message)</strong>
+    </dt>
+    <dd>
+    (inherited) Adds a message to this GameObject's logs.  Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A string to add to this GameObject's log. Intended for debugging.
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#GameObject:log">GameObject:log</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

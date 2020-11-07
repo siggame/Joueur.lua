@@ -1,0 +1,574 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Newtonian — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Newtonian Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><a href="../classes/Game.html">Game</a></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Job.html">Job</a></li>
+  <li><a href="../classes/Machine.html">Machine</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><strong>Tile</strong></li>
+  <li><a href="../classes/Unit.html">Unit</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Tile</code></h1>
+<p>A Tile in the game that makes up the 2D map grid.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.blueium">self.blueium</a></td>
+	<td class="summary">The amount of blueium on this tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.blueiumOre">self.blueiumOre</a></td>
+	<td class="summary">The amount of blueium ore on this tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.decoration">self.decoration</a></td>
+	<td class="summary">(Visualizer only) Different tile types, cracked, slightly dirty, etc.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.direction">self.direction</a></td>
+	<td class="summary">The direction of a conveyor belt ('blank', 'north', 'east', 'south', or 'west').</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.isWall">self.isWall</a></td>
+	<td class="summary">Whether or not the tile is a wall.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.machine">self.machine</a></td>
+	<td class="summary">The Machine on this Tile if present, otherwise nil.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.owner">self.owner</a></td>
+	<td class="summary">The owner of this Tile, or nil if owned by no-one.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.redium">self.redium</a></td>
+	<td class="summary">The amount of redium on this tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.rediumOre">self.rediumOre</a></td>
+	<td class="summary">The amount of redium ore on this tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tileEast">self.tileEast</a></td>
+	<td class="summary">The Tile to the 'East' of this one (x+1, y).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tileNorth">self.tileNorth</a></td>
+	<td class="summary">The Tile to the 'North' of this one (x, y-1).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tileSouth">self.tileSouth</a></td>
+	<td class="summary">The Tile to the 'South' of this one (x, y+1).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tileWest">self.tileWest</a></td>
+	<td class="summary">The Tile to the 'West' of this one (x-1, y).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.type">self.type</a></td>
+	<td class="summary">The type of Tile this is ('normal', 'generator', 'conveyor', or 'spawn').</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.unit">self.unit</a></td>
+	<td class="summary">The Unit on this Tile if present, otherwise nil.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.x">self.x</a></td>
+	<td class="summary">The x (horizontal) position of this Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.y">self.y</a></td>
+	<td class="summary">The y (vertical) position of this Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjectName">self.gameObjectName</a></td>
+	<td class="summary">(inherited) String representing the top level Class that this game object is an instance of.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.id">self.id</a></td>
+	<td class="summary">(inherited) A unique id for each instance of a GameObject or a sub class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.logs">self.logs</a></td>
+	<td class="summary">(inherited) Any strings logged will be stored here.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tile.directions">Tile.directions</a></td>
+	<td class="summary">The valid directions that tiles can be in, "North", "East", "South", or "West"</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Tile:log">Tile:log (message)</a></td>
+	<td class="summary">(inherited) Adds a message to this GameObject's logs.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tile:getNeighbors">Tile:getNeighbors ()</a></td>
+	<td class="summary">Gets the neighbors of this Tile</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tile:isPathable">Tile:isPathable ()</a></td>
+	<td class="summary">Checks if a Tile is pathable to units</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tile:hasNeighbor">Tile:hasNeighbor (tile)</a></td>
+	<td class="summary">Checks if this Tile has a specific neighboring Tile</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.blueium"></a>
+    <strong>self.blueium</strong>
+    </dt>
+    <dd>
+    The amount of blueium on this tile.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.blueiumOre"></a>
+    <strong>self.blueiumOre</strong>
+    </dt>
+    <dd>
+    The amount of blueium ore on this tile.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.decoration"></a>
+    <strong>self.decoration</strong>
+    </dt>
+    <dd>
+    (Visualizer only) Different tile types, cracked, slightly dirty, etc.  This has no effect on gameplay, but feel free to use it if you want.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.direction"></a>
+    <strong>self.direction</strong>
+    </dt>
+    <dd>
+    The direction of a conveyor belt ('blank', 'north', 'east', 'south', or 'west').  Blank means conveyor doesn't move.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.isWall"></a>
+    <strong>self.isWall</strong>
+    </dt>
+    <dd>
+    Whether or not the tile is a wall.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.machine"></a>
+    <strong>self.machine</strong>
+    </dt>
+    <dd>
+    The Machine on this Tile if present, otherwise nil.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.owner"></a>
+    <strong>self.owner</strong>
+    </dt>
+    <dd>
+    The owner of this Tile, or nil if owned by no-one.  Only for generators and spawn areas.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.redium"></a>
+    <strong>self.redium</strong>
+    </dt>
+    <dd>
+    The amount of redium on this tile.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.rediumOre"></a>
+    <strong>self.rediumOre</strong>
+    </dt>
+    <dd>
+    The amount of redium ore on this tile.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tileEast"></a>
+    <strong>self.tileEast</strong>
+    </dt>
+    <dd>
+    The Tile to the 'East' of this one (x+1, y).  nil if out of bounds of the map.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tileNorth"></a>
+    <strong>self.tileNorth</strong>
+    </dt>
+    <dd>
+    The Tile to the 'North' of this one (x, y-1).  nil if out of bounds of the map.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tileSouth"></a>
+    <strong>self.tileSouth</strong>
+    </dt>
+    <dd>
+    The Tile to the 'South' of this one (x, y+1).  nil if out of bounds of the map.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tileWest"></a>
+    <strong>self.tileWest</strong>
+    </dt>
+    <dd>
+    The Tile to the 'West' of this one (x-1, y).  nil if out of bounds of the map.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.type"></a>
+    <strong>self.type</strong>
+    </dt>
+    <dd>
+    The type of Tile this is ('normal', 'generator', 'conveyor', or 'spawn').
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.unit"></a>
+    <strong>self.unit</strong>
+    </dt>
+    <dd>
+    The Unit on this Tile if present, otherwise nil.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.x"></a>
+    <strong>self.x</strong>
+    </dt>
+    <dd>
+    The x (horizontal) position of this Tile.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.y"></a>
+    <strong>self.y</strong>
+    </dt>
+    <dd>
+    The y (vertical) position of this Tile.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjectName"></a>
+    <strong>self.gameObjectName</strong>
+    </dt>
+    <dd>
+    (inherited) String representing the top level Class that this game object is an instance of.  Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.gameObjectName">GameObject.gameObjectName</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.id"></a>
+    <strong>self.id</strong>
+    </dt>
+    <dd>
+    (inherited) A unique id for each instance of a GameObject or a sub class.  Used for client and server communication. Should never change value after being set.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.id">GameObject.id</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.logs"></a>
+    <strong>self.logs</strong>
+    </dt>
+    <dd>
+    (inherited) Any strings logged will be stored here.  Intended for debugging.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.logs">GameObject.logs</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Tile.directions"></a>
+    <strong>Tile.directions</strong>
+    </dt>
+    <dd>
+    The valid directions that tiles can be in, "North", "East", "South", or "West"
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Tile:log"></a>
+    <strong>Tile:log (message)</strong>
+    </dt>
+    <dd>
+    (inherited) Adds a message to this GameObject's logs.  Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A string to add to this GameObject's log. Intended for debugging.
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#GameObject:log">GameObject:log</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Tile:getNeighbors"></a>
+    <strong>Tile:getNeighbors ()</strong>
+    </dt>
+    <dd>
+    Gets the neighbors of this Tile
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tile:isPathable"></a>
+    <strong>Tile:isPathable ()</strong>
+    </dt>
+    <dd>
+    Checks if a Tile is pathable to units
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tile:hasNeighbor"></a>
+    <strong>Tile:hasNeighbor (tile)</strong>
+    </dt>
+    <dd>
+    Checks if this Tile has a specific neighboring Tile
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         the tile to check against
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,789 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Coreminer — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Coreminer Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><a href="../classes/Bomb.html">Bomb</a></li>
+  <li><strong>Game</strong></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Miner.html">Miner</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Tile.html">Tile</a></li>
+  <li><a href="../classes/Upgrade.html">Upgrade</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Game</code></h1>
+<p>Mine resources to obtain more value than your opponent.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.name">self.name</a></td>
+	<td class="summary">The name of this game, "{game_name}".</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.bombPrice">self.bombPrice</a></td>
+	<td class="summary">The monetary price of a bomb when bought or sold.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.bombSize">self.bombSize</a></td>
+	<td class="summary">The amount of cargo space taken up by a Bomb.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.bombs">self.bombs</a></td>
+	<td class="summary">Every Bomb in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.buildingMaterialPrice">self.buildingMaterialPrice</a></td>
+	<td class="summary">The monetary price of building materials when bought.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentPlayer">self.currentPlayer</a></td>
+	<td class="summary">The player whose turn it is currently.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentTurn">self.currentTurn</a></td>
+	<td class="summary">The current turn number, starting at 0 for the first player's turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.dirtPrice">self.dirtPrice</a></td>
+	<td class="summary">The monetary price of dirt when bought or sold.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.fallDamage">self.fallDamage</a></td>
+	<td class="summary">The amount of damage taken per Tile fallen.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.fallWeightDamage">self.fallWeightDamage</a></td>
+	<td class="summary">The amount of extra damage taken for falling while carrying a large amount of cargo.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjects">self.gameObjects</a></td>
+	<td class="summary">A mapping of every game object's ID to the actual game object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.ladderCost">self.ladderCost</a></td>
+	<td class="summary">The amount of building material required to build a ladder.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.ladderHealth">self.ladderHealth</a></td>
+	<td class="summary">The amount of mining power needed to remove a ladder from a Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.largeCargoSize">self.largeCargoSize</a></td>
+	<td class="summary">The amount deemed as a large amount of cargo.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.largeMaterialSize">self.largeMaterialSize</a></td>
+	<td class="summary">The amount deemed as a large amount of material.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.mapHeight">self.mapHeight</a></td>
+	<td class="summary">The number of Tiles in the map along the y (vertical) axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.mapWidth">self.mapWidth</a></td>
+	<td class="summary">The number of Tiles in the map along the x (horizontal) axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxShielding">self.maxShielding</a></td>
+	<td class="summary">The maximum amount of shielding possible on a Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxTurns">self.maxTurns</a></td>
+	<td class="summary">The maximum number of turns before the game will automatically end.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxUpgradeLevel">self.maxUpgradeLevel</a></td>
+	<td class="summary">The highest upgrade level allowed on a Miner.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.miners">self.miners</a></td>
+	<td class="summary">Every Miner in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.orePrice">self.orePrice</a></td>
+	<td class="summary">The amount of money awarded when ore is dumped in the base and sold.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.oreValue">self.oreValue</a></td>
+	<td class="summary">The amount of value awarded when ore is dumped in the base and sold.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.players">self.players</a></td>
+	<td class="summary">List of all the players in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.session">self.session</a></td>
+	<td class="summary">A unique identifier for the game instance that is being played.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.shieldCost">self.shieldCost</a></td>
+	<td class="summary">The amount of building material required to shield a Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.shieldHealth">self.shieldHealth</a></td>
+	<td class="summary">The amount of mining power needed to remove one unit of shielding off a Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.spawnPrice">self.spawnPrice</a></td>
+	<td class="summary">The monetary price of spawning a Miner.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.suffocationDamage">self.suffocationDamage</a></td>
+	<td class="summary">The amount of damage taken when suffocating inside a filled Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.suffocationWeightDamage">self.suffocationWeightDamage</a></td>
+	<td class="summary">The amount of extra damage taken for suffocating under a large amount of material.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.supportCost">self.supportCost</a></td>
+	<td class="summary">The amount of building material required to build a support.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.supportHealth">self.supportHealth</a></td>
+	<td class="summary">The amount of mining power needed to remove a support from a Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tiles">self.tiles</a></td>
+	<td class="summary">All the tiles in the map, stored in Row-major order.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.timeAddedPerTurn">self.timeAddedPerTurn</a></td>
+	<td class="summary">The amount of time (in nano-seconds) added after each player performs a turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.upgradePrice">self.upgradePrice</a></td>
+	<td class="summary">The cost to upgrade a Miner.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.upgrades">self.upgrades</a></td>
+	<td class="summary">Every Upgrade for a Miner in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.victoryAmount">self.victoryAmount</a></td>
+	<td class="summary">The amount of victory points (value) required to win.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Game:getTileAt">Game:getTileAt (x, y)</a></td>
+	<td class="summary">Gets the Tile at a specified (x, y) position</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.name"></a>
+    <strong>self.name</strong>
+    </dt>
+    <dd>
+    The name of this game, "{game_name}".
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.bombPrice"></a>
+    <strong>self.bombPrice</strong>
+    </dt>
+    <dd>
+    The monetary price of a bomb when bought or sold.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.bombSize"></a>
+    <strong>self.bombSize</strong>
+    </dt>
+    <dd>
+    The amount of cargo space taken up by a Bomb.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.bombs"></a>
+    <strong>self.bombs</strong>
+    </dt>
+    <dd>
+    Every Bomb in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.buildingMaterialPrice"></a>
+    <strong>self.buildingMaterialPrice</strong>
+    </dt>
+    <dd>
+    The monetary price of building materials when bought.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentPlayer"></a>
+    <strong>self.currentPlayer</strong>
+    </dt>
+    <dd>
+    The player whose turn it is currently.  That player can send commands. Other players cannot.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentTurn"></a>
+    <strong>self.currentTurn</strong>
+    </dt>
+    <dd>
+    The current turn number, starting at 0 for the first player's turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.dirtPrice"></a>
+    <strong>self.dirtPrice</strong>
+    </dt>
+    <dd>
+    The monetary price of dirt when bought or sold.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.fallDamage"></a>
+    <strong>self.fallDamage</strong>
+    </dt>
+    <dd>
+    The amount of damage taken per Tile fallen.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.fallWeightDamage"></a>
+    <strong>self.fallWeightDamage</strong>
+    </dt>
+    <dd>
+    The amount of extra damage taken for falling while carrying a large amount of cargo.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjects"></a>
+    <strong>self.gameObjects</strong>
+    </dt>
+    <dd>
+    A mapping of every game object's ID to the actual game object.  Primarily used by the server and client to easily refer to the game objects via ID.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.ladderCost"></a>
+    <strong>self.ladderCost</strong>
+    </dt>
+    <dd>
+    The amount of building material required to build a ladder.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.ladderHealth"></a>
+    <strong>self.ladderHealth</strong>
+    </dt>
+    <dd>
+    The amount of mining power needed to remove a ladder from a Tile.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.largeCargoSize"></a>
+    <strong>self.largeCargoSize</strong>
+    </dt>
+    <dd>
+    The amount deemed as a large amount of cargo.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.largeMaterialSize"></a>
+    <strong>self.largeMaterialSize</strong>
+    </dt>
+    <dd>
+    The amount deemed as a large amount of material.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.mapHeight"></a>
+    <strong>self.mapHeight</strong>
+    </dt>
+    <dd>
+    The number of Tiles in the map along the y (vertical) axis.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.mapWidth"></a>
+    <strong>self.mapWidth</strong>
+    </dt>
+    <dd>
+    The number of Tiles in the map along the x (horizontal) axis.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxShielding"></a>
+    <strong>self.maxShielding</strong>
+    </dt>
+    <dd>
+    The maximum amount of shielding possible on a Tile.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxTurns"></a>
+    <strong>self.maxTurns</strong>
+    </dt>
+    <dd>
+    The maximum number of turns before the game will automatically end.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxUpgradeLevel"></a>
+    <strong>self.maxUpgradeLevel</strong>
+    </dt>
+    <dd>
+    The highest upgrade level allowed on a Miner.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.miners"></a>
+    <strong>self.miners</strong>
+    </dt>
+    <dd>
+    Every Miner in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.orePrice"></a>
+    <strong>self.orePrice</strong>
+    </dt>
+    <dd>
+    The amount of money awarded when ore is dumped in the base and sold.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.oreValue"></a>
+    <strong>self.oreValue</strong>
+    </dt>
+    <dd>
+    The amount of value awarded when ore is dumped in the base and sold.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.players"></a>
+    <strong>self.players</strong>
+    </dt>
+    <dd>
+    List of all the players in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.session"></a>
+    <strong>self.session</strong>
+    </dt>
+    <dd>
+    A unique identifier for the game instance that is being played.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.shieldCost"></a>
+    <strong>self.shieldCost</strong>
+    </dt>
+    <dd>
+    The amount of building material required to shield a Tile.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.shieldHealth"></a>
+    <strong>self.shieldHealth</strong>
+    </dt>
+    <dd>
+    The amount of mining power needed to remove one unit of shielding off a Tile.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.spawnPrice"></a>
+    <strong>self.spawnPrice</strong>
+    </dt>
+    <dd>
+    The monetary price of spawning a Miner.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.suffocationDamage"></a>
+    <strong>self.suffocationDamage</strong>
+    </dt>
+    <dd>
+    The amount of damage taken when suffocating inside a filled Tile.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.suffocationWeightDamage"></a>
+    <strong>self.suffocationWeightDamage</strong>
+    </dt>
+    <dd>
+    The amount of extra damage taken for suffocating under a large amount of material.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.supportCost"></a>
+    <strong>self.supportCost</strong>
+    </dt>
+    <dd>
+    The amount of building material required to build a support.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.supportHealth"></a>
+    <strong>self.supportHealth</strong>
+    </dt>
+    <dd>
+    The amount of mining power needed to remove a support from a Tile.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tiles"></a>
+    <strong>self.tiles</strong>
+    </dt>
+    <dd>
+    All the tiles in the map, stored in Row-major order.  Use `x + y * mapWidth` to access the correct index.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.timeAddedPerTurn"></a>
+    <strong>self.timeAddedPerTurn</strong>
+    </dt>
+    <dd>
+    The amount of time (in nano-seconds) added after each player performs a turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.upgradePrice"></a>
+    <strong>self.upgradePrice</strong>
+    </dt>
+    <dd>
+    The cost to upgrade a Miner.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.upgrades"></a>
+    <strong>self.upgrades</strong>
+    </dt>
+    <dd>
+    Every Upgrade for a Miner in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.victoryAmount"></a>
+    <strong>self.victoryAmount</strong>
+    </dt>
+    <dd>
+    The amount of victory points (value) required to win.
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Game:getTileAt"></a>
+    <strong>Game:getTileAt (x, y)</strong>
+    </dt>
+    <dd>
+    Gets the Tile at a specified (x, y) position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         integer between 0 and the mapWidth
+        </li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         integer between 0 and the mapHeight
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

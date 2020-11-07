@@ -1,0 +1,455 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Necrowar — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Necrowar Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><a href="../classes/Game.html">Game</a></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/tJob.html">tJob</a></li>
+  <li><a href="../classes/Tile.html">Tile</a></li>
+  <li><a href="../classes/Tower.html">Tower</a></li>
+  <li><a href="../classes/TowerJob.html">TowerJob</a></li>
+  <li><a href="../classes/uJob.html">uJob</a></li>
+  <li><strong>Unit</strong></li>
+  <li><a href="../classes/UnitJob.html">UnitJob</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Unit</code></h1>
+<p>A unit in the game.</p>
+<p> May be a worker, zombie, ghoul, hound, abomination, wraith or horseman.</p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.acted">self.acted</a></td>
+	<td class="summary">Whether or not this Unit has performed its action this turn (attack or build).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.health">self.health</a></td>
+	<td class="summary">The remaining health of a unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.job">self.job</a></td>
+	<td class="summary">The type of unit this is.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.moves">self.moves</a></td>
+	<td class="summary">The number of moves this unit has left this turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.owner">self.owner</a></td>
+	<td class="summary">The Player that owns and can control this Unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tile">self.tile</a></td>
+	<td class="summary">The Tile this Unit is on.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjectName">self.gameObjectName</a></td>
+	<td class="summary">(inherited) String representing the top level Class that this game object is an instance of.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.id">self.id</a></td>
+	<td class="summary">(inherited) A unique id for each instance of a GameObject or a sub class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.logs">self.logs</a></td>
+	<td class="summary">(inherited) Any strings logged will be stored here.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Unit:attack">Unit:attack (tile)</a></td>
+	<td class="summary">Attacks an enemy tower on an adjacent tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:build">Unit:build (title)</a></td>
+	<td class="summary">Unit, if it is a worker, builds a tower on the tile it is on, only workers can do this.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:fish">Unit:fish (tile)</a></td>
+	<td class="summary">Stops adjacent to a river tile and begins fishing for mana.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:mine">Unit:mine (tile)</a></td>
+	<td class="summary">Enters a mine and is put to work gathering resources.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:move">Unit:move (tile)</a></td>
+	<td class="summary">Moves this Unit from its current Tile to an adjacent Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:log">Unit:log (message)</a></td>
+	<td class="summary">(inherited) Adds a message to this GameObject's logs.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.acted"></a>
+    <strong>self.acted</strong>
+    </dt>
+    <dd>
+    Whether or not this Unit has performed its action this turn (attack or build).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.health"></a>
+    <strong>self.health</strong>
+    </dt>
+    <dd>
+    The remaining health of a unit.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.job"></a>
+    <strong>self.job</strong>
+    </dt>
+    <dd>
+    The type of unit this is.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.moves"></a>
+    <strong>self.moves</strong>
+    </dt>
+    <dd>
+    The number of moves this unit has left this turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.owner"></a>
+    <strong>self.owner</strong>
+    </dt>
+    <dd>
+    The Player that owns and can control this Unit.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tile"></a>
+    <strong>self.tile</strong>
+    </dt>
+    <dd>
+    The Tile this Unit is on.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjectName"></a>
+    <strong>self.gameObjectName</strong>
+    </dt>
+    <dd>
+    (inherited) String representing the top level Class that this game object is an instance of.  Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.gameObjectName">GameObject.gameObjectName</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.id"></a>
+    <strong>self.id</strong>
+    </dt>
+    <dd>
+    (inherited) A unique id for each instance of a GameObject or a sub class.  Used for client and server communication. Should never change value after being set.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.id">GameObject.id</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.logs"></a>
+    <strong>self.logs</strong>
+    </dt>
+    <dd>
+    (inherited) Any strings logged will be stored here.  Intended for debugging.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.logs">GameObject.logs</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Unit:attack"></a>
+    <strong>Unit:attack (tile)</strong>
+    </dt>
+    <dd>
+    Attacks an enemy tower on an adjacent tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile to attack.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully attacked, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:build"></a>
+    <strong>Unit:build (title)</strong>
+    </dt>
+    <dd>
+    Unit, if it is a worker, builds a tower on the tile it is on, only workers can do this.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">title</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The tower type to build, as a string.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully built, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:fish"></a>
+    <strong>Unit:fish (tile)</strong>
+    </dt>
+    <dd>
+    Stops adjacent to a river tile and begins fishing for mana.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The tile the unit will stand on as it fishes.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully began fishing for mana, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:mine"></a>
+    <strong>Unit:mine (tile)</strong>
+    </dt>
+    <dd>
+    Enters a mine and is put to work gathering resources.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The tile the mine is located on.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully entered mine and began mining, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:move"></a>
+    <strong>Unit:move (tile)</strong>
+    </dt>
+    <dd>
+    Moves this Unit from its current Tile to an adjacent Tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile this Unit should move to.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if it moved, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:log"></a>
+    <strong>Unit:log (message)</strong>
+    </dt>
+    <dd>
+    (inherited) Adds a message to this GameObject's logs.  Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A string to add to this GameObject's log. Intended for debugging.
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#GameObject:log">GameObject:log</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

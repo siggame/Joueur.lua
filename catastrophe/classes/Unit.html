@@ -1,0 +1,730 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Catastrophe — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Catastrophe Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><a href="../classes/Game.html">Game</a></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Job.html">Job</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Structure.html">Structure</a></li>
+  <li><a href="../classes/Tile.html">Tile</a></li>
+  <li><strong>Unit</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Unit</code></h1>
+<p>A unit in the game.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.acted">self.acted</a></td>
+	<td class="summary">Whether this Unit has performed its action this turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.energy">self.energy</a></td>
+	<td class="summary">The amount of energy this Unit has (from 0.0 to 100.0).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.food">self.food</a></td>
+	<td class="summary">The amount of food this Unit is holding.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.job">self.job</a></td>
+	<td class="summary">The Job this Unit was recruited to do.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.materials">self.materials</a></td>
+	<td class="summary">The amount of materials this Unit is holding.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.movementTarget">self.movementTarget</a></td>
+	<td class="summary">The tile this Unit is moving to.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.moves">self.moves</a></td>
+	<td class="summary">How many moves this Unit has left this turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.owner">self.owner</a></td>
+	<td class="summary">The Player that owns and can control this Unit, or nil if the Unit is neutral.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.squad">self.squad</a></td>
+	<td class="summary">The Units in the same squad as this Unit.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.starving">self.starving</a></td>
+	<td class="summary">Whether this Unit is starving.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tile">self.tile</a></td>
+	<td class="summary">The Tile this Unit is on.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.turnsToDie">self.turnsToDie</a></td>
+	<td class="summary">The number of turns before this Unit dies.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjectName">self.gameObjectName</a></td>
+	<td class="summary">(inherited) String representing the top level Class that this game object is an instance of.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.id">self.id</a></td>
+	<td class="summary">(inherited) A unique id for each instance of a GameObject or a sub class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.logs">self.logs</a></td>
+	<td class="summary">(inherited) Any strings logged will be stored here.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Unit:attack">Unit:attack (tile)</a></td>
+	<td class="summary">Attacks an adjacent Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:changeJob">Unit:changeJob (job)</a></td>
+	<td class="summary">Changes this Unit's Job.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:construct">Unit:construct (tile, type)</a></td>
+	<td class="summary">Constructs a Structure on an adjacent Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:convert">Unit:convert (tile)</a></td>
+	<td class="summary">Converts an adjacent Unit to your side.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:deconstruct">Unit:deconstruct (tile)</a></td>
+	<td class="summary">Removes materials from an adjacent Tile's Structure.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:drop">Unit:drop (tile, resource[, amount=0])</a></td>
+	<td class="summary">Drops some of the given resource on or adjacent to the Unit's Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:harvest">Unit:harvest (tile)</a></td>
+	<td class="summary">Harvests the food on an adjacent Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:move">Unit:move (tile)</a></td>
+	<td class="summary">Moves this Unit from its current Tile to an adjacent Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:pickup">Unit:pickup (tile, resource[, amount=0])</a></td>
+	<td class="summary">Picks up some materials or food on or adjacent to the Unit's Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:rest">Unit:rest ()</a></td>
+	<td class="summary">Regenerates energy.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:log">Unit:log (message)</a></td>
+	<td class="summary">(inherited) Adds a message to this GameObject's logs.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.acted"></a>
+    <strong>self.acted</strong>
+    </dt>
+    <dd>
+    Whether this Unit has performed its action this turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.energy"></a>
+    <strong>self.energy</strong>
+    </dt>
+    <dd>
+    The amount of energy this Unit has (from 0.0 to 100.0).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.food"></a>
+    <strong>self.food</strong>
+    </dt>
+    <dd>
+    The amount of food this Unit is holding.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.job"></a>
+    <strong>self.job</strong>
+    </dt>
+    <dd>
+    The Job this Unit was recruited to do.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.materials"></a>
+    <strong>self.materials</strong>
+    </dt>
+    <dd>
+    The amount of materials this Unit is holding.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.movementTarget"></a>
+    <strong>self.movementTarget</strong>
+    </dt>
+    <dd>
+    The tile this Unit is moving to.  This only applies to neutral fresh humans spawned on the road. Otherwise, the tile this Unit is on.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.moves"></a>
+    <strong>self.moves</strong>
+    </dt>
+    <dd>
+    How many moves this Unit has left this turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.owner"></a>
+    <strong>self.owner</strong>
+    </dt>
+    <dd>
+    The Player that owns and can control this Unit, or nil if the Unit is neutral.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.squad"></a>
+    <strong>self.squad</strong>
+    </dt>
+    <dd>
+    The Units in the same squad as this Unit.  Units in the same squad attack and defend together.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.starving"></a>
+    <strong>self.starving</strong>
+    </dt>
+    <dd>
+    Whether this Unit is starving.  Starving Units regenerate energy at half the rate they normally would while resting.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tile"></a>
+    <strong>self.tile</strong>
+    </dt>
+    <dd>
+    The Tile this Unit is on.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.turnsToDie"></a>
+    <strong>self.turnsToDie</strong>
+    </dt>
+    <dd>
+    The number of turns before this Unit dies.  This only applies to neutral fresh humans created from combat. Otherwise, 0.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjectName"></a>
+    <strong>self.gameObjectName</strong>
+    </dt>
+    <dd>
+    (inherited) String representing the top level Class that this game object is an instance of.  Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.gameObjectName">GameObject.gameObjectName</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.id"></a>
+    <strong>self.id</strong>
+    </dt>
+    <dd>
+    (inherited) A unique id for each instance of a GameObject or a sub class.  Used for client and server communication. Should never change value after being set.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.id">GameObject.id</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.logs"></a>
+    <strong>self.logs</strong>
+    </dt>
+    <dd>
+    (inherited) Any strings logged will be stored here.  Intended for debugging.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.logs">GameObject.logs</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Unit:attack"></a>
+    <strong>Unit:attack (tile)</strong>
+    </dt>
+    <dd>
+    Attacks an adjacent Tile.  Costs an action for each Unit in this Unit's squad. Units in the squad without an action don't participate in combat. Units in combat cannot move afterwards. Attacking structures will not give materials.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile to attack.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully attacked, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:changeJob"></a>
+    <strong>Unit:changeJob (job)</strong>
+    </dt>
+    <dd>
+    Changes this Unit's Job.  Must be at max energy (100) to change Jobs.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">job</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The name of the Job to change to.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully changed Jobs, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:construct"></a>
+    <strong>Unit:construct (tile, type)</strong>
+    </dt>
+    <dd>
+    Constructs a Structure on an adjacent Tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile to construct the Structure on. It must have enough materials on it for a Structure to be constructed.
+        </li>
+        <li><span class="parameter">type</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The type of Structure to construct on that Tile.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully constructed a structure, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:convert"></a>
+    <strong>Unit:convert (tile)</strong>
+    </dt>
+    <dd>
+    Converts an adjacent Unit to your side.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile with the Unit to convert.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully converted, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:deconstruct"></a>
+    <strong>Unit:deconstruct (tile)</strong>
+    </dt>
+    <dd>
+    Removes materials from an adjacent Tile's Structure.  You cannot deconstruct friendly structures (see `Unit.attack`).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile to deconstruct. It must have a Structure on it.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully deconstructed, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:drop"></a>
+    <strong>Unit:drop (tile, resource[, amount=0])</strong>
+    </dt>
+    <dd>
+    Drops some of the given resource on or adjacent to the Unit's Tile.  Does not count as an action.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile to drop materials/food on.
+        </li>
+        <li><span class="parameter">resource</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The type of resource to drop ('materials' or 'food').
+        </li>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         The amount of the resource to drop. Amounts <= 0 will drop as much as possible.
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully dropped the resource, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:harvest"></a>
+    <strong>Unit:harvest (tile)</strong>
+    </dt>
+    <dd>
+    Harvests the food on an adjacent Tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile you want to harvest.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully harvested, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:move"></a>
+    <strong>Unit:move (tile)</strong>
+    </dt>
+    <dd>
+    Moves this Unit from its current Tile to an adjacent Tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile this Unit should move to.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if it moved, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:pickup"></a>
+    <strong>Unit:pickup (tile, resource[, amount=0])</strong>
+    </dt>
+    <dd>
+    Picks up some materials or food on or adjacent to the Unit's Tile.  Does not count as an action.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile to pickup materials/food from.
+        </li>
+        <li><span class="parameter">resource</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The type of resource to pickup ('materials' or 'food').
+        </li>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         The amount of the resource to pickup. Amounts <= 0 will pickup as much as possible.
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully picked up a resource, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:rest"></a>
+    <strong>Unit:rest ()</strong>
+    </dt>
+    <dd>
+    Regenerates energy.  Must be in range of a friendly shelter to rest. Costs an action. Units cannot move after resting.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully rested, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:log"></a>
+    <strong>Unit:log (message)</strong>
+    </dt>
+    <dd>
+    (inherited) Adds a message to this GameObject's logs.  Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A string to add to this GameObject's log. Intended for debugging.
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#GameObject:log">GameObject:log</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

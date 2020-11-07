@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Pirates — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Pirates Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><strong>AI</strong></li>
+  <li><a href="../classes/Game.html">Game</a></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Port.html">Port</a></li>
+  <li><a href="../classes/Tile.html">Tile</a></li>
+  <li><a href="../classes/Unit.html">Unit</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>AI</code></h1>
+<p>the AI functions for the Pirates game.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.game">self.game</a></td>
+	<td class="summary">The reference to the Game instance this AI is playing.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.player">self.player</a></td>
+	<td class="summary">The reference to the Player this AI controls in the Game.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#AI:getName">AI:getName ()</a></td>
+	<td class="summary">this is the name you send to the server to play as.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AI:start">AI:start ()</a></td>
+	<td class="summary">this is called once the game starts and your AI knows its playerID and game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AI:gameUpdated">AI:gameUpdated ()</a></td>
+	<td class="summary">this is called when the game's state updates, so if you are tracking anything you can update it here.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AI:ended">AI:ended (won, reason)</a></td>
+	<td class="summary">this is called when the game ends, you can clean up your data and dump files here if need be</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AI:runTurn">AI:runTurn ()</a></td>
+	<td class="summary">This is called every time it is this AI.player's turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AI:findPath">AI:findPath (start, goal)</a></td>
+	<td class="summary">A very basic path finding algorithm (Breadth First Search) that when given a starting Tile, will return a valid path to the goal Tile.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.game"></a>
+    <strong>self.game</strong>
+    </dt>
+    <dd>
+    The reference to the Game instance this AI is playing.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Game.html#">Game</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.player"></a>
+    <strong>self.player</strong>
+    </dt>
+    <dd>
+    The reference to the Player this AI controls in the Game.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Player.html#">Player</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "AI:getName"></a>
+    <strong>AI:getName ()</strong>
+    </dt>
+    <dd>
+    this is the name you send to the server to play as.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AI:start"></a>
+    <strong>AI:start ()</strong>
+    </dt>
+    <dd>
+    this is called once the game starts and your AI knows its playerID and game.  You can initialize your AI here.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AI:gameUpdated"></a>
+    <strong>AI:gameUpdated ()</strong>
+    </dt>
+    <dd>
+    this is called when the game's state updates, so if you are tracking anything you can update it here.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AI:ended"></a>
+    <strong>AI:ended (won, reason)</strong>
+    </dt>
+    <dd>
+    this is called when the game ends, you can clean up your data and dump files here if need be
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">won</span>
+            <span class="types"><span class="type">boolean</span></span>
+         true means you won, won == false means you lost
+        </li>
+        <li><span class="parameter">reason</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         why you won or lost
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AI:runTurn"></a>
+    <strong>AI:runTurn ()</strong>
+    </dt>
+    <dd>
+    This is called every time it is this AI.player's turn.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        Represents if you want to end your turn. True means end your turn, False means to keep your turn going and re-call this function.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AI:findPath"></a>
+    <strong>AI:findPath (start, goal)</strong>
+    </dt>
+    <dd>
+    A very basic path finding algorithm (Breadth First Search) that when given a starting Tile, will return a valid path to the goal Tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">start</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         the starting Tile
+        </li>
+        <li><span class="parameter">goal</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         the goal Tile
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

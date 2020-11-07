@@ -1,0 +1,644 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Pirates — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Pirates Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><a href="../classes/Game.html">Game</a></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Port.html">Port</a></li>
+  <li><a href="../classes/Tile.html">Tile</a></li>
+  <li><strong>Unit</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Unit</code></h1>
+<p>A unit group in the game.</p>
+<p> This may consist of a ship and any number of crew.</p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.acted">self.acted</a></td>
+	<td class="summary">Whether this Unit has performed its action this turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.crew">self.crew</a></td>
+	<td class="summary">How many crew are on this Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.crewHealth">self.crewHealth</a></td>
+	<td class="summary">How much total health the crew on this Tile have.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gold">self.gold</a></td>
+	<td class="summary">How much gold this Unit is carrying.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.moves">self.moves</a></td>
+	<td class="summary">How many more times this Unit may move this turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.owner">self.owner</a></td>
+	<td class="summary">The Player that owns and can control this Unit, or nil if the Unit is neutral.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.path">self.path</a></td>
+	<td class="summary">(Merchants only) The path this Unit will follow.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.shipHealth">self.shipHealth</a></td>
+	<td class="summary">If a ship is on this Tile, how much health it has remaining.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.stunTurns">self.stunTurns</a></td>
+	<td class="summary">(Merchants only) The number of turns this merchant ship won't be able to move.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.targetPort">self.targetPort</a></td>
+	<td class="summary">(Merchants only) The Port this Unit is moving to.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tile">self.tile</a></td>
+	<td class="summary">The Tile this Unit is on.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjectName">self.gameObjectName</a></td>
+	<td class="summary">(inherited) String representing the top level Class that this game object is an instance of.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.id">self.id</a></td>
+	<td class="summary">(inherited) A unique id for each instance of a GameObject or a sub class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.logs">self.logs</a></td>
+	<td class="summary">(inherited) Any strings logged will be stored here.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Unit:attack">Unit:attack (tile, target)</a></td>
+	<td class="summary">Attacks either the 'crew' or 'ship' on a Tile in range.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:bury">Unit:bury (amount)</a></td>
+	<td class="summary">Buries gold on this Unit's Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:deposit">Unit:deposit ([amount=0])</a></td>
+	<td class="summary">Puts gold into an adjacent Port.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:dig">Unit:dig ([amount=0])</a></td>
+	<td class="summary">Digs up gold on this Unit's Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:move">Unit:move (tile)</a></td>
+	<td class="summary">Moves this Unit from its current Tile to an adjacent Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:rest">Unit:rest ()</a></td>
+	<td class="summary">Regenerates this Unit's health.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:split">Unit:split (tile[, amount=1[, gold=0]])</a></td>
+	<td class="summary">Moves a number of crew from this Unit to the given Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:withdraw">Unit:withdraw ([amount=0])</a></td>
+	<td class="summary">Takes gold from the Player.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Unit:log">Unit:log (message)</a></td>
+	<td class="summary">(inherited) Adds a message to this GameObject's logs.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.acted"></a>
+    <strong>self.acted</strong>
+    </dt>
+    <dd>
+    Whether this Unit has performed its action this turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.crew"></a>
+    <strong>self.crew</strong>
+    </dt>
+    <dd>
+    How many crew are on this Tile.  This number will always be <= crewHealth.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.crewHealth"></a>
+    <strong>self.crewHealth</strong>
+    </dt>
+    <dd>
+    How much total health the crew on this Tile have.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gold"></a>
+    <strong>self.gold</strong>
+    </dt>
+    <dd>
+    How much gold this Unit is carrying.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.moves"></a>
+    <strong>self.moves</strong>
+    </dt>
+    <dd>
+    How many more times this Unit may move this turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.owner"></a>
+    <strong>self.owner</strong>
+    </dt>
+    <dd>
+    The Player that owns and can control this Unit, or nil if the Unit is neutral.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.path"></a>
+    <strong>self.path</strong>
+    </dt>
+    <dd>
+    (Merchants only) The path this Unit will follow.  The first element is the Tile this Unit will move to next.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.shipHealth"></a>
+    <strong>self.shipHealth</strong>
+    </dt>
+    <dd>
+    If a ship is on this Tile, how much health it has remaining.  0 for no ship.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.stunTurns"></a>
+    <strong>self.stunTurns</strong>
+    </dt>
+    <dd>
+    (Merchants only) The number of turns this merchant ship won't be able to move.  They will still attack. Merchant ships are stunned when they're attacked.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.targetPort"></a>
+    <strong>self.targetPort</strong>
+    </dt>
+    <dd>
+    (Merchants only) The Port this Unit is moving to.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tile"></a>
+    <strong>self.tile</strong>
+    </dt>
+    <dd>
+    The Tile this Unit is on.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjectName"></a>
+    <strong>self.gameObjectName</strong>
+    </dt>
+    <dd>
+    (inherited) String representing the top level Class that this game object is an instance of.  Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.gameObjectName">GameObject.gameObjectName</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.id"></a>
+    <strong>self.id</strong>
+    </dt>
+    <dd>
+    (inherited) A unique id for each instance of a GameObject or a sub class.  Used for client and server communication. Should never change value after being set.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.id">GameObject.id</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.logs"></a>
+    <strong>self.logs</strong>
+    </dt>
+    <dd>
+    (inherited) Any strings logged will be stored here.  Intended for debugging.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.logs">GameObject.logs</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Unit:attack"></a>
+    <strong>Unit:attack (tile, target)</strong>
+    </dt>
+    <dd>
+    Attacks either the 'crew' or 'ship' on a Tile in range.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile to attack.
+        </li>
+        <li><span class="parameter">target</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Whether to attack 'crew' or 'ship'. Crew deal damage to crew and ships deal damage to ships. Consumes any remaining moves.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully attacked, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:bury"></a>
+    <strong>Unit:bury (amount)</strong>
+    </dt>
+    <dd>
+    Buries gold on this Unit's Tile.  Gold must be a certain distance away for it to get interest (Game.minInterestDistance).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         How much gold this Unit should bury. Amounts <= 0 will bury as much as possible.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully buried, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:deposit"></a>
+    <strong>Unit:deposit ([amount=0])</strong>
+    </dt>
+    <dd>
+    Puts gold into an adjacent Port.  If that Port is the Player's port, the gold is added to that Player. If that Port is owned by merchants, it adds to that Port's investment.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         The amount of gold to deposit. Amounts <= 0 will deposit all the gold on this Unit.
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully deposited, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:dig"></a>
+    <strong>Unit:dig ([amount=0])</strong>
+    </dt>
+    <dd>
+    Digs up gold on this Unit's Tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         How much gold this Unit should take. Amounts <= 0 will dig up as much as possible.
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully dug up, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:move"></a>
+    <strong>Unit:move (tile)</strong>
+    </dt>
+    <dd>
+    Moves this Unit from its current Tile to an adjacent Tile.  If this Unit merges with another one, the other Unit will be destroyed and its tile will be set to nil. Make sure to check that your Unit's tile is not nil before doing things with it.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile this Unit should move to.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if it moved, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:rest"></a>
+    <strong>Unit:rest ()</strong>
+    </dt>
+    <dd>
+    Regenerates this Unit's health.  Must be used in range of a port.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully rested, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:split"></a>
+    <strong>Unit:split (tile[, amount=1[, gold=0]])</strong>
+    </dt>
+    <dd>
+    Moves a number of crew from this Unit to the given Tile.  This will consume a move from those crew.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile to move the crew to.
+        </li>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         The number of crew to move onto that Tile. Amount <= 0 will move all the crew to that Tile.
+         (<em>default</em> 1)
+        </li>
+        <li><span class="parameter">gold</span>
+            <span class="types"><span class="type">number</span></span>
+         The amount of gold the crew should take with them. Gold < 0 will move all the gold to that Tile.
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully split, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:withdraw"></a>
+    <strong>Unit:withdraw ([amount=0])</strong>
+    </dt>
+    <dd>
+    Takes gold from the Player.  You can only withdraw from your own Port.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         The amount of gold to withdraw. Amounts <= 0 will withdraw everything.
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully withdrawn, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Unit:log"></a>
+    <strong>Unit:log (message)</strong>
+    </dt>
+    <dd>
+    (inherited) Adds a message to this GameObject's logs.  Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A string to add to this GameObject's log. Intended for debugging.
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#GameObject:log">GameObject:log</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

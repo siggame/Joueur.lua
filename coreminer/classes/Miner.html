@@ -1,0 +1,625 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Coreminer — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Coreminer Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#Methods">Methods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><a href="../classes/Bomb.html">Bomb</a></li>
+  <li><a href="../classes/Game.html">Game</a></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><strong>Miner</strong></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Tile.html">Tile</a></li>
+  <li><a href="../classes/Upgrade.html">Upgrade</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Miner</code></h1>
+<p>A Miner in the game.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.bombs">self.bombs</a></td>
+	<td class="summary">The number of bombs being carried by this Miner.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.buildingMaterials">self.buildingMaterials</a></td>
+	<td class="summary">The number of building materials carried by this Miner.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentUpgrade">self.currentUpgrade</a></td>
+	<td class="summary">The Upgrade this Miner is on.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.dirt">self.dirt</a></td>
+	<td class="summary">The amount of dirt carried by this Miner.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.health">self.health</a></td>
+	<td class="summary">The remaining health of this Miner.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.miningPower">self.miningPower</a></td>
+	<td class="summary">The remaining mining power this Miner has this turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.moves">self.moves</a></td>
+	<td class="summary">The number of moves this Miner has left this turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.ore">self.ore</a></td>
+	<td class="summary">The amount of ore carried by this Miner.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.owner">self.owner</a></td>
+	<td class="summary">The Player that owns and can control this Miner.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.tile">self.tile</a></td>
+	<td class="summary">The Tile this Miner is on.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.upgradeLevel">self.upgradeLevel</a></td>
+	<td class="summary">The upgrade level of this Miner.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjectName">self.gameObjectName</a></td>
+	<td class="summary">(inherited) String representing the top level Class that this game object is an instance of.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.id">self.id</a></td>
+	<td class="summary">(inherited) A unique id for each instance of a GameObject or a sub class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.logs">self.logs</a></td>
+	<td class="summary">(inherited) Any strings logged will be stored here.</td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Miner:build">Miner:build (tile, type)</a></td>
+	<td class="summary">Builds a support, shield, or ladder on Miner's Tile, or an adjacent Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Miner:buy">Miner:buy (resource, amount)</a></td>
+	<td class="summary">Purchase a resource from the Player's base or hopper.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Miner:dump">Miner:dump (tile, material, amount)</a></td>
+	<td class="summary">Dumps materials from cargo to an adjacent Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Miner:mine">Miner:mine (tile, amount)</a></td>
+	<td class="summary">Mines the Tile the Miner is on or an adjacent Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Miner:move">Miner:move (tile)</a></td>
+	<td class="summary">Moves this Miner from its current Tile to an adjacent Tile.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Miner:transfer">Miner:transfer (miner, resource, amount)</a></td>
+	<td class="summary">Transfers a resource from the one Miner to another.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Miner:upgrade">Miner:upgrade ()</a></td>
+	<td class="summary">Upgrade this Miner by installing an upgrade module.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Miner:log">Miner:log (message)</a></td>
+	<td class="summary">(inherited) Adds a message to this GameObject's logs.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.bombs"></a>
+    <strong>self.bombs</strong>
+    </dt>
+    <dd>
+    The number of bombs being carried by this Miner.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.buildingMaterials"></a>
+    <strong>self.buildingMaterials</strong>
+    </dt>
+    <dd>
+    The number of building materials carried by this Miner.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentUpgrade"></a>
+    <strong>self.currentUpgrade</strong>
+    </dt>
+    <dd>
+    The Upgrade this Miner is on.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.dirt"></a>
+    <strong>self.dirt</strong>
+    </dt>
+    <dd>
+    The amount of dirt carried by this Miner.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.health"></a>
+    <strong>self.health</strong>
+    </dt>
+    <dd>
+    The remaining health of this Miner.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.miningPower"></a>
+    <strong>self.miningPower</strong>
+    </dt>
+    <dd>
+    The remaining mining power this Miner has this turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.moves"></a>
+    <strong>self.moves</strong>
+    </dt>
+    <dd>
+    The number of moves this Miner has left this turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.ore"></a>
+    <strong>self.ore</strong>
+    </dt>
+    <dd>
+    The amount of ore carried by this Miner.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.owner"></a>
+    <strong>self.owner</strong>
+    </dt>
+    <dd>
+    The Player that owns and can control this Miner.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.tile"></a>
+    <strong>self.tile</strong>
+    </dt>
+    <dd>
+    The Tile this Miner is on.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.upgradeLevel"></a>
+    <strong>self.upgradeLevel</strong>
+    </dt>
+    <dd>
+    The upgrade level of this Miner.  Starts at 0.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjectName"></a>
+    <strong>self.gameObjectName</strong>
+    </dt>
+    <dd>
+    (inherited) String representing the top level Class that this game object is an instance of.  Used for reflection to create new instances on clients, but exposed for convenience should AIs want this data.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.gameObjectName">GameObject.gameObjectName</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.id"></a>
+    <strong>self.id</strong>
+    </dt>
+    <dd>
+    (inherited) A unique id for each instance of a GameObject or a sub class.  Used for client and server communication. Should never change value after being set.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.id">GameObject.id</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "self.logs"></a>
+    <strong>self.logs</strong>
+    </dt>
+    <dd>
+    (inherited) Any strings logged will be stored here.  Intended for debugging.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#self.logs">GameObject.logs</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Miner:build"></a>
+    <strong>Miner:build (tile, type)</strong>
+    </dt>
+    <dd>
+    Builds a support, shield, or ladder on Miner's Tile, or an adjacent Tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile to build on.
+        </li>
+        <li><span class="parameter">type</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The structure to build (support, ladder, or shield).
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully built, False otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Miner:buy"></a>
+    <strong>Miner:buy (resource, amount)</strong>
+    </dt>
+    <dd>
+    Purchase a resource from the Player's base or hopper.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">resource</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The type of resource to buy.
+        </li>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         The amount of resource to buy. Amounts <= 0 will buy all of that material Player can.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully purchased, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Miner:dump"></a>
+    <strong>Miner:dump (tile, material, amount)</strong>
+    </dt>
+    <dd>
+    Dumps materials from cargo to an adjacent Tile.  If the Tile is a base or a hopper Tile, materials are sold instead of placed.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile the materials will be dumped on.
+        </li>
+        <li><span class="parameter">material</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The material the Miner will drop. 'dirt', 'ore', or 'bomb'.
+        </li>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         The number of materials to drop. Amounts <= 0 will drop all of the material.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully dumped materials, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Miner:mine"></a>
+    <strong>Miner:mine (tile, amount)</strong>
+    </dt>
+    <dd>
+    Mines the Tile the Miner is on or an adjacent Tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile the materials will be mined from.
+        </li>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         The amount of material to mine up. Amounts <= 0 will mine all the materials that the Miner can.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully mined, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Miner:move"></a>
+    <strong>Miner:move (tile)</strong>
+    </dt>
+    <dd>
+    Moves this Miner from its current Tile to an adjacent Tile.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tile</span>
+            <span class="types"><a class="type" href="../classes/Tile.html#">Tile</a></span>
+         The Tile this Miner should move to.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if it moved, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Miner:transfer"></a>
+    <strong>Miner:transfer (miner, resource, amount)</strong>
+    </dt>
+    <dd>
+    Transfers a resource from the one Miner to another.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">miner</span>
+            <span class="types"><a class="type" href="../classes/Miner.html#">Miner</a></span>
+         The Miner to transfer materials to.
+        </li>
+        <li><span class="parameter">resource</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The type of resource to transfer.
+        </li>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+         The amount of resource to transfer. Amounts <= 0 will transfer all the of the material.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully transferred, false otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Miner:upgrade"></a>
+    <strong>Miner:upgrade ()</strong>
+    </dt>
+    <dd>
+    Upgrade this Miner by installing an upgrade module.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True if successfully upgraded, False otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Miner:log"></a>
+    <strong>Miner:log (message)</strong>
+    </dt>
+    <dd>
+    (inherited) Adds a message to this GameObject's logs.  Intended for your own debugging purposes, as strings stored here are saved in the gamelog.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A string to add to this GameObject's log. Intended for debugging.
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/GameObject.html#GameObject:log">GameObject:log</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

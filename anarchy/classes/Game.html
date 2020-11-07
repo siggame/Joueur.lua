@@ -1,0 +1,394 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Anarchy — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Anarchy Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><a href="../classes/Building.html">Building</a></li>
+  <li><a href="../classes/FireDepartment.html">FireDepartment</a></li>
+  <li><a href="../classes/Forecast.html">Forecast</a></li>
+  <li><strong>Game</strong></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/PoliceDepartment.html">PoliceDepartment</a></li>
+  <li><a href="../classes/Warehouse.html">Warehouse</a></li>
+  <li><a href="../classes/WeatherStation.html">WeatherStation</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Game</code></h1>
+<p>Two player grid based game where each player tries to burn down the other player's buildings.</p>
+<p> Let it burn.</p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.name">self.name</a></td>
+	<td class="summary">The name of this game, "{game_name}".</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.baseBribesPerTurn">self.baseBribesPerTurn</a></td>
+	<td class="summary">How many bribes players get at the beginning of their turn, not counting their burned down Buildings.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.buildings">self.buildings</a></td>
+	<td class="summary">All the buildings in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentForecast">self.currentForecast</a></td>
+	<td class="summary">The current Forecast, which will be applied at the end of the turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentPlayer">self.currentPlayer</a></td>
+	<td class="summary">The player whose turn it is currently.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentTurn">self.currentTurn</a></td>
+	<td class="summary">The current turn number, starting at 0 for the first player's turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.forecasts">self.forecasts</a></td>
+	<td class="summary">All the forecasts in the game, indexed by turn number.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjects">self.gameObjects</a></td>
+	<td class="summary">A mapping of every game object's ID to the actual game object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.mapHeight">self.mapHeight</a></td>
+	<td class="summary">The width of the entire map along the vertical (y) axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.mapWidth">self.mapWidth</a></td>
+	<td class="summary">The width of the entire map along the horizontal (x) axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxFire">self.maxFire</a></td>
+	<td class="summary">The maximum amount of fire value for any Building.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxForecastIntensity">self.maxForecastIntensity</a></td>
+	<td class="summary">The maximum amount of intensity value for any Forecast.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxTurns">self.maxTurns</a></td>
+	<td class="summary">The maximum number of turns before the game will automatically end.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.nextForecast">self.nextForecast</a></td>
+	<td class="summary">The next Forecast, which will be applied at the end of your opponent's turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.players">self.players</a></td>
+	<td class="summary">List of all the players in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.session">self.session</a></td>
+	<td class="summary">A unique identifier for the game instance that is being played.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.timeAddedPerTurn">self.timeAddedPerTurn</a></td>
+	<td class="summary">The amount of time (in nano-seconds) added after each player performs a turn.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.name"></a>
+    <strong>self.name</strong>
+    </dt>
+    <dd>
+    The name of this game, "{game_name}".
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.baseBribesPerTurn"></a>
+    <strong>self.baseBribesPerTurn</strong>
+    </dt>
+    <dd>
+    How many bribes players get at the beginning of their turn, not counting their burned down Buildings.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.buildings"></a>
+    <strong>self.buildings</strong>
+    </dt>
+    <dd>
+    All the buildings in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentForecast"></a>
+    <strong>self.currentForecast</strong>
+    </dt>
+    <dd>
+    The current Forecast, which will be applied at the end of the turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentPlayer"></a>
+    <strong>self.currentPlayer</strong>
+    </dt>
+    <dd>
+    The player whose turn it is currently.  That player can send commands. Other players cannot.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentTurn"></a>
+    <strong>self.currentTurn</strong>
+    </dt>
+    <dd>
+    The current turn number, starting at 0 for the first player's turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.forecasts"></a>
+    <strong>self.forecasts</strong>
+    </dt>
+    <dd>
+    All the forecasts in the game, indexed by turn number.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjects"></a>
+    <strong>self.gameObjects</strong>
+    </dt>
+    <dd>
+    A mapping of every game object's ID to the actual game object.  Primarily used by the server and client to easily refer to the game objects via ID.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.mapHeight"></a>
+    <strong>self.mapHeight</strong>
+    </dt>
+    <dd>
+    The width of the entire map along the vertical (y) axis.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.mapWidth"></a>
+    <strong>self.mapWidth</strong>
+    </dt>
+    <dd>
+    The width of the entire map along the horizontal (x) axis.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxFire"></a>
+    <strong>self.maxFire</strong>
+    </dt>
+    <dd>
+    The maximum amount of fire value for any Building.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxForecastIntensity"></a>
+    <strong>self.maxForecastIntensity</strong>
+    </dt>
+    <dd>
+    The maximum amount of intensity value for any Forecast.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxTurns"></a>
+    <strong>self.maxTurns</strong>
+    </dt>
+    <dd>
+    The maximum number of turns before the game will automatically end.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.nextForecast"></a>
+    <strong>self.nextForecast</strong>
+    </dt>
+    <dd>
+    The next Forecast, which will be applied at the end of your opponent's turn.  This is also the Forecast WeatherStations can control this turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.players"></a>
+    <strong>self.players</strong>
+    </dt>
+    <dd>
+    List of all the players in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.session"></a>
+    <strong>self.session</strong>
+    </dt>
+    <dd>
+    A unique identifier for the game instance that is being played.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.timeAddedPerTurn"></a>
+    <strong>self.timeAddedPerTurn</strong>
+    </dt>
+    <dd>
+    The amount of time (in nano-seconds) added after each player performs a turn.
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

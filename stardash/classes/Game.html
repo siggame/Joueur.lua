@@ -1,0 +1,698 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+<link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+    <title>Stardash — Lua Joueur Client</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1><p style="margin: 0.25em;"><a href="../">Lua Joueur Client</a></p>
+<p style="font-size: 0.675em; margin: 0.5em;">Stardash Game</p>
+</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AI.html">AI</a></li>
+  <li><a href="../classes/Body.html">Body</a></li>
+  <li><strong>Game</strong></li>
+  <li><a href="../classes/GameObject.html">GameObject</a></li>
+  <li><a href="../classes/Job.html">Job</a></li>
+  <li><a href="../classes/Player.html">Player</a></li>
+  <li><a href="../classes/Projectile.html">Projectile</a></li>
+  <li><a href="../classes/Unit.html">Unit</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Game</code></h1>
+<p>Collect of the most of the rarest mineral orbiting around the sun and out-compete your competitor.</p>
+<p></p>
+
+
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.name">self.name</a></td>
+	<td class="summary">The name of this game, "{game_name}".</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.bodies">self.bodies</a></td>
+	<td class="summary">All the celestial bodies in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentPlayer">self.currentPlayer</a></td>
+	<td class="summary">The player whose turn it is currently.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.currentTurn">self.currentTurn</a></td>
+	<td class="summary">The current turn number, starting at 0 for the first player's turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.dashCost">self.dashCost</a></td>
+	<td class="summary">The cost of dashing.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.dashDistance">self.dashDistance</a></td>
+	<td class="summary">The distance traveled each turn by dashing.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.gameObjects">self.gameObjects</a></td>
+	<td class="summary">A mapping of every game object's ID to the actual game object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.genariumValue">self.genariumValue</a></td>
+	<td class="summary">The value of every unit of genarium.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.jobs">self.jobs</a></td>
+	<td class="summary">A array-like table of all jobs.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.legendariumValue">self.legendariumValue</a></td>
+	<td class="summary">The value of every unit of legendarium.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxAsteroid">self.maxAsteroid</a></td>
+	<td class="summary">The highest amount of material, that can be in a asteroid.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.maxTurns">self.maxTurns</a></td>
+	<td class="summary">The maximum number of turns before the game will automatically end.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.minAsteroid">self.minAsteroid</a></td>
+	<td class="summary">The smallest amount of material, that can be in a asteroid.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.miningSpeed">self.miningSpeed</a></td>
+	<td class="summary">The rate at which miners grab minerals from asteroids.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.mythiciteAmount">self.mythiciteAmount</a></td>
+	<td class="summary">The amount of mythicite that spawns at the start of the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.orbitsProtected">self.orbitsProtected</a></td>
+	<td class="summary">The number of orbit updates you cannot mine the mithicite asteroid.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.oreRarityGenarium">self.oreRarityGenarium</a></td>
+	<td class="summary">The rarity modifier of the most common ore.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.oreRarityLegendarium">self.oreRarityLegendarium</a></td>
+	<td class="summary">The rarity modifier of the rarest ore.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.oreRarityRarium">self.oreRarityRarium</a></td>
+	<td class="summary">The rarity modifier of the second rarest ore.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.planetEnergyCap">self.planetEnergyCap</a></td>
+	<td class="summary">The amount of energy a planet can hold at once.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.planetRechargeRate">self.planetRechargeRate</a></td>
+	<td class="summary">The amount of energy the planets restore each round.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.players">self.players</a></td>
+	<td class="summary">List of all the players in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.projectileRadius">self.projectileRadius</a></td>
+	<td class="summary">The standard size of ships.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.projectileSpeed">self.projectileSpeed</a></td>
+	<td class="summary">The amount of distance missiles travel through space.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.projectiles">self.projectiles</a></td>
+	<td class="summary">Every projectile in the game.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.rariumValue">self.rariumValue</a></td>
+	<td class="summary">The value of every unit of rarium.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.regenerateRate">self.regenerateRate</a></td>
+	<td class="summary">The regeneration rate of asteroids.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.session">self.session</a></td>
+	<td class="summary">A unique identifier for the game instance that is being played.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.shipRadius">self.shipRadius</a></td>
+	<td class="summary">The standard size of ships.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.sizeX">self.sizeX</a></td>
+	<td class="summary">The size of the map in the X direction.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.sizeY">self.sizeY</a></td>
+	<td class="summary">The size of the map in the Y direction.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.timeAddedPerTurn">self.timeAddedPerTurn</a></td>
+	<td class="summary">The amount of time (in nano-seconds) added after each player performs a turn.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.turnsToOrbit">self.turnsToOrbit</a></td>
+	<td class="summary">The number of turns it takes for a asteroid to orbit the sun.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.units">self.units</a></td>
+	<td class="summary">Every Unit in the game.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.name"></a>
+    <strong>self.name</strong>
+    </dt>
+    <dd>
+    The name of this game, "{game_name}".
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.bodies"></a>
+    <strong>self.bodies</strong>
+    </dt>
+    <dd>
+    All the celestial bodies in the game.  The first two are planets and the third is the sun. The fourth is the VP asteroid. Everything else is normal asteroids.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentPlayer"></a>
+    <strong>self.currentPlayer</strong>
+    </dt>
+    <dd>
+    The player whose turn it is currently.  That player can send commands. Other players cannot.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.currentTurn"></a>
+    <strong>self.currentTurn</strong>
+    </dt>
+    <dd>
+    The current turn number, starting at 0 for the first player's turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.dashCost"></a>
+    <strong>self.dashCost</strong>
+    </dt>
+    <dd>
+    The cost of dashing.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.dashDistance"></a>
+    <strong>self.dashDistance</strong>
+    </dt>
+    <dd>
+    The distance traveled each turn by dashing.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.gameObjects"></a>
+    <strong>self.gameObjects</strong>
+    </dt>
+    <dd>
+    A mapping of every game object's ID to the actual game object.  Primarily used by the server and client to easily refer to the game objects via ID.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.genariumValue"></a>
+    <strong>self.genariumValue</strong>
+    </dt>
+    <dd>
+    The value of every unit of genarium.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.jobs"></a>
+    <strong>self.jobs</strong>
+    </dt>
+    <dd>
+    A array-like table of all jobs.  The first element is corvette, second is missileboat, third is martyr, fourth is transport, and fifth is miner.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.legendariumValue"></a>
+    <strong>self.legendariumValue</strong>
+    </dt>
+    <dd>
+    The value of every unit of legendarium.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxAsteroid"></a>
+    <strong>self.maxAsteroid</strong>
+    </dt>
+    <dd>
+    The highest amount of material, that can be in a asteroid.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.maxTurns"></a>
+    <strong>self.maxTurns</strong>
+    </dt>
+    <dd>
+    The maximum number of turns before the game will automatically end.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.minAsteroid"></a>
+    <strong>self.minAsteroid</strong>
+    </dt>
+    <dd>
+    The smallest amount of material, that can be in a asteroid.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.miningSpeed"></a>
+    <strong>self.miningSpeed</strong>
+    </dt>
+    <dd>
+    The rate at which miners grab minerals from asteroids.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.mythiciteAmount"></a>
+    <strong>self.mythiciteAmount</strong>
+    </dt>
+    <dd>
+    The amount of mythicite that spawns at the start of the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.orbitsProtected"></a>
+    <strong>self.orbitsProtected</strong>
+    </dt>
+    <dd>
+    The number of orbit updates you cannot mine the mithicite asteroid.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.oreRarityGenarium"></a>
+    <strong>self.oreRarityGenarium</strong>
+    </dt>
+    <dd>
+    The rarity modifier of the most common ore.  This controls how much spawns.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.oreRarityLegendarium"></a>
+    <strong>self.oreRarityLegendarium</strong>
+    </dt>
+    <dd>
+    The rarity modifier of the rarest ore.  This controls how much spawns.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.oreRarityRarium"></a>
+    <strong>self.oreRarityRarium</strong>
+    </dt>
+    <dd>
+    The rarity modifier of the second rarest ore.  This controls how much spawns.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.planetEnergyCap"></a>
+    <strong>self.planetEnergyCap</strong>
+    </dt>
+    <dd>
+    The amount of energy a planet can hold at once.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.planetRechargeRate"></a>
+    <strong>self.planetRechargeRate</strong>
+    </dt>
+    <dd>
+    The amount of energy the planets restore each round.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.players"></a>
+    <strong>self.players</strong>
+    </dt>
+    <dd>
+    List of all the players in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.projectileRadius"></a>
+    <strong>self.projectileRadius</strong>
+    </dt>
+    <dd>
+    The standard size of ships.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.projectileSpeed"></a>
+    <strong>self.projectileSpeed</strong>
+    </dt>
+    <dd>
+    The amount of distance missiles travel through space.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.projectiles"></a>
+    <strong>self.projectiles</strong>
+    </dt>
+    <dd>
+    Every projectile in the game.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.rariumValue"></a>
+    <strong>self.rariumValue</strong>
+    </dt>
+    <dd>
+    The value of every unit of rarium.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.regenerateRate"></a>
+    <strong>self.regenerateRate</strong>
+    </dt>
+    <dd>
+    The regeneration rate of asteroids.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.session"></a>
+    <strong>self.session</strong>
+    </dt>
+    <dd>
+    A unique identifier for the game instance that is being played.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.shipRadius"></a>
+    <strong>self.shipRadius</strong>
+    </dt>
+    <dd>
+    The standard size of ships.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.sizeX"></a>
+    <strong>self.sizeX</strong>
+    </dt>
+    <dd>
+    The size of the map in the X direction.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.sizeY"></a>
+    <strong>self.sizeY</strong>
+    </dt>
+    <dd>
+    The size of the map in the Y direction.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.timeAddedPerTurn"></a>
+    <strong>self.timeAddedPerTurn</strong>
+    </dt>
+    <dd>
+    The amount of time (in nano-seconds) added after each player performs a turn.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.turnsToOrbit"></a>
+    <strong>self.turnsToOrbit</strong>
+    </dt>
+    <dd>
+    The number of turns it takes for a asteroid to orbit the sun.  (Asteroids move after each players turn).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.units"></a>
+    <strong>self.units</strong>
+    </dt>
+    <dd>
+    Every Unit in the game.
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2020-11-07 17:28:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
